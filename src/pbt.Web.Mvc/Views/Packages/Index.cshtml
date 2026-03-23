@@ -1,0 +1,233 @@
+﻿@using pbt.Web.Startup
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.Common.Modals
+@using pbt.Authorization
+@using pbt.Web.Helpers
+@model pbt.Web.Models.Packages.PackageIndexViewModel
+
+@{
+    ViewBag.Title = L("Packages");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_SaleAdmin) || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
+{
+    <script>
+        let isAdminOrSaleAdmin = true;
+    </script>
+}
+else
+{
+    <script>
+        let isAdminOrSaleAdmin = false;
+    </script>
+}
+
+@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
+{
+    <script>
+        let isAdmin = true;
+    </script>
+}
+else
+{
+    <script>
+        let isAdmin = false;
+    </script>
+}
+
+<script>   
+    const _serverPackageDeliveryStatusOptions = @Html.Raw(Json.Serialize(EnumHelper.GetEnumSelectList<PackageDeliveryStatusEnum>()));
+</script>
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+@section styles {
+    <style>
+
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Packages")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-success btn-export-min">@L("ExportExcelMin")</button>
+                <button type="button" class="btn btn-success btn-export">@L("ExportExcel")</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @await Html.PartialAsync("~/Views/Packages/Index.AdvancedSearch.cshtml", Model)
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="table-header"> <b id="totalPackage"></b> @L("Package") | <b id="totalWeight"></b>(kg)</div>
+                            <table id="PackagesTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("PackageNumber")</th>
+                                        <th>@L("TrackingNumber")</th>
+                                        <th>@L("BagNumber")</th>
+                                        <th>@L("Weight")</th>
+                                        <th>@L("Volume")</th>
+                                        <th>@L("Description")</th>
+                                        <th>@L("Customer")</th>
+                                        <th>@L("Service")</th>
+                                        <th>@L("DomesticShippingFee")</th>
+                                        <th>@L("WarehouseCreate")</th>
+                                        <th>@L("WarehouseDestination")</th>
+                                        <th>@L("WarehouseCurrent")</th>
+                                        <th>@L("CreationTime")</th>
+
+                                        <th>@L("WarehouseStatus")</th>
+                                        <th>@L("ShippingLine")</th>
+                                        <th>@L("Status")</th>
+                                        <th style="width: 50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="OrderNote" tabindex="-1" role="dialog" aria-labelledby="OrderNoteModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("OrderNote")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Danh sách ghi chú -->
+
+                        <input type="hidden" id="hidden-order-id" />
+                        <div class="col-md-8 border-end" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@L("Name")</th>
+                                        <th>@L("CreationTime")</th>
+                                        <th>@L("Content")</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="noteList">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Nhập ghi chú mới -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="noteContent">@L("NewNote")</label>
+                                <textarea id="noteContent" class="form-control" rows="6" placeholder="@L("EnterNoteHere")"></textarea>
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button id="btnSaveNote" type="button" class="btn btn-primary btn-save-note">@L("SaveNote")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- modal-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="WarehouseTransfer" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("WarehouseTransfer")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                    <form name="warehouseTransferForm" role="form" class="form-horizontal">
+                        <input type="hidden" name="PackageId" />
+                        <div class="form-group row required">
+                            <label class="col-md-3 col-form-label">@L("SelectNewWarehouse")</label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="ToWarehouse" placeholder="Chọn kho mới">
+
+                                    @if (Model.WarehouseVNs != null)
+                                    {
+                                        foreach (var warehouse in Model.WarehouseVNs)
+                                        {
+                                            <option value="@warehouse.Id">@warehouse.Name</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <label class="col-md-3 col-form-label">@L("Note")</label>
+                            <div class="col-md-9">
+                                <textarea type="text" name="Note" class="form-control"> </textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default close-button" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary btn-save-warehouse-transfer"><i class="fa fa-save"></i> Lưu</button>
+                        </div>
+                    </form>
+                </div> <!-- modal-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="change-customer" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateWarehouseTransfer")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                    <form name="change-customer-form" role="form" class="form-horizontal">
+                        <input type="hidden" name="PackageId" />
+
+                        <div class="form-group row required">
+                            <label class="col-md-3 col-form-label">@L("SelectAndMapNewCustomer")</label>
+                            <div class="col-md-4">
+                                <select class="select2 form-control" id="select-new-customer" name="CustomerId" style="width: 100%;">
+                                    <option value="-1">-- @L("All") --</option>
+                                    @foreach (var customer in Model.Customers)
+                                    {
+                                        <option value="@customer.Id">@customer.Username</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default close-button" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary btn-save-warehouse-transfer"><i class="fa fa-save"></i> Lưu</button>
+                        </div>
+                    </form>
+                </div> <!-- modal-body -->
+            </div>
+        </div>
+    </div>
+</div>

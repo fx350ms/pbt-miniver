@@ -1,0 +1,299 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using pbt.ApplicationUtils
+@using pbt.Web.Helpers
+@using pbt.Web.Models.Packages
+@using pbt.Web.Startup
+@using pbt.Authorization
+
+
+@model CreateUpdatePackage
+
+@{
+    ViewBag.Title = L("CreatePackage");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/Create.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/Packages/_CloneMultiModal.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/Create.min.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/Packages/_CloneMultiModal.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<style>
+    .active {
+        background-color: #ffecc8;
+    }
+
+    .fake-package {
+        background-color: #efefef;
+    }
+
+    .select2-container {
+        margin-bottom: .5rem !important;
+        width: 100% !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    #tableWaybill tbody tr:hover {
+        background: #ffe7a0;
+    }
+
+    #tableWaybill tbody tr.selected {
+        background: #ffe7a0;
+    }
+
+    .red-placeholder::placeholder {
+        color: #ffa5a5 !important;
+        opacity: 1; /* Firefox */
+    }
+
+    .red-placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #ffa5a5;
+    }
+
+    .red-placeholder::-ms-input-placeholder { /* Microsoft Edge */
+        color: #ffa5a5;
+    }
+
+    .select2-selection--single {
+        height: 38px !important;
+    }
+
+    .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreatePackage")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8" id="createPackage">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex gap-1 mb-3">
+                            <input type="hidden" name="RMBRate" value="@Model.RMBRate" />
+                            <div>
+                                <select class="form-control mr-2" style="max-width: 250px;" id="select-delivery-line">
+                                    <option value="0">@L("SelectLine")</option>
+                                    <option value="@((int)LineShipping.InformalTrade)">@L("InformalTrade")</option>
+                                    <option value="@((int)LineShipping.Ecommerce)">@L("Ecommerce")</option>
+                                    <option value="@((int)LineShipping.OfficialChannel)">@L("OfficialChannel")</option>
+                                    <option value="@((int)LineShipping.Portable)">@L("Portable")</option>
+                                </select>
+                            </div>
+                            <div style="min-width: 300px">
+                                <select class="form-control select2 ml-2" id="selectAllCustomer">
+                                    <option value="0" data-warehouseCode="" data-warehouseName="">@L("SelectCustomer")</option>
+                                    @if (Model.CustomerSelectListItems != null && Model.CustomerSelectListItems.Count > 0)
+                                    {
+                                        foreach (var item in Model.CustomerSelectListItems)
+                                        {
+                                            <option value="@item.Id" data-warehouseCode="@item.WarehouseCode" data-warehouseName="@item.WarehouseName">@item.Username</option>
+                                        }
+                                    }
+                                </select>
+                                <input type="hidden" name="CustomerId" id="hiddenCustomerId" />
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label style="font-weight: normal" class="ml-2">
+                                    <input id="rememberCustomer" type="checkbox" /> Ghi nhớ khách hàng
+                                </label>
+                            </div>
+                            <div class="d-flex align-items-center ">
+                                <label style="font-size: 18px" class="ml-2" id="customerWarehouse"></label>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" id="table-packages">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>@L("STT")</th>
+                                    <th class="col-4">@L("ProductInformation")</th>
+                                    <th class="col-4">@L("ProductSpecifications")</th>
+                                    <th class="col-4">@L("ShippingService")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr type="parent">
+                                    <td class="stt">1</td>
+                                    <td>
+                                        <div class="input-group mb-2">
+                                            <input tabindex="1" type="text" class="form-control TrackingNumber red-placeholder" name="TrackingNumber" id="TrackingNumber" placeholder="@L("Waybill")" value="@Model.Package?.TrackingNumber">
+                                        </div>
+                                        <input tabindex="2" type="text" class="form-control red-placeholder" id="Packages[0].Weight" name="Weight" placeholder="@L("Weight") *">
+                                        <input tabindex="3" type="text" class="form-control mb-2 mt-2 red-placeholder" name="ProductNameCn" placeholder="@L("ProductNameCn") *">
+                                        <div class="d-flex gap-1 mb-2">
+                                            <input tabindex="4" type="number" class="form-control red-placeholder" name="Quantity" placeholder="@L("Quantity") *">
+                                            <input tabindex="5" type="text" class="form-control red-placeholder" id="package-price" name="Price" placeholder="@L("Price") *">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class=" d-none" id="product-group-type">
+                                            @foreach (var item in Model.ProductGroupTypes)
+                                            {
+                                                var selected = item.IsDefault ? "checked" : "";
+                                                <div class="form-check form-check-inline">
+                                                    <label class="form-check-label pointer-event">
+                                                        <input class="form-check-input bagType" type="radio" name="ProductGroupTypeId" value="@item.Id" @selected>
+                                                        @item.Name
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="d-flex gap-1 mb-2">
+                                            <input type="number" class="form-control" name="Length" placeholder="@L("Length") (cm)">
+                                            <input type="number" class="form-control" name="Width" placeholder="@L("Width") (cm)">
+                                            <input type="number" class="form-control" name="Height" placeholder="@L("Height") (cm)">
+                                        </div>
+                                        <input type="text" class="form-control mb-2 mt-2" name="ProductNameVi" placeholder="@L("ProductNameVn")">
+
+                                        <textarea rows="2" type="text" class="form-control" name="Description" placeholder="@L("Note")"></textarea>
+                                    </td>
+
+                                    <td class="position-relative">
+                                        <div class="form-check">
+                                            <input class="form-check-input check-IsWoodenCrate" name="IsWoodenCrate" type="checkbox" id="packing">
+                                            <label class="form-check-label cursor-pointer" for="packing">@L("WoodenPackaging")</label>
+                                        </div>
+                                        <div class="" id="wooden-crate-group">
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label pointer-event">
+                                                    <input class="form-check-input woodenCrateType" type="radio" name="WoodenCrateType" value="1" checked>
+                                                    @L("SeparateWoodenCrate")
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label pointer-event">
+                                                    <input class="form-check-input woodenCrateType" type="radio" name="WoodenCrateType" value="2">
+                                                    @L("SharedWoodenCrate")
+                                                </label>
+                                            </div>
+                                            <div id="sharedCrateSelectContainer" class="ml-2">
+                                                <input id="packageNumber" class="form-control" placeholder="quét mã kiện" />
+                                                <div id="woodenPackingTable" class="d-none mt-2">
+                                                    <table class="table" id="lstWoodenPacking">
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input check-IsShockproof" name="IsShockproof" type="checkbox"
+                                                   id="shockproof">
+                                            <label class="form-check-label cursor-pointer" for="shockproof">  @L("ShockproofPackaging") </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input check-IsDomesticShipping" name="IsDomesticShipping" type="checkbox"
+                                                   id="local-ship">
+                                            <label class="form-check-label cursor-pointer" for="local-ship">
+                                                @L("DomesticTransportation")
+                                            </label>
+
+                                            <div class="input-group mb-3 d-none input-price">
+                                                <input type="number" class="form-control input-domesticShippingFee" id="DomesticShippingFee" name="DomesticShippingFee" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text price-vnd"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex gap-1 mt-3">
+                            <button class="btn btn-primary ml-2 btn-add-same" disabled>
+                                <i class="fas fa-plus"></i>
+                                @L("AddSimilarPackage")
+                            </button>
+                            <button class="btn btn-success ml-2 btn-add-multi" disabled
+                                    onclick="AddMultiClonePackage(this)">
+                                <i class="fas fa-copy"></i> @L("AddMultiplePackages")
+                            </button>
+                            <button tabindex="6" class="btn btn-success ml-2" id="btnPrintStamp">
+                                <i class="fas fa-print"></i>  @L("PrintStamp")
+                            </button>
+                            <button tabindex="6" class="btn btn-success ml-2" id="btnPrintStampTmdt">
+                                <i class="fas fa-print"></i>  @L("PrintStampTmdt")
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <button class="btn btn-primary create-package" data-redirect="current"><i class="fas fa-save"></i> @L("Save")</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="lstPackagePending">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-3">@L("PackageList")</h4>
+                        <div class="d-inline"><span id="total-package">0</span> Kiện</div>
+                        <div class="pl-2 d-inline"><span id="total-weight">0</span> kg</div>
+                        <table class="table table-bordered" id="table-new-package">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col"><input type="checkbox" id="check-all"></th>
+                                    <th scope="col">@L("PackageCode")</th>
+                                    <th scope="col">@L("Customer")</th>
+                                    <th scope="col">KG</th>
+                                    <th scope="col" style="width: 1%">Line</th>
+                                    <th scope="col">@L("Warehouse")</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                </tr>
+                                <!-- End repeat -->
+                            </tbody>
+                        </table>
+                        @if (PermissionChecker.IsGranted(PermissionNames.Function_PackageCreate))
+                        {
+                            <button class="btn btn-primary btn-block" id="quickCreateBag" disabled="disabled" style="cursor: pointer">@L("QuickCreateBag")</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Packages/_CloneMultiModal.cshtml", new CloneMultiPackage() { })
+
+<div class="modal fade" id="PrintStamp" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div id="labelContent" style="display: none;">
+</div>
+<div id="label-container-9710" style="display: none;">
+</div>

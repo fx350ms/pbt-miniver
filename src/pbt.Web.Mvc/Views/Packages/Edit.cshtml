@@ -1,0 +1,434 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using NPOI.SS.Formula.Functions
+@using pbt.ApplicationUtils
+@using pbt.Web.Helpers
+@using pbt.Web.Models.Packages
+@using pbt.Web.Startup
+@model UpdatePackageModel
+
+@{
+    ViewBag.Title = L("EditPackage");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/Edit.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/Packages/_CloneMultiModal.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/Edit.min.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/Packages/_CloneMultiModal.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+
+
+    <style>
+        .active {
+            background-color: #ffecc8;
+        }
+
+        .fake-package {
+            background-color: #efefef;
+        }
+
+        .select2-container {
+            margin-bottom: .5rem !important;
+            width: 100% !important;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 50% !important;
+        }
+
+        #tableWaybill tbody tr:hover {
+            background: #ffe7a0;
+        }
+
+        #tableWaybill tbody tr.selected {
+            background: #ffe7a0;
+        }
+
+        .red-placeholder::placeholder {
+            color: #ffa5a5 !important;
+            opacity: 1; /* Firefox */
+        }
+
+        .red-placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #ffa5a5;
+        }
+
+        .red-placeholder::-ms-input-placeholder { /* Microsoft Edge */
+            color: #ffa5a5;
+        }
+
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+
+        .active {
+            background-color: #ffecc8;
+        }
+
+        .ml-2 {
+            margin-left: 0px !important;
+        }
+
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("EditPackage")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model != null && Model.Dto != null)
+            {
+                <input type="hidden" id="hidden-order-id" value="@Model.Dto.OrderId" />
+
+                <div class="col-md-12" id="editPackage">
+                    <form id="form-package">
+                        <input type="hidden" name="Id" id="hidden-package-id" value="@Model.Dto.Id" />
+                        <input type="hidden" id="hidden-bag-id" value="@Model.Dto.BagId" />
+                        <input type="hidden" name="RMBRate" value="@Model.RMBRate" />
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex gap-1 mb-3">
+                                    <div>
+                                        <label>Line vận chuyển</label>
+
+                                        @{
+                                            var selectedId = Model.Dto.ShippingLineId;
+                                        }
+
+                                        <select class="form-control mr-2" style="max-width: 250px;" name="ShippingLineId" id="select-delivery-line">
+                                            @if (selectedId == null)
+                                            {
+                                                <option value="" selected>@L("SelectLine")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="">@L("SelectLine")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.InformalTrade)
+                                            {
+                                                <option value="@((int)LineShipping.InformalTrade)" selected>@L("InformalTrade")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.InformalTrade)">@L("InformalTrade")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.Ecommerce)
+                                            {
+                                                <option value="@((int)LineShipping.Ecommerce)" selected>@L("Ecommerce")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.Ecommerce)">@L("Ecommerce")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.OfficialChannel)
+                                            {
+                                                <option value="@((int)LineShipping.OfficialChannel)" selected>@L("OfficialChannel")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.OfficialChannel)">@L("OfficialChannel")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.Portable)
+                                            {
+                                                <option value="@((int)LineShipping.Portable)" selected>@L("Portable")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.Portable)">@L("Portable")</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div style="min-width: 400px">
+                                        <label>Khách hàng</label>
+                                        @{
+                                            var selectedCustomerId = Model.Dto.CustomerId;
+                                        }
+
+                                        <select class="form-control select2 ml-2" name="CustomerId" id="selectAllCustomer">
+                                            @if (selectedCustomerId == null)
+                                            {
+                                                <option value="" selected>@L("SelectCustomer")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="">@L("SelectCustomer")</option>
+                                            }
+
+                                            @foreach (var customer in Model.Customers)
+                                            {
+                                                if (customer.Id == selectedCustomerId)
+                                                {
+                                                    <option value="@customer.Id" selected>@customer.Username</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@customer.Id">@customer.Username</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="table-packages">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="col-4">THÔNG TIN HÀNG HÓA</th>
+                                            <th class="col-4">THÔNG SỐ HÀNG HÓA</th>
+                                            <th class="col-4">VẬN CHUYỂN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr type="parent">
+                                            <td>
+
+                                                <div class="form-group row">
+                                                    <div class="col-6">
+                                                        <label>Mã vận đơn *</label>
+                                                        <span class="d-block"><h4 class="text-primary">@Model.Dto.TrackingNumber</h4></span>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label>Mã kiện</label>
+                                                        <input type="text" class="form-control red-placeholder" asp-for="Dto.PackageNumber" name="PackageNumber" placeholder="@L("Mã kiện") *">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="input-group mb-2">
+
+                                                    @if (Model.Dto.BagId != null)
+                                                    {
+                                                        <div class="form-group bag-info">
+                                                            <label>Mã bao</label>
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="d-block mr-2"><h4 class="text-primary">@Model.Dto.BagNumber</h4></span>
+                                                                <button type="button" class="btn btn-danger btn-sm unbag-package" data-package-id="@Model.Dto.Id">
+                                                                    <i class="fas fa-times"></i> Bỏ khỏi bao
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group d-none select-bag-group">
+                                                            <label>Chọn bao</label>
+                                                            <div class="d-flex align-items-center" style="min-width:400px !important;">
+                                                                <select class="form-control select2 ml-2 select-new-bag" name="BagId" style="width: 100% !important; ">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                      
+                                                    }
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Trọng lượng(kg)*</label>
+                                                    <input type="text" class="form-control red-placeholder" id="Package.Weight" name="Weight" value="@Model.Dto.Weight" placeholder="Trọng lượng(kg)*">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Tên sp (ghi tiếng Trung) *</label>
+                                                    <input tabindex="3" type="text" class="form-control mb-2 mt-2 red-placeholder" asp-for="Dto.ProductNameCn" name="ProductNameCn" placeholder="@L("ProductNameCn") *">
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-6">
+                                                        <label style="width: 200px" class="red-placeholder">Số lượng: </label>
+                                                        <input tabindex="4" type="number" class="form-control red-placeholder" asp-for="Dto.Quantity" name="Quantity" placeholder="@L("Quantity") *">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="red-placeholder">Giá: </label>
+                                                        <input tabindex="5" type="number" class="form-control red-placeholder" asp-for="Dto.PriceCN" name="PriceCN" placeholder="@L("Price") *">
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <label>Trạng thái vận chuyển</label>
+                                                <select class="form-control mb-2" name="ShippingStatus" value="1"
+                                                        asp-for="@Model.Dto.ShippingStatus"
+                                                        asp-items="@EnumHelper.GetEnumSelectList<PackageDeliveryStatusEnum>()">
+                                                </select>
+                                                <label>Trạng thái kho</label>
+                                                <select class="form-control mb-2" name="WarehouseStatus"
+                                                        asp-for="@Model.Dto.WarehouseStatus"
+                                                        asp-items="@EnumHelper.GetEnumSelectList<WarehouseStatus>()">
+                                                </select>
+
+                                                <label>Loại hàng hóa</label>
+                                                <div class="d-none" id="product-group-type">
+                                                    @foreach (var item in Model.ProductGroupTypes)
+                                                    {
+                                                        var selected = @Model.Dto != null && item.Id == @Model.Dto.ProductGroupTypeId ? "checked" : "";
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label pointer-event">
+                                                                <input class="form-check-input bagType" type="radio" name="ProductGroupTypeId" value="@item.Id" @selected>
+                                                                @item.Name
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <label>Kích thước</label>
+                                                <div class="d-flex gap-1 mb-2">
+                                                    <input type="number" class="form-control" value="@Model.Dto.Length" name="Length" placeholder="Dài(cm)">
+                                                    <input type="number" class="form-control" value="@Model.Dto.Width" name="Width" placeholder="Rộng(cm)">
+                                                    <input type="number" class="form-control" value="@Model.Dto.Height" name="Height" placeholder="Cao(cm)">
+                                                </div>
+                                                <label>Tên sp (ghi tiếng Việt)</label>
+                                                <input type="text" class="form-control mb-2 mt-2" asp-for="Dto.ProductNameVi" name="ProductNameVi" placeholder="@L("ProductNameVn")">
+
+                                                <label>Ghi chú hàng hóa</label>
+
+                                                <textarea rows="2" type="text" asp-for="Dto.Description" class="form-control" name="Description" placeholder="Ghi chú hàng hóa"></textarea>
+                                            </td>
+
+                                            <td class="position-relative">
+                                                <label>Dịch vụ</label>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" asp-for="Dto.IsWoodenCrate" name="IsWoodenCrate" type="checkbox" id="packing">
+                                                    <label class="form-check-label cursor-pointer" for="packing">@L("WoodenPackaging")</label>
+                                                </div>
+
+                                                <div class="" id="wooden-crate-group">
+                                                    <div class="form-check form-check-inline">
+                                                        <label class="form-check-label pointer-event">
+                                                            @{
+                                                                var separateWoodenCrate = Model.Dto != null && Model.Dto.WoodenPackingId == null ? "checked" : "";
+                                                            }
+                                                            <input class="form-check-input woodenCrateType" type="radio" name="WoodenCrateType" value="1" @separateWoodenCrate>
+
+                                                            @L("SeparateWoodenCrate")
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <label class="form-check-label pointer-event">
+                                                            @{
+                                                                var sharedWoodenCrate = Model.Dto != null && Model.Dto.WoodenPackingId == null ? "" : "checked";
+                                                            }
+                                                            <input class="form-check-input woodenCrateType" type="radio" name="WoodenCrateType" value="2" @sharedWoodenCrate>
+                                                            @L("SharedWoodenCrate")
+                                                        </label>
+                                                    </div>
+                                                    @{
+                                                        var showSharedCrate = Model.Dto != null && Model.Dto.WoodenPackingId == null ? "d-none" : "";
+                                                    }
+                                                    <div id="sharedCrateSelectContainer" class="ml-2 @showSharedCrate">
+                                                        <select class="form-control select2 ml-2" id="sharedCrateSelect" name="SharedCrateSelectId">
+                                                            <option value=""></option>
+                                                            @if (Model.WoodenPackingDtos != null && Model.WoodenPackingDtos.Count > 0)
+                                                            {
+                                                                foreach (var item in Model.WoodenPackingDtos)
+                                                                {
+                                                                    if (@item.id == Model.Dto.WoodenPackingId.ToString())
+                                                                    {
+                                                                        <option selected="selected" value="@item.id">@item.text</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.id">@item.text</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" asp-for="Dto.IsShockproof" name="IsShockproof" type="checkbox"
+                                                           id="shockproof">
+                                                    <label class="form-check-label cursor-pointer" for="shockproof">  @L("ShockproofPackaging") </label>
+                                                </div>
+
+                                                <div class="form-check">
+
+                                                    @if (Model.Dto.ShippingStatus == (int)ShippingStatus.New)
+                                                    {
+                                                        <input class="form-check-input" name="IsDomesticShipping" type="checkbox" id="local-ship">
+                                                        <label class="form-check-label cursor-pointer" for="local-ship">
+                                                            @L("DomesticTransportation")
+                                                        </label>
+
+                                                        <div class="input-group mb-3 d-none input-price">
+                                                            <input type="number" class="form-control" id="DomesticShippingFee" name="DomesticShippingFee" value="0" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text price-vnd"></span>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (Model.Dto.IsDomesticShipping.HasValue && Model.Dto.IsDomesticShipping.Value)
+                                                        {
+                                                            <label class="form-check-label cursor-pointer" for="packing">- Ship nội địa Trung Quốc </label>
+                                                            <span class="d-block">@(Model.Dto.DomesticShippingFeeRMB ?? 0) RMB</span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex gap-1 mt-3">
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                                    @if (Model.Dto.OrderId != null && Model.Dto.OrderId > 0)
+                                    {
+                                        <div class="d-flex justify-content-between gap-3 mt-4">
+                                            <button type="button" class="btn btn-primary save-package" data-redirect="detail"> <i class="fas fa-save"></i> @L("Save") </button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex justify-content-end gap-3 mt-4">
+                                            <button type="button" class="btn btn-primary save-package" data-redirect="detail"><i class="fas fa-save"></i> @L("Save") </button>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>

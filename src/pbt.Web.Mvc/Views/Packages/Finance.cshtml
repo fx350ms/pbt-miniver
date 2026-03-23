@@ -1,0 +1,367 @@
+@using pbt.ApplicationUtils
+@using pbt.Web.Startup
+@model pbt.Web.Models.Packages.PackageFinanceModel
+@{
+    ViewBag.Title = L("PackageFinance");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/Finance.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/Finance.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<style>
+    .log-box {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .log-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .log-item img {
+            margin-left: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .log-item .log-content {
+            flex-grow: 1;
+        }
+
+        .log-item .log-time {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .log-item .log-text strong {
+            font-weight: bold;
+        }
+
+    .col-sm-3 {
+        margin-top: 10px;
+    }
+
+    .finance-package-detail-item .col-sm-4, .col-3, .col-4, .col-5 {
+        margin-bottom: 10px;
+    }
+
+    .mask-number, .mask-number-2, .mask-number-3 {
+        text-align: right !important;
+    }
+</style>
+<section class="content-header">
+    <input type="hidden" name="bagId" value="@Model.Dto.Id">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("PackageFinance") <strong class="text-danger"> #@Model.Dto.PackageNumber</strong></h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a class="btn btn-default">Trở lại danh sách</a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <div class="card card-info">
+
+                    <div class="card-header">
+                        <h3 class="card-title">@L("PackageDetail")</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class=" finance-package-detail-item" id="divPackageDetailCollapse">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <span>Mã kiện</span>
+                                        <span class="d-block text-primary">
+                                            <strong>@Model.Dto.PackageNumber</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Khách hàng</span>
+                                        <span class="d-block text-primary">
+                                            <strong>@Model.Customer.Username</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Mã vận đơn</span>
+                                        <span class="d-block text-primary">
+                                            <strong>
+                                                <a href="@Url.Action("Detail", "Orders", new { id = Model.Dto.OrderId })"> @Model.Dto.TrackingNumber</a>
+                                            </strong>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span>Mã bao</span>
+                                        <span class="d-block text-primary">
+                                            @if (Model.Dto.BagId != null)
+                                            {
+                                                <strong>@Model.Dto.BagNumber</strong>
+                                            }
+                                            else
+                                            {
+                                                <i>Đang cập nhật</i>
+                                            }
+                                        </span>
+
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span>Line vận chuyển</span>
+                                        <span class="d-block text-primary"><strong>@Model.Dto.ShippingLineString</strong></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Trạng thái</span>
+                                        <span class="d-block text-primary"><strong>@Model.Dto.ShippingStatusName</strong></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Kho nguồn</span>
+                                        <span class="d-block text-primary"><strong>@Model.CreateWarehouse.Name</strong></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Kho đích</span>
+                                        <span class="d-block text-primary"><strong>@Model.ToWarehouse.Name</strong></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span>Trạng thái kho</span>
+                                        <span class="d-block text-primary"><strong>@Model.Dto.WarehouseStatusName</strong></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span>Thời gian tạo </span>
+                                        <span class="d-block text-primary"><strong>@Model.Dto.CreationTimeFormat</strong></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Thời gian khớp</span>
+                                        <span class="d-block text-primary"><strong>@Model.Dto.MatchTimeFormat</strong></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Ngày xuất kho TQ</span>
+                                        <span class="d-block text-primary">
+                                            @if (Model.Dto.ExportDate.HasValue)
+                                            {
+                                                <strong> @Model.Dto.ExportDate.Value.ToString("dd/MM/yyyy HH:mm")</strong>
+                                            }
+                                            else
+                                            {
+                                                <i>Đang cập nhật</i>
+                                            }
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Ngày xuất kho TQ</span>
+                                        <span class="d-block text-primary">
+                                            @if (Model.Dto.ImportDate.HasValue)
+                                            {
+                                                <strong> @Model.Dto.ImportDate.Value.ToString("dd/MM/yyyy HH:mm")</strong>
+                                            }
+                                            else
+                                            {
+                                                <i>Đang cập nhật</i>
+                                            }
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Đối tác vận chuyển</span>
+
+                                        <span class="d-block text-primary">
+                                            @if (Model.ShippingPartner != null)
+                                            {
+                                                <strong>@Model.ShippingPartner.Name</strong>
+                                            }
+                                            else
+                                            {
+                                                <i>Đang cập nhật</i>
+                                            }
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Loại hàng</span>
+
+                                        <span class="d-block text-primary">
+                                            @if (Model.ProductGroupType != null)
+                                            {
+                                                <strong>@Model.ProductGroupType.Name</strong>
+                                            }
+                                            else
+                                            {
+                                                <i>Đang cập nhật</i>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <span>Cân nặng (kg)</span>
+                                        <span class="d-block text-primary font-weight-bold">@Model.Dto.Weight  </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Kích thước (DxRxC)</span>
+                                        <span class="d-block text-primary font-weight-bold"> @(Model.Dto.Length ?? 0) x @(Model.Dto.Width ?? 0)  x @(Model.Dto.Height ?? 0)</span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>Thể tích (m3)</span>
+                                        <span class="d-block text-primary"><strong>@((Model.Dto.Length ?? 0) * (Model.Dto.Width ?? 0) * (Model.Dto.Height ?? 0))</strong> </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="card card-primary">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Tài chính kiện</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="form-edit-package-finance" onsubmit="return false;">
+
+                            <input type="hidden" name="Id" value="@Model.Dto.Id" />
+                            <input type="hidden" name="CustomerId" value="@Model.Dto.CustomerId" />
+                            <input type="hidden" name="WarehouseCreateId" value="@Model.Dto.WarehouseCreateId" />
+                            <input type="hidden" name="WarehouseDestinationId" value="@Model.Dto.WarehouseDestinationId" />
+                            <input type="hidden" name="ShippingLineId" value="@Model.Dto.ShippingLineId" />
+                            <input type="hidden" name="ProductGroupTypeId" value="@Model.Dto.ProductGroupTypeId" />
+
+                            <div class="form-group row  finance-package-detail-item">
+                                @* phí vận chuyển nội địa *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (A) </span> Tỉ giá RMB</label>
+
+                                <div class="col-9">
+                                    <input type="text" class="form-control mask-number" name="RMB" placeholder="@L("RMB")" value="@(Model.RMBRate)">
+                                </div>
+
+                                <label class="col-3 col-form-label"><span class="text-danger"> (B) </span> Ship nội địa</label>
+                                <div class="col-2">
+                                    <input type="checkbox" class="" id="cbDomesticShipping" name="IsDomesticShipping" target="DomesticShippingFee" @(Model.Dto.IsDomesticShipping ? "checked" : "") />
+                                    <label for="cbDomesticShipping"> Ship nội địa </label>
+                                </div>
+                                <div class="col-3">
+                                    <input type="text" class="form-control mask-number-2" data-target="DomesticShippingFee" name="DomesticShippingFeeRMB" placeholder="@L("DomesticShippingFeeRMB")" value="@Model.Dto.DomesticShippingFeeRMBStr" @(Model.Dto.IsDomesticShipping ? "" : "readonly") />
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control mask-number" name="DomesticShippingFee" data-target="DomesticShippingFee" placeholder="@L("DomesticShippingFee")" value="@Model.Dto.DomesticShippingFeeStr" @(Model.Dto.IsDomesticShipping ? "" : "readonly") />
+                                </div>
+
+                                @* Giá trị vật lý *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (C) </span>@L("Weight")</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control mask-number-2" name="Weight" placeholder="@L("Weight")" value="@Model.Dto.WeightStr">
+                                </div>
+
+                                @* Giá trị vật lý *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (D) </span>Kích thước DRC</label>
+                                <div class="col-3">
+                                    <input type="text" class="form-control mask-number" name="Width" placeholder="@L("Width")" value="@Model.Dto.WidthStr">
+                                </div>
+
+                                <div class="col-3">
+                                    <input type="text" class="form-control mask-number" name="Length" placeholder="@L("Length")" value="@Model.Dto.LengthStr">
+                                </div>
+
+                                <div class="col-3">
+                                    <input type="text" class="form-control mask-number" name="Height" placeholder="@L("Height")" value="@Model.Dto.HeightStr">
+                                </div>
+                                <label class="col-3 col-form-label"><span class="text-danger"> (E) </span>@L("Volume") = RxRxC </label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control mask-number-3" name="Volume" placeholder="@L("Volume")" readonly value="@Model.Dto.VolumeStr">
+                                </div>
+                                @* Phí chống sốc *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (F) </span>@L("ShockproofFee")</label>
+                                <div class="col-2">
+                                    <input type="checkbox" class="" id="cbShockproofFee" name="IsShockproof" target="ShockproofFee" @(Model.Dto.IsShockproof ? "checked" : "") />
+                                    <label for="cbShockproofFee"> Chống sốc </label>
+                                </div>
+                                <div class="col-7">
+                                    <input type="text" class="form-control mask-number" name="ShockproofFee" data-target="ShockproofFee" placeholder="@L("ShockproofFee")" value="@Model.Dto.ShockproofFeeStr" @(Model.Dto.IsShockproof ? "" : "readonly")>
+                                </div>
+
+                                @* Phí đóng gỗ *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (G) </span>@L("WoodenPackagingFee")</label>
+                                <div class="col-2">
+                                    <input type="checkbox" class="" id="cbIsWoodenCrate" name="IsWoodenCrate" target="WoodenPackagingFee" @(Model.Dto.IsWoodenCrate ? "checked" : "") />
+                                    <label for="cbIsWoodenCrate"> Đóng gỗ </label>
+                                </div>
+
+                                <div class="col-7">
+                                    <input type="text" class="form-control mask-number" name="WoodenPackagingFee" data-target="WoodenPackagingFee" placeholder="@L("WoodenPackagingFee")" value="@Model.Dto.WoodenPackagingFeeStr" @(Model.Dto.IsWoodenCrate ? "" : "readonly")>
+                                </div>
+                                @* Giá trị hàng hóa *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (H) </span>Giá trị hàng hóa</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control mask-number" name="Price" placeholder="@L("ProductPrice")" value="@Model.Dto.PriceStr">
+                                </div>
+
+                                @* Bảo hiểm *@
+                                <label class="col-3 col-form-label"><span class="text-danger"> (I) </span>Bảo hiểm(%)</label>
+                                <div class="col-2">
+                                    <input type="checkbox" class="" id="cbInsurance" name="IsInsured" target="InsuranceFee" @(Model.Dto.IsInsured ? "checked" : "") />
+                                    <label for="cbInsurance"> Bảo hiểm </label>
+                                </div>
+
+                                <div class="col-3">
+                                    <input type="text" class="form-control mask-number" data-target="InsuranceFee" name="InsuranceValue" placeholder="@L("InsuranceValue")" value="@Model.Dto.InsuranceValueStr" @(Model.Dto.IsInsured ? "" : "readonly") />
+                                </div>
+
+                                <div class="col-4">
+                                    <input type="text" class="form-control mask-number" data-target="InsuranceFee" name="InsuranceFee" placeholder="@L("InsuranceFee")" value="@Model.Dto.InsuranceFeeStr" @(Model.Dto.IsInsured ? "" : "readonly")>
+                                </div>
+                                @* Tổng phí địch vụ *@
+                                <label class="col-4 col-form-label"><span class="text-danger"> (J) = B + F + G + I </span>Tổng tiền dịch vụ</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control mask-number" name="TotalServiceFee" readonly placeholder="@L("TotalServiceFee")" value="@Model.Dto.TotalServiceFeeStr">
+                                </div>
+
+                                <label class="col-3 col-form-label"><span class="text-danger"> (K) </span>Phí vận chuyển</label>
+                                <div class="col-3">
+                                    <button class="btn btn-primary btn-calc-total-price"> <i class="fas fa-cogs"></i> Tự động tính phí</button>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control mask-number" name="TotalFee" placeholder="@L("TotalFee")" value="@Model.Dto.TotalFeeStr">
+                                </div>
+
+                                <label class="col-3 col-form-label"><span class="text-danger"> (L) = J + K </span>Tổng chi phí</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control mask-number" name="TotalPrice" placeholder="@L("TotalPrice")" value="@Model.Dto.TotalPriceStr">
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button class="btn btn-primary save-button">  <i class="fas fa-save"></i>  @L("Save")</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+

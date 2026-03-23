@@ -1,0 +1,376 @@
+@using pbt.ApplicationUtils
+@using pbt.Web.Startup
+@using pbt.Authorization
+@model pbt.Web.Models.Packages.PackageDetailModel
+@{
+    ViewBag.Title = L("PackageDetail");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/Detail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/Detail.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<style>
+    .log-box {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .log-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .log-item img {
+            margin-left: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .log-item .log-content {
+            flex-grow: 1;
+        }
+
+        .log-item .log-time {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .log-item .log-text strong {
+            font-weight: bold;
+        }
+
+    .col-sm-3 {
+        margin-top: 10px;
+    }
+
+</style>
+
+<section class="content-header">
+    <input type="hidden" name="packageId" value="@Model.Dto.Id">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("PackageDetail") #@Model.Dto.PackageNumber</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-default">Hủy bỏ</button>
+
+                <button type="button" class="btn btn-primary" id="btnPrintLabel9710" data-type="real">In tem TMDT</button>
+                <button type="button" class="btn btn-primary btnPrintLabel" data-type="real">In tem</button>
+
+                @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_SaleAdmin) || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
+                {
+                    <script>
+                        let isAdminOrSaleAdmin = true;
+                    </script>
+
+                }
+
+                @if (Model.Dto.FakePackages.HasValue && Model.Dto.FakePackages > 0)
+                {
+                    <button type="button" class="btn btn-primary btnPrintLabel" data-type="fake">In tem Fake</button>
+                }
+                @if (Model.Dto.BagId == null)
+                {
+                    <a href="/packages/edit/@Model.Dto.Id" type="button" class="btn btn-primary" data-type="real">Sửa kiện</a>
+                }
+                @if (Model.Dto.DeliveryNoteId.HasValue && Model.Dto.DeliveryNoteId > 0)
+                {
+                    <button class="btn btn-remote-delivery-note btn-danger" data-id="@Model.Dto.Id" data-code="@Model.Dto.DeliveryNoteCode" data-delivery-note-id="@Model.Dto.DeliveryNoteId" data-type="real"> Xóa khỏi phiếu xuất</button>
+                }
+
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-9">
+                <div class="card">
+                    <div class="card-body" style="border-top: 4px solid #2b4df3">
+                        <h4>Thông tin kiện hàng</h4>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <span>Mã kiện dán sẵn</span>
+                                <span class="d-block">
+                                    <strong>@Model.Dto.PackageNumber</strong>
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Mã vận đơn</span>
+                                <span class="d-block">
+                                    <strong>@Model.Dto.TrackingNumber</strong>
+                                </span>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span>Mã bao</span>
+                                <span class="d-block">
+                                    @if (Model.Dto.BagId.HasValue)
+                                    {
+                                        <strong>
+                                            <a href="@Url.Action("Detail", "Bags", new { id = Model.Dto.BagId })"> @Model.Dto.BagNumber</a>
+                                        </strong>
+                                    }
+                                    else
+                                    {
+                                        <i>Đang cập nhật</i>
+                                    }
+
+                                </span>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span>Line vận chuyển</span>
+                                <span class="d-block"><strong>@Model.Dto.ShippingLineString</strong></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Trạng thái kho</span>
+                                <span class="d-block"><strong>@Model.Dto.WarehouseStatusName</strong></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Trạng thái</span>
+                                <span class="d-block"><strong>@Model.Dto.ShippingStatusName</strong></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Kho tạo</span>
+                                <span class="d-block"><strong>@(Model.Dto.CnWarehouse != null ? Model.Dto.CnWarehouse.Name : "")</strong></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Kho đích</span>
+                                <span class="d-block"><strong>@(Model.Dto.VnWarehouse != null ? Model.Dto.VnWarehouse.Name : "")</strong></span>
+                            </div>
+
+                             <div class="col-sm-3">
+                                <span>Kho hiện tại</span>
+                                <span class="d-block"><strong>@(Model.Dto.CurrentWarehouse != null ? Model.Dto.CurrentWarehouse.Name : "")</strong></span>
+                            </div> 
+                            <div class="col-sm-3">
+                                <span>Thời gian tạo </span>
+                                <span class="d-block"><strong>@Model.Dto.CreationTimeFormat</strong></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Thời gian khớp</span>
+                                <span class="d-block"><strong>@Model.Dto.MatchTimeFormat</strong></span>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span>Đối tác vận chuyển</span>
+
+                                <span class="d-block">
+                                    @if (Model.Dto.Bag != null && Model.Dto.Bag?.ShippingPartner != null)
+                                    {
+                                        <strong>@Model.Dto.Bag?.ShippingPartner?.Code</strong>
+                                    }
+                                    else
+                                    {
+                                        <i>Đang cập nhật</i>
+                                    }
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Loại hàng</span>
+
+                                <span class="d-block">
+                                    @if (Model.Dto.ProductGroupType != null)
+                                    {
+                                        <strong>@Model.Dto.ProductGroupType.Name</strong>
+                                    }
+                                    else
+                                    {
+                                        <i>Đang cập nhật</i>
+                                    }
+                                </span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>Id Phiếu xuất</span>
+
+                                <span class="d-block">
+                                    @if (Model.Dto.DeliveryNoteId.HasValue && Model.Dto.DeliveryNoteId > 0)
+                                    {
+                                        <strong>@Model.Dto.DeliveryNoteCode</strong>
+
+                                    }
+                                    else
+                                    {
+                                        <i>Đang cập nhật</i>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="border-top: 4px solid #009fa3">
+                        <h4>Thông số kiện hàng</h4>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span>Cân nặng (kg)</span>
+                                <span class="d-block font-weight-bold">@Model.Dto.Weight  </span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Thể tích (m3)</span>
+                                <span class="d-block"><strong>@Model.Dto.Dimention</strong> </span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Cân nặng quy đổi</span>
+                                <span class="d-block"><strong>@Model.Dto.Height</strong> (kg)</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Cân nặng đóng gói</span>
+                                <span class="d-block"><strong>@Model.Dto.Weight</strong> (kg)</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Kích thước đóng gói</span>
+                                <span class="d-block"><strong>@Model.Dto.Volume</strong> (m2)</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Kích thước DxRXC (cm)</span>
+                                <span class="d-block"><strong>@Model.Dto.Volume</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="border-top: 4px solid #009fa3">
+                        <h4>Thông tin khách hàng</h4>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span>Người nhận</span>
+                                <span class="d-block"><strong>@Model.Dto.Order?.CustomerName</strong></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Số điện thoại</span>
+                                <span class="d-block"><strong>@Model.Dto.CustomerFake?.PhoneNumber</strong></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Địa chỉ</span>
+                                <span class="d-block"><strong>@Model.Dto.CustomerFake?.Address</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="border-top: 4px solid #a30049">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <span>Ghi chú</span>
+                                <span class="d-block"><strong>@Model.Dto.Note</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-header">
+                        <label>Log hành động</label>
+                    </div>
+                    <div class="card-body">
+                        <div id="package-logs" class="list-group overflow-auto" style="max-height: 100vh;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+            </div>
+        </div>
+    </div>
+</section>
+<div id="labelContent" style="display: none;">
+</div>
+<div id="label-container-9710" style="display: none;">
+    <div class="label-container">
+        <!-- 🔹 Header -->
+        <div class="section flex">
+            <div style="width: 40%">
+                <span style="display: block;" class="bold">Từ:</span> <span id="sender9710"></span>
+            </div>
+            <div style="width: 60%">
+                <span class="bold">Đến:</span> <span id="to9710"></span><br>
+                SĐT: <span id="sdt9710"></span><br>
+                Địa chỉ: <span id="add9710"></span>
+            </div>
+        </div>
+
+        <!-- 🔹 Barcode -->
+        <div class="section">
+            <div class="barcode">
+                <div style="width: 25%; display: inline-block">
+                    <span style="display: block;"><img style="height: 36px" src="/img/logo_stamp_kikitu.png" /></span>
+                </div>
+                <div style="width: 72%; height: 70px; display: inline-block">
+                    <div style="height: 70px" id="barcodeImage9710" alt="Barcode"></div>
+                </div>
+                <div class="bold" id="packageCode9710"></div>
+                <div class="bold" id="waybillCode9710"></div>
+                <div class="bold waybillNumber9710" id="waybillNumber9710"></div>
+            </div>
+        </div>
+
+        <!-- 🔹 Order Info -->
+        <div class="section flex">
+            <div><span class="bold">Order No.</span> <span id="orderCode9710"></span></div>
+            <div><span class="bold" id="warehouseVn"></span></div>
+            <div>
+                <div><span class="bold">HN</span></div>
+                <div>CN9710</div>
+            </div>
+        </div>
+
+        <!-- 🔹 Product Info -->
+        <div class="section flex">
+            <div>
+                <div class="bold">Nội dung hàng:</div>
+                (Tổng số lượng <span id="quantity9710"></span> sản phẩm)<br>
+                <span id="packageName9710"></span>
+            </div>
+            <div>
+                <div class="bold">User: <span id="toCustomerName9710"></span></div><br>
+                Ngày đặt hàng: <span id="orderCreate9710"></span>
+            </div>
+        </div>
+
+        <!-- 🔹 Payment & Weight -->
+        <div class="section flex">
+            <div class="amount">Tiền thu người nhận</div>
+            <div class="amount"><span id="priceAmount9710"></span></div>
+        </div>
+
+        <div class="section flex">
+            <div>Khối lượng: <span id="weight9710"></span>(kg)</div>
+            <div style="height: 70px" class="bold">Chữ ký người nhận</div>
+        </div>
+
+        <!-- 🔹 Footer -->
+        <div class="footer">
+            Chỉ dẫn giao hàng: Không đồng kiểm, chuyển hoàn sau 3 lần phát. Lưu 5 ngày.
+        </div>
+    </div>
+</div>
+
+
+

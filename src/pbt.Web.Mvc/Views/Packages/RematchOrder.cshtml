@@ -1,0 +1,98 @@
+﻿@using pbt.Web.Startup
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.Orders
+@using pbt.CustomerAddresss.Dto
+@using pbt.Waybills.Dto
+
+@model EditOrderModel
+
+@{
+    ViewBag.Title = L("EditCustomerOrder");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+    <script>
+        var waybillCode = '@Model.Dto.WaybillNumber';
+        var customerAddressId = '@Model.Dto.AddressId';
+        var UseInsurance = '@Model.Dto.UseInsurance';
+    </script>
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/Edit.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/Edit.min.js" asp-append-version="true"></script>
+    </environment>
+}
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("EditOrder"): <strong class="text-primary">@Model.Dto.OrderNumber </strong></h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        @if (Model != null)
+                        {
+                            <form id="form-create-my-order" role="form" class="form-horizontal">
+                                <input type="hidden" name="Id" value="@Model.Dto.Id" />
+
+                                <div class="modal-body">
+                                    <div class="form-group row">
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>Mã vận đơn</label>
+                                                    <input class="form-control" type="text" readonly="readonly" asp-for="Dto.WaybillNumber" value="@Model.Dto.WaybillNumber" />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="">Khách hàng</label>
+                                                        <select class="select2 select2-hidden-accessible " name="CustomerId" asp-for="Dto.CustomerId" style="width: 100%;">
+                                                            <option value="@Model.Dto.CustomerId"> @Model.CustomerName </option>
+                                                        </select>
+                                                    </div>
+                                                    <span asp-validation-for="Dto.CustomerId" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-end">
+                                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                                    <button type="submit" class="btn btn-danger cancel-button">@L("CancelOrder")</button>
+                                    <button type="submit" class="btn btn-primary save-button">@L("UpdateOrder")</button>
+                                </div>
+                            </form>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

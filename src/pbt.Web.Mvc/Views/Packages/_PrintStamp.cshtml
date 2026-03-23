@@ -1,0 +1,28 @@
+﻿@using pbt.Web.Models.Packages
+@using pbt.Web.Models.Common.Modals
+
+@model CloneMultiPackage
+
+@{
+    Layout = null;
+}
+<div class="modal fade" id="CloneMultiModal" tabindex="-1" role="dialog" aria-labelledby="CloneMultiModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ClonePackage")))
+            <form name="CategoryEditForm" role="form" class="form-horizontal">
+                <input type="hidden" name="Id" value="@Model.PackageCode" />
+                <div class="modal-body">
+                    <div class="form-group row required" data-country="2">
+                        <label class="col-md-3 col-form-label">@L("NumberPackage")</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" name="NumberPackage" id="NumberStamp">
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+

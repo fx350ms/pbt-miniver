@@ -1,0 +1,385 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using NPOI.SS.Formula.Functions
+@using pbt.ApplicationUtils
+@using pbt.Web.Helpers
+@using pbt.Web.Models.Packages
+@using pbt.Web.Startup
+@model EditPackageByAdminModel
+
+@{
+    ViewBag.Title = L("EditPackage");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Packages/EditByAdmin.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Packages/EditByAdmin.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+
+
+    <style>
+        .active {
+            background-color: #ffecc8;
+        }
+
+        .fake-package {
+            background-color: #efefef;
+        }
+
+        .select2-container {
+            margin-bottom: .5rem !important;
+            width: 100% !important;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 50% !important;
+        }
+
+        #tableWaybill tbody tr:hover {
+            background: #ffe7a0;
+        }
+
+        #tableWaybill tbody tr.selected {
+            background: #ffe7a0;
+        }
+
+        .red-placeholder::placeholder {
+            color: #ffa5a5 !important;
+            opacity: 1; /* Firefox */
+        }
+
+        .red-placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #ffa5a5;
+        }
+
+        .red-placeholder::-ms-input-placeholder { /* Microsoft Edge */
+            color: #ffa5a5;
+        }
+
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+
+        .active {
+            background-color: #ffecc8;
+        }
+
+        .ml-2 {
+            margin-left: 0px !important;
+        }
+
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("EditPackage")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model != null && Model.Dto != null)
+            {
+                
+                <div class="col-md-12" id="editPackage">
+                    <form id="form-package">
+                        <input type="hidden" name="Id" id="hidden-package-id" value="@Model.Dto.Id" />
+                        
+                        <input type="hidden" name="RMBRate" value="@Model.RMBRate" />
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex gap-1 mb-3">
+                                    <div>
+                                        <label>Line vận chuyển</label>
+
+                                        @{
+                                            var selectedId = Model.Dto.ShippingLineId;
+                                        }
+
+                                        <select class="form-control mr-2" style="max-width: 250px;" name="ShippingLineId" id="select-delivery-line">
+                                            @if (selectedId == null)
+                                            {
+                                                <option value="" selected>@L("SelectLine")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="">@L("SelectLine")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.InformalTrade)
+                                            {
+                                                <option value="@((int)LineShipping.InformalTrade)" selected>@L("InformalTrade")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.InformalTrade)">@L("InformalTrade")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.Ecommerce)
+                                            {
+                                                <option value="@((int)LineShipping.Ecommerce)" selected>@L("Ecommerce")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.Ecommerce)">@L("Ecommerce")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.OfficialChannel)
+                                            {
+                                                <option value="@((int)LineShipping.OfficialChannel)" selected>@L("OfficialChannel")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.OfficialChannel)">@L("OfficialChannel")</option>
+                                            }
+
+                                            @if (selectedId == (int)LineShipping.Portable)
+                                            {
+                                                <option value="@((int)LineShipping.Portable)" selected>@L("Portable")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@((int)LineShipping.Portable)">@L("Portable")</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div style="min-width: 400px">
+                                        <label>Khách hàng</label>
+                                        @{
+                                            var selectedCustomerId = Model.Dto.CustomerId;
+                                        }
+
+                                        <select class="form-control select2 ml-2" name="CustomerId" id="selectAllCustomer">
+                                            @if (selectedCustomerId == null)
+                                            {
+                                                <option value="" selected>@L("SelectCustomer")</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="">@L("SelectCustomer")</option>
+                                            }
+
+                                            @foreach (var customer in Model.Customers)
+                                            {
+                                                if (customer.Id == selectedCustomerId)
+                                                {
+                                                    <option value="@customer.Id" selected>@customer.Username</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@customer.Id">@customer.Username</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="table-packages">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="col-3">THÔNG TIN HÀNG HÓA</th>
+                                            <th class="col-3">THÔNG SỐ HÀNG HÓA</th>
+                                            <th class="col-3">VẬN CHUYỂN</th>
+                                            <th class="col-3">TimeLine</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr type="parent">
+                                            <td>
+
+                                                <div class="form-group row">
+                                                    <label>Mã vận đơn</label>
+                                                    <input type="text" class="form-control red-placeholder" placeholder="@L("Mã kiện") *" value="@Model.Dto.TrackingNumber" tabindex="1" disabled>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label>Mã kiện</label>
+                                                    <input type="text" class="form-control red-placeholder" asp-for="Dto.PackageNumber" name="PackageNumber" placeholder="@L("Mã kiện") *" tabindex="2">
+                                                </div>
+                                                 
+                                                <label>Tên sp (ghi tiếng Việt)</label>
+                                                <input type="text" class="form-control mb-2 mt-2" asp-for="Dto.ProductNameVi" name="ProductNameVi" placeholder="@L("ProductNameVn")" tabindex="3">
+
+
+                                                <div class="form-group">
+                                                    <label>Tên sp (ghi tiếng Trung) *</label>
+                                                    <input   type="text" class="form-control mb-2 mt-2 red-placeholder" asp-for="Dto.ProductNameCn" name="ProductNameCn" placeholder="@L("ProductNameCn") *" tabindex="4">
+                                                </div>
+
+
+                                            </td>
+                                            <td>
+
+                                                <div class="form-group">
+                                                    <label>Trọng lượng(kg)*</label>
+                                                    <input class="form-control red-placeholder mask-number" decimal-places="2" id="Package.Weight" name="Weight" value="@Model.Dto.Weight" placeholder="Trọng lượng(kg)*" tabindex="5">
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-6">
+                                                        <label style="width: 200px" class="red-placeholder">Số lượng: </label>
+                                                        <input tabindex="6"  class="form-control red-placeholder mask-number"  value="@(Model.Dto.Quantity ?? 1)" name="Quantity" placeholder="@L("Quantity") *">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="red-placeholder">Giá: </label>
+                                                        <input tabindex="7" class="form-control red-placeholder mask-number" value="@(Model.Dto.PriceCN ?? 1)" name="PriceCN" placeholder="@L("Price") *">
+                                                    </div>
+
+                                                </div>
+
+                                                <label>Kích thước</label>
+                                                <div class="d-flex gap-1 mb-2">
+                                                    <input tabindex="8" class="form-control mask-number" value="@Model.Dto.Length" name="Length" placeholder="Dài(cm)">
+                                                    <input tabindex="9" class="form-control mask-number" value="@Model.Dto.Width" name="Width" placeholder="Rộng(cm)">
+                                                    <input tabindex="10" class="form-control mask-number" value="@Model.Dto.Height" name="Height" placeholder="Cao(cm)">
+                                                </div>
+                                                @{
+                                                    var hiddenClass = "";
+                                                    if(Model.Dto.ShippingLineId == (int) LineShipping.Ecommerce)
+                                                    {
+                                                        hiddenClass = "d-none";
+                                                    }
+                                                    else
+                                                    {
+                                                        hiddenClass = "";
+                                                    }
+                                                }
+                                                <label id="lb-product-group-type" class="@hiddenClass">Loại hàng hóa</label>
+                                                <div id="product-group-type" class="@hiddenClass">
+                                                    
+                                                    @foreach (var item in Model.ProductGroupTypes)
+                                                    {
+                                                        var selected = @Model.Dto != null && item.Id == @Model.Dto.ProductGroupTypeId ? "checked" : "";
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label pointer-event">
+                                                                <input tabindex="11" class="form-check-input bagType" type="radio" name="ProductGroupTypeId" value="@item.Id" @selected>
+                                                                @item.Name
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                            </td>
+                                            <td class="position-relative">
+                                                <label>Dịch vụ</label>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" asp-for="Dto.IsWoodenCrate" name="IsWoodenCrate" type="checkbox" id="packing">
+                                                    <label class="form-check-label cursor-pointer" for="packing">@L("WoodenPackaging")</label>
+                                                </div>
+
+                                           
+                                                <div class="form-check">
+                                                    <input class="form-check-input" asp-for="Dto.IsShockproof" name="IsShockproof" type="checkbox"
+                                                           id="shockproof">
+                                                    <label class="form-check-label cursor-pointer" for="shockproof">  @L("ShockproofPackaging") </label>
+                                                </div>
+
+                                                <div class="form-check">
+
+                                                    <input class="form-check-input" name="IsDomesticShipping" type="checkbox" id="local-ship">
+                                                    <label class="form-check-label cursor-pointer" for="local-ship">
+                                                        @L("DomesticTransportation")
+                                                    </label>
+
+                                                    <div class="input-group mb-3 d-none input-price">
+                                                        <input  class="form-control mask-number" decimal-places="2" id="DomesticShippingFee" name="DomesticShippingFee" value="0" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text price-vnd"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <label>Ghi chú hàng hóa</label>
+                                                <textarea rows="2" type="text" asp-for="Dto.Note" class="form-control" name="Description" placeholder="Ghi chú hàng hóa"></textarea>
+                                            </td>
+                                            <td class="position-relative">
+                                                <label>Trạng thái vận chuyển</label>
+                                                <select class="form-control mb-2" name="ShippingStatus" value="1"
+                                                        asp-for="@Model.Dto.ShippingStatus"
+                                                        asp-items="@EnumHelper.GetEnumSelectList<PackageDeliveryStatusEnum>()">
+                                                </select>
+
+                                                <label>Trạng thái kho</label>
+                                                <select class="form-control mb-2" name="WarehouseStatus"
+                                                        asp-for="@Model.Dto.WarehouseStatus"
+                                                        asp-items="@EnumHelper.GetEnumSelectList<WarehouseStatus>()">
+                                                </select>
+
+                                                <label>Ngày xuất kho TQ</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control date-select" name="ExportDate" value="@(Model.Dto.ExportDateStr)" />
+                                                     <input type="hidden"  />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-outline-danger btn-clear-value" target="ExportDate"  style="border: none;">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <label>Ngày nhập kho VN</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control date-select" name="ImportDate"  value="@(Model.Dto.ImportDateStr)">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-outline-danger btn-clear-value" target="ImportDate"  style="border: none;">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <label>Ngày Xuất kho VN</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control date-select" name="DeliveryTime" value="@(Model.Dto.DeliveryTimeStr)">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-outline-danger btn-clear-value" target="DeliveryTime" style="border: none;">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex gap-1 mt-3">
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                                    <div class="d-flex justify-content-between gap-3 mt-4">
+                                        <button type="button" class="btn btn-primary save-package" data-redirect="@Url.Action("Index", "Packages")"> <i class="fas fa-save"></i> @L("Save") </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</section>

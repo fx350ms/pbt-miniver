@@ -1,0 +1,80 @@
+﻿@using pbt.Web.Startup
+
+@{
+ViewBag.Title = L("Pages_Packages_Pending");
+ViewBag.CurrentPageName = PageNames.Packages;
+}
+@section scripts
+{
+<environment names="Development">
+    <script src="~/view-resources/Views/Packages/Pending.js" asp-append-version="true"></script>
+</environment>
+
+<environment names="Staging,Production">
+    <script src="~/view-resources/Views/Packages/Pending.min.js" asp-append-version="true"></script>
+</environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 mb-2">
+                <h1>@L("Packages_Pending")</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs mb-3" id="nav-bar-status">
+                    <li class="nav-item">
+                        <input type="hidden" checked name="process" value="wait"/>
+                        <a class="nav-link active" data-value="wait" href="#">@L("Pending")</a>
+                    </li>
+                    <li class="nav-item">
+                        <input type="hidden" name="process" value="processing"/>
+                        <a class="nav-link" data-value="processing" href="#">@L("Processing")</a>
+                    </li>
+                    <li class="nav-item">
+                        <input type="hidden" name="process" value="processed"/>
+                        <a class="nav-link" data-value="processed" href="#">@L("Processed")</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @await Html.PartialAsync("~/Views/Packages/Index.AdvancedSearch.cshtml")
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="PackagesPendingTable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@L("PackageNumber")</th>
+                                    <th>@L("TrackingNumber")</th>
+                                    <th>@L("BagNumber")</th>
+                                    <th>@L("Weight")</th>
+                                    <th>@L("Volume") (m2)</th>
+                                    <th>@L("Description")</th>
+                                    <th>@L("CreationTime")</th>
+                                    <th>@L("MatchTime")</th>
+                                    <th>@L("DeliveryTime")</th>
+                                    <th>@L("WarehouseStatus")</th>
+                                    <th>@L("ShippingStatus")</th>
+                                    @* <th style="width: 150px">@L("Actions")</th> *@
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

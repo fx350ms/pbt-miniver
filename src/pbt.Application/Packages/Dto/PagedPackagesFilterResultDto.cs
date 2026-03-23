@@ -1,0 +1,15 @@
+﻿using Abp.Application.Services.Dto;
+using pbt.Bags.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace pbt.Packages.Dto
+{
+    public class PagedPackagesFilterResultDto : PagedResultDto<PackageDto>
+    {
+        public decimal TotalWeight { get; set; }
+    }
+}

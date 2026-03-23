@@ -1,0 +1,297 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using pbt.ApplicationUtils
+@using pbt.Web.Helpers
+@model pbt.Web.Models.Packages.PackageIndexViewModel
+
+
+<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+
+    <div class="collapse" id="PackageFilterCollapse">
+        <form id="PackageSearchForm" class="form-horizontal">
+            <input type="hidden" name="ProcessType" value="wait" />
+            <div class="form-row ">
+                <div class="col-md-2">
+                    <label for="Keyword">Từ khóa</label>
+                    <div class="input-group input-group">
+                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" id="txt-keyword">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="Keyword">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="Keyword">@L("Feature")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" id="Feature" name="FeatureId">
+                            <option value="-1">-- @L("All") --</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="FeatureId" target-value="-1" style="border: none;">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="Keyword">@L("UnBagType")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" name="UnBagType">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int) InBagType.InBag)">@L("InBagType.InBag") </option>
+                            <option value="@((int) InBagType.UnBag)">@L("InBagType.UnBag")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="FeatureId" target-value="-1" style="border: none;">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="Keyword">@L("Line")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" id="ShippingLine" name="ShippingLine">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)LineShipping.InformalTrade)">@L("LineShipping.InformalTrade")</option>
+                            <option value="@((int)LineShipping.Ecommerce)">@L("LineShipping.Ecommerce")</option>
+                            <option value="@((int)LineShipping.OfficialChannel)">@L("LineShipping.OfficialChannel")</option>
+                            <option value="@((int)LineShipping.Portable)">@L("LineShipping.Portable")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="ShippingLine" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <label for="ServiceId">@L("Service")</label>
+                    <div class="input-group">
+                        <select class="form-control" id="ServiceId" name="ServiceId">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="1">@L("WoodenPackaging")</option>
+                            <option value="2">@L("ShockproofPackaging")</option>
+                            <option value="3">@L("DomesticTransportation")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="ServiceId" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-2">
+                    <label for="Status">@L("Status")</label>
+                    <div class="input-group">
+                        <select name="Status" class="form-control" id="select-filter-order-status">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.Initiate)">@L("PackageDeliveryStatusEnum.Initiate")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.WaitingForShipping)">@L("WaitingForShipping")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.Shipping)">@L("Shipping")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.InWarehouseVN)">@L("PackageDeliveryStatusEnum.InWarehouse")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.WarehouseTransfer)">@L("PackageDeliveryStatusEnum.WarehouseTransfer")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.WaitingForDelivery)">@L("WaitingForDelivery")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.DeliveryInProgress)">@L("PackageDeliveryStatusEnum.DeliveryInProgress")</option>
+                            <option value="@((int)PackageDeliveryStatusEnum.Delivered)">@L("PackageDeliveryStatusEnum.Received")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="Status" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="WarehouseDestination">@L("WarehouseDestination")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control search-warehouse" name="WarehouseDestinationId" id="WarehouseDestinationId" placeholder="@L("WarehouseDestination")">
+                            <option value="-1">-- @L("All") --</option>
+                            @if (Model.WarehouseVNs != null && Model.WarehouseVNs.Count > 0)
+                            {
+                                foreach (var item in Model.WarehouseVNs)
+                                {
+                                    <option value="@item.Id">@item.Name</option>    
+                                }
+                            }
+                          
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#WarehouseDestinationId">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    <label for="WarehouseId">@L("CurrentWarehouse")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control search-warehouse" name="WarehouseId" id="WarehouseId" placeholder="@L("CurrentWarehouse")">
+                            <option value="-1">-- @L("All") --</option>
+                            @if (Model.WarehouseVNs != null && Model.WarehouseVNs.Count > 0)
+                            {
+                                foreach (var item in Model.WarehouseVNs)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">@L("NoData")</option>
+                            }
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#WarehouseId">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Loại bao -->
+                <div class="col-md-2">
+                    <label for="BagType">@L("BagType")</label>
+                    <div class="input-group">
+                        <select name="BagType" class="form-control"  >
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)BagTypeEnum.SeparateBag)">@L("BagTypeEnum.SeparateBag")</option>
+                            <option value="@((int)BagTypeEnum.InclusiveBag)">@L("BagTypeEnum.InclusiveBag")</option>
+                      
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="BagType" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Hiển thị loại kiện -->
+                <div class="col-md-2">
+                    <label for="ExcludeCoverWeightType">@L("ExcludeCoverWeightType")</label>
+                    <div class="input-group">
+                        <select name="ExcludeCoverWeightType" class="form-control">
+                            <option value="-1">-- @L("All") --</option>
+                            <option selected value="@((int)ExcludeCoverWeightTypeFilter.ExcludeCoverWeight)">@L("ExcludeCoverWeightTypeFilter.ExcludeCoverWeight")</option>
+                            <option value="@((int)ExcludeCoverWeightTypeFilter.CoverWeightOnly)">@L("ExcludeCoverWeightTypeFilter.CoverWeightOnly")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="ExcludeCoverWeightType" target-value="@((int)ExcludeCoverWeightTypeFilter.ExcludeCoverWeight)">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+
+                <!-- CreateDate -->
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="CreateDate" target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date">
+                </div>
+
+
+                <!-- MatchTime -->
+                <div class="col-md-3">
+                    <label for="MatchTime">@L("MatchTime")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="MatchTime" id="MatchTime" target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="MatchTime" target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date" name="MatchStartDateStr" id="start-match-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="MatchEndDateStr" id="end-match-date">
+                </div>
+
+
+                <!-- ExportDateCN -->
+                <div class="col-md-3">
+                    <label for="ExportDate">@L("ExportDateCN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ExportDate" target-date="export-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date export-date" name="ExportStartDateStr" id="start-export-date">
+                    <input type="hidden" class="form-control float-right end-date export-date" name="ExportEndDateStr" id="end-export-date">
+                </div>
+
+                <!-- ImportDateVN -->
+                <div class="col-md-3">
+                    <label for="ImportDate">@L("ImportDateVN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ImportDate" id="ImportDate" target="import-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ImportDate" target-date="import-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date import-date" name="ImportStartDateStr" id="start-import-date">
+                    <input type="hidden" class="form-control float-right end-date import-date" name="ImportEndDateStr" id="end-import-date">
+                </div>
+
+                <!-- DeliveryTimeVN -->
+                <div class="col-md-3">
+                    <label for="DeliveryTime">@L("DeliveryTimeVN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="DeliveryTime" id="DeliveryTime" target="delivery-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="DeliveryTime" target-date="delivery-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date delivery-date" name="DeliveryStartDateStr" id="start-delivery-date">
+                    <input type="hidden" class="form-control float-right end-date delivery-date" name="DeliveryEndDateStr" id="end-delivery-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>@L("Customer")</label>
+                    <div class="input-group">
+                        <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 100%;"></select>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-select" target="CustomerSelect" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
