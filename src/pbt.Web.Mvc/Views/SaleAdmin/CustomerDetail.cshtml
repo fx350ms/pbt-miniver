@@ -1,0 +1,138 @@
+﻿@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.SaleAdmin
+
+@model CustomerDetailModel
+
+@inject pbtAppSession AppSession
+
+@{
+    ViewBag.Title = L("SaleAdminOrder");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/SaleAdmin/CustomerDetail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/SaleAdmin/CustomerDetail.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CustomerInformation")</h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @if (Model != null)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            @*  <div class="row">
+                        <div class="col-md-6">
+                        <!--Use for bulk actions-->
+
+                        <a href="@Url.Action("CreateOrderBySale", "SaleAdmin")" class="btn bg-blue float-sm-right">
+                        <i class="fa fa-plus-square"></i>
+                        @L("CreateCustomerOrder")
+                        </a>
+
+                        </div>
+                        <div class="col-md-6">
+                        @await Html.PartialAsync("~/Views/SaleAdmin/Index.AdvancedSearch.cshtml")
+                        </div>
+                        </div> *@
+                            <form id="OrderSearchForm" class="form-horizontal">
+                                <input type="hidden" name="CustomerId" value="@Model.Id" />
+                            </form>
+
+                            @if (Model.Customer != null)
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>  <small>@Model.Customer.FullName</small></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-responsive">
+                                            <tr>
+                                                <th class="col-1">@L("PhoneNumber")</th>
+                                                <th class="col-1">@L("Email")</th>
+                                                <th class="col-1">@L("CreationTime")</th>
+                                                <th class="col-1">@L("CurrentAmount")</th>
+                                                <th class="col-1">@L("PotentialLevel")</th>
+                                                <th class="col-1"> @L("LineShipping")</th>
+                                            </tr>
+                                            <tr>
+
+                                                <td>@Model.Customer.PhoneNumber</td>
+                                                <td>@Model.Customer.Email</td>
+                                                <td>@Model.Customer.CreationTimeString</td>
+                                                <td>@Model.Customer.CurrentAmount</td>
+                                                <td>@Model.Customer.PotentialLevel</td>
+                                                <td>@Model.Customer.LineId</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>  <small>@L("ReceiptAddress")</small></h4>
+                                </div>
+                            </div>
+                            @if (Model.Address != null)
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table>
+                                            <tr>
+                                                <th>@L("Address")</th>
+                                            </tr>
+                                            <tr>
+                                                <td>@Model.Address.FullAddress</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="OrdersTable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>@L("OrderNumber")</th>
+                                          @*   <th>@L("WaybillNumber")</th> *@
+                                            <th>@L("OrderDate")</th>
+                                            <th>@L("LastModificationTime")</th>
+                                            <th>@L("Status")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

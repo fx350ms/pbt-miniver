@@ -1,0 +1,171 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Startup
+@using pbt.Customers.Dto
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.Orders
+@using pbt
+@using pbt.Authorization
+@using pbt.CustomerAddresss.Dto
+@using pbt.Waybills.Dto
+
+@model CreateOrderModel
+
+@{
+    ViewBag.Title = L("CreateOrder");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/Create.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/Create.min.js" asp-append-version="true"></script>
+    </environment>
+
+}
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateNewWaybill") <strong class="text-primary">@Model.Dto.WaybillNumber</strong> </h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        @if (Model != null)
+                        {
+                            <form id="form-create-my-order" role="form" class="form-horizontal">
+                                <input type="hidden" id="hiddenCustomerId" name="CustomerId" value="@User.Claims.Get("CustomerId")" />
+                                <input type="hidden" name="CustomerName" value="@User.Identity.Name" />
+                                <input type="hidden" name="IsCustomerOrder" value="false" />
+                                <input type="hidden" name="OrderNumber" value="@Model.Dto.OrderNumber" />
+                                <input type="hidden" id="UseInsurance" name="UseInsurance" value="false" />
+                                <input type="hidden" id="UseDomesticTransportation" name="UseDomesticTransportation" value="false" />
+                                <input type="hidden" id="UseShockproofPackaging" name="UseShockproofPackaging" value="false" />
+                                <input type="hidden" id="UseWoodenPackaging" name="UseWoodenPackaging" value="false" />
+                                <input type="hidden" name="AddressId" id="AddressId" value="@Model.Dto.AddressId" asp-for="Dto.AddressId" required />
+                                <div class="row">
+                                    <!-- Left Column (2/3) -->
+                                    <div class="col-md-8 form-row">
+                                        <div class="col-4">
+                                            <label for="Keyword">@L("InputWaybill")</label>
+                                            @if (!string.IsNullOrEmpty(Model.Dto.WaybillNumber))
+                                            {
+                                                <input type="text" class="form-control is-valid" name="WaybillNumber" asp-for="Dto.WaybillNumber" placeholder="@L("InputWaybillNumber")" required>
+                                            }
+                                            else
+                                            {
+                                                <input type="text" class="form-control" name="WaybillNumber" asp-for="Dto.WaybillNumber" placeholder="@L("InputWaybillNumber")" required>
+                                            }
+                                            <span asp-validation-for="Dto.WaybillNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="Keyword">@L("SelectLine")</label>
+                                            <select class="form-control" name="ShippingLine" asp-for="Dto.ShippingLine" required>
+                                                <option value="@((int)LineShipping.InformalTrade)" selected>@LineShipping.InformalTrade.GetDescription()</option>
+                                                <option value="@((int)LineShipping.Ecommerce)">@LineShipping.Ecommerce.GetDescription()</option>
+                                                <option value="@((int)LineShipping.OfficialChannel)">@LineShipping.OfficialChannel.GetDescription()</option>
+                                                <option value="@((int)LineShipping.Portable)">@LineShipping.Portable.GetDescription()</option>
+                                            </select>
+                                            <span asp-validation-for="Dto.ShippingLine" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>@L("Customer")</label>
+                                            <select class="select2 form-control" id="select-customer" name="CustomerId" style="width: 100%;">
+                                                <option value="">@L("SelectCustomer")</option>
+                                                @foreach (var customer in Model.Customers)
+                                                {
+                                                    <option value="@customer.Id">@customer.Username</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-8 d-flex align-items-end">
+                                            <div style="flex: 1; max-width: 75%;">
+                                                <label><strong>@L("SelectAddress")</strong></label>
+                                                <select class="form-control" name="AddressId" id="select-customer-address">
+                                                    <option value=""> @L("SelectAddress")</option>
+                                                </select>
+                                            </div>
+                                            <div class="ml-2">
+                                                <label>&nbsp;</label>
+                                                <button type="button" data-toggle="modal" class="btn btn-outline-primary btn-sm btn-add-new-address" id="btnAddAddress">
+                                                    +  @L("AddAddress")
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <label class="d-block font-weight-bold">Dịch vụ</label>
+
+                                        <div class="form-group d-flex align-items-center">
+                                            <div class="custom-control custom-checkbox mr-2">
+                                                <input class="custom-control-input" data-service-target="#UseInsurance" name="OnUseInsurance" type="checkbox" id="select-insurance">
+                                                <label class="custom-control-label" for="select-insurance">Bảo hiểm</label>
+                                            </div>
+                                            <input type="text" class="form-control ml-4 mask-number" id="inputInsurance" name="PriceInsurance" placeholder="Giá trị hàng hóa" style="width: 250px;">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" data-service-target="#UseShockproofPackaging" name="OnUseShockproofPackaging" type="checkbox" id="select-shockproof-packaging">
+                                                <label class="custom-control-label" for="select-shockproof-packaging">Chống sốc</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" data-service-target="#UseWoodenPackaging" name="OnUseWoodenPackaging" type="checkbox" id="select-wooden-packaging">
+                                                <label class="custom-control-label" for="select-wooden-packaging">Đóng gỗ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-right">
+                                    <a href="@Url.Action("Index", "Orders")" type="button" class="btn btn-default close-button" data-dismiss="modal">
+                                        <i class="fas fa-arrow-left"></i> @L("GoToList")
+                                    </a>
+                                    <button type="submit" class="btn btn-primary save-button" data-url="@Url.Action("Create", "Orders")">
+                                        <i class="fas fa-share-square"></i> @L("SaveAndCreateNew")
+                                    </button>
+                                    <button type="submit" class="btn btn-primary save-button" data-url="@Url.Action("Index", "Orders")">
+                                        <i class="fas fa-save"></i> @L("SaveAndGoToList")
+                                    </button>
+                                </div>
+
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@await Html.PartialAsync("~/Views/Orders/_CreateAddressModal.cshtml", new CustomerAddressDto() { })

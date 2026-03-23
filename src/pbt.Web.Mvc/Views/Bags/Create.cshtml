@@ -1,0 +1,204 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.Bags
+@using pbt.Web.Startup
+
+@model BagCreateViewModel
+
+@{
+    ViewBag.Title = L("CreateBag");
+    ViewBag.CurrentPageName = PageNames.Bags;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Bags/Create.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Bags/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<style>
+	.active {
+		background-color: #ffecc8;
+	}
+    .customer-item{
+        cursor: pointer;
+    }
+    .customer-item:hover{
+        background: #ffe7a0;
+    }
+</style>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateBag")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <form id="create-bag-form">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>@L("BagType")</label>
+                            <div>
+                                @{
+                                    var checkedGrafting = Model.SameCustomer != null && (bool)Model.SameCustomer ? "" : "checked";
+                                    var checkedPrivate = Model.SameCustomer == null || (bool)Model.SameCustomer ? "checked" : "";
+                                }
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input bagType" type="radio" name="BagType" id="bagTypeGrafting" value="2" @checkedGrafting>
+                                    <label class="form-check-label pointer-event" for="bagTypeGrafting">@L("GraftingBag")</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input bagType" type="radio" name="BagType" id="bagTypePrivate" value="1" @checkedPrivate>
+                                    <label class="form-check-label pointer-event" for="bagTypePrivate">@L("PrivateBag")</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="khoTao">@L("Customer")</label>
+                            <input type="hidden" id="defaultCustomerId" value="@Model.customerId"/>
+                            <select class="form-control select2" name="CustomerId" id="customerId">
+                                <option value="">@L("Customer")</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>@L("Feature")</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="IsSolution" id="isSolution" value="true">
+                                 <label class="form-check-label" for="isSolution">@L("Solution")</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="IsWoodSealing" id="isWoodSealing" value="true">
+                                <label class="form-check-label" for="isWoodSealing">@L("WoodSealing")</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="IsFakeGoods" id="isFakeGoods" value="true">
+                              <label class="form-check-label" for="isFakeGoods">@L("FakeGoods")</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="IsOtherFeature" id="isOtherFeature" value="true">
+                                 <label class="form-check-label" for="isOtherFeature">@L("Other")</label>
+                                <input type="text" name="otherReason" class="form-control d-none ml-2"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="warehouseCreateId">@L("WarehouseCreate")</label>
+                            <select class="form-control" data-value="@Model.WarehouseCnId" id="warehouseCreateId" name="WarehouseCreateId">
+                                <option selected>@L("WarehouseCreate")</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="warehouseDestinationId">@L("WarehouseDestination")</label>
+                            <select class="form-control" data-value="@Model.WarehouseVnId" id="warehouseDestinationId" name="WarehouseDestinationId">
+                               <option selected value="">@L("WarehouseDestination")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="shippingType">@L("ShippingType")</label>
+                            <select class="form-control" id="shippingType" name="ShippingType"  >
+                                @if(Model.ShippingType == 0)
+                                {
+                                    <option selected value="">@L("ShippingType")</option>
+                                }
+                                else
+                                {
+                                    <option value="">@L("ShippingType")</option>
+                                }
+                                
+                                @if(Model.ShippingType == (int)LineShipping.InformalTrade)
+                                {
+                                    <option value="@((int)LineShipping.InformalTrade)" selected>@L("InformalTrade")</option>
+                                }
+                                else
+                                {
+                                    <option value="@((int)LineShipping.InformalTrade)">@L("InformalTrade")</option>
+                                }
+                                
+                                @if(Model.ShippingType == (int)LineShipping.Ecommerce)
+                                {
+                                    <option value="@((int)LineShipping.Ecommerce)" selected>@L("Ecommerce")</option>
+                                }
+                                else
+                                {
+                                    <option value="@((int)LineShipping.Ecommerce)">@L("Ecommerce")</option>
+                                }
+                                
+                                @if(Model.ShippingType == (int)LineShipping.OfficialChannel)
+                                {
+                                    <option value="@((int)LineShipping.OfficialChannel)" selected>@L("OfficialChannel")</option>
+                                }
+                                else
+                                {
+                                    <option value="@((int)LineShipping.OfficialChannel)">@L("OfficialChannel")</option>
+                                }
+                                @if(Model.ShippingType == (int)LineShipping.Portable)
+                                {
+                                    <option value="@((int)LineShipping.Portable)" selected>@L("Portable")</option>
+                                }
+                                else
+                                {
+                                    <option value="@((int)LineShipping.Portable)">@L("Portable")</option>
+                                }
+                               
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="shippingPartnerId">@L("ShippingPartner")</label>
+                            <select class="form-control" id="shippingPartnerId" name="ShippingPartnerId">
+                            </select>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="receiver">@L("Receiver")</label>
+                        <input type="text" class="form-control" id="receiver" name="Receiver" value="@Model.Receiver" placeholder="@L("Receiver")" >
+                    </div>
+                    <div class="form-group">
+                        <label for="note">@L("Note")</label>
+                        <textarea class="form-control" id="note" name="Note" rows="3" placeholder="@L("Note")"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>@L("Packages")</label>
+                        <div class="mt-2 mb-2" id="selectedPackage">
+                            @if (Model.PackageDetailDtos != null)
+                            {
+                                @foreach (var package in @Model.PackageDetailDtos)
+                                {
+                                    <span class="badge badge-primary">@package.PackageNumber</span>
+                                    <input class="selected-package" type="hidden" value="@package.Id"/>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <button type="button" data-close="false" class="btn btn-primary btnSave">@L("Save")</button>
+                    <button type="button" data-close="true" class="btn btn-success btnSave">@L("SaveAndBag")</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="CloneMultiModal" tabindex="-1" role="dialog" aria-labelledby="DepartmentEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

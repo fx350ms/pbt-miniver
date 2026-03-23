@@ -1,0 +1,276 @@
+﻿@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.Orders
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.SaleAdmin
+
+@model pbt.Web.Models.SaleAdmin.SaleAdminImportExportModel
+
+@{
+    ViewBag.Title = L("Pages_Report_ImportExport");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/SaleAdmin/ImportExport.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/SaleAdmin/ImportExport.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+
+@section styles {
+
+
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Pages_Report_ImportExport")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-primary btn-export-excel">
+                    <i class="fas fa-file-excel"></i> @L("ExportExcel")
+                </button>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <div class="abp-advanced-search">
+                                    <!-- Nút mở rộng/thu gọn -->
+                                    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#OrderFilterCollapse">
+                                        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+                                    </button>
+
+                                    <div class="collapse" id="OrderFilterCollapse">
+                                        <form id="OrderSearchForm" class="form-horizontal">
+                                            <div class="form-row">
+                                                <div class="col-md-3">
+                                                    <label for="Keyword">@L("Keyword")</label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" id="txt-keyword">
+                                                        <span class="input-group-append">
+                                                            <button type="button" class="btn btn-flat btn-clear-value" target="Keyword">
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Line vận chuyển -->
+                                                <div class="col-md-2">
+                                                    <label for="Keyword">@L("LineVC")</label>
+                                                    <div class="input-group input-group">
+                                                        <select class="form-control" id="ShippingLine" name="ShippingLine">
+                                                            <option value="-1">-- @L("All") --</option>
+                                                            <option value="@((int)LineShipping.InformalTrade)">@L("LineShipping.InformalTrade")</option>
+                                                            <option value="@((int)LineShipping.Ecommerce)">@L("LineShipping.Ecommerce")</option>
+                                                            <option value="@((int)LineShipping.OfficialChannel)">@L("LineShipping.OfficialChannel")</option>
+                                                            <option value="@((int)LineShipping.Portable)">@L("LineShipping.Portable")</option>
+                                                        </select>
+                                                        <span class="input-group-append">
+                                                            <button type="button" class="btn btn-flat btn-clear-value" target="ShippingLine" target-value="-1">
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                              
+                                                <div class="col-md-2">
+                                                    <label for="Status">@L("ShippingPartnerIntern")</label>
+                                                    <div class="input-group input-group">
+                                                        <select class="form-control" name="ShippingPartnerIntern" id="ShippingPartnerIntern" placeholder="@L("ShippingPartner")">
+                                                            <option value="-1">@L("All")</option>
+                                                            @foreach (var item in Model.ShippingPartnersIntern)
+                                                            {
+                                                                <option value="@((int)item.Id)">@item.Name</option>
+                                                            }
+                                                        </select>
+                                                        <span class="input-group-append">
+                                                            <button type="button" class="btn btn-flat btn-clear-value" target="ShippingPartnerIntern" target-value="-1">
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-2">
+                                                    <label for="Status">@L("ShippingPartnerDomestic")</label>
+                                                    <div class="input-group input-group">
+                                                        <select class="form-control" id="ShippingPartnerDomestic" name="ShippingPartnerDomestic">
+                                                            <option value="-1">-- @L("All") --</option>
+                                                            @if (Model.ShippingPartnersDomestic != null && Model.ShippingPartnersDomestic.Count > 0)
+                                                            {
+                                                                foreach (var shippingPartner in Model.ShippingPartnersDomestic)
+                                                                {
+                                                                    <option value="@shippingPartner.Id">@shippingPartner.Code</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                        <span class="input-group-append">
+                                                            <button type="button" class="btn btn-flat btn-clear-value" target="ShippingPartnerDomestic" target-value="-1">
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="ExportDate">@L("ExportDateCN")</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ExportDate" target-date="export-date" style="border: none;">
+                                                                <i class="fa fa-times-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" class="form-control float-right start-date export-date" name="ExportStartDateStr" id="start-export-date">
+                                                    <input type="hidden" class="form-control float-right end-date export-date" name="ExportEndDateStr" id="end-export-date">
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="ImportDate">@L("ImportDateVN")</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control date-range" name="ImportDate" id="ImportDate" target="import-date">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ImportDate" target-date="import-date" style="border: none;">
+                                                                <i class="fa fa-times-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" class="form-control float-right start-date import-date" name="ImportStartDateStr" id="start-import-date">
+                                                    <input type="hidden" class="form-control float-right end-date import-date" name="ImportEndDateStr" id="end-import-date">
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label for="DeliveryDate">@L("ExportDateVN")</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control date-range" name="ExportStartDateVN" id="ExportStartDateVN" target="export-date-vn">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ExportStartDateVN" target-date="export-date-vn" style="border: none;">
+                                                                <i class="fa fa-times-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" class="form-control float-right start-date export-date-vn" name="ExportVNStartDateStr" id="start-export-date-vn">
+                                                    <input type="hidden" class="form-control float-right end-date export-date-vn" name="ExportVNEndDateStr" id="end-export-date-vn">
+                                                </div>
+
+
+                                                <div class="col-md-3">
+                                                    <label>@L("Customer")</label>
+                                                    <div class="input-group">
+                                                        <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 80%;"></select> <div class="input-group-append">
+                                                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="CustomerSelect" style="border: none;">
+                                                                <i class="fa fa-times-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Căn phải nút tìm kiếm -->
+                                            <div class="form-row mt-3">
+                                                <div class="col-md-12 d-flex justify-content-end">
+                                                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                                                        <i class="fas fa-search"></i> Tìm kiếm
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="PackageTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        @* Ngày xuất kho TQ  *@
+                                        <th>@L("ExportDateCN")</th>
+                                        @* Người nhận *@
+                                        <th>@L("ReceiptName")</th>
+                                        @* Mã bao/kiện *@
+                                        <th>@L("BagOrPackageCode")</th>
+                                        @* Tổng cân nặng *@
+                                        <th>@L("TotalWeight")</th>
+                                        @* Kích thước (M3) *@
+                                        <th>@L("DimensionM3")</th>
+                                        @* Tổng số kiện *@
+                                        <th>@L("TotalPackage")</th>
+
+                                        @* Đối tác vận chuyển *@
+                                        <th>@L("ShippingPartner")</th>
+                                        @* Đặc tính *@
+                                        <th>@L("Feature")</th>
+
+                                        @* Ngày nhập kho HN *@
+                                        <th>@L("ImportDateVN")</th>
+
+                                        @* Giá cước - giá VC quốc tế*@
+                                        <th>@L("ECommerceShipping")</th>
+                                        @* Ship nội địa TQ *@
+                                        <th>@L("DomesticShippingFeeCN")</th>
+
+                                        @*  Gia cố hàng *@
+                                        <th>@L("SecuringCost")</th>
+                                        @* Ship VN *@
+                                        <th>@L("DomesticShippingFeeVN")</th>
+
+                                        @*  Thành tiền *@
+                                        <th>@L("TotalFee")</th>
+
+                                        @* Ship VN mình chịu *@
+                                        <th>@L("ShippingFeeAbsorbedByWarehouse")</th>
+                                        <th>@L("OriginShippingCost")</th>
+
+                                        @*  Đối tác xuất *@
+                                        <th>@L("ShippingPartnerVN")</th>
+                                        @*  Ngày xuất kho HN *@
+                                        <th>@L("ExportDateVN")</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

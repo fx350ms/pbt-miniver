@@ -1,0 +1,41 @@
+﻿@model List<pbt.Orders.Dto.OrderNoteDto>
+
+
+<table class="table table-striped table-bordered table-package table-child">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nội dung</th>
+            <th>Người ghi chú</th>
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            var _i = 1;
+            foreach (var item in Model)
+            {
+                <tr data-order-id="@item.OrderId" data-note-id="@item.Id">
+                    <td width="30px">@_i</td>
+                    <td>@item.Content</td>
+                    <td width="200px">@item.CreatorUserName</td>
+                    <td width="200px">@item.CreationTime.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td width="20px">
+                        <button type="button" class="btn btn-sm btn-danger btn-delete-order-note" data-note-id="@item.Id" title="Xóa ghi chú">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                </tr>
+                _i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center"><i>Không có ghi chú nào </i></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

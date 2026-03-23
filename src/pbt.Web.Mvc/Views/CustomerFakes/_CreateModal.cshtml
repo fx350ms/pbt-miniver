@@ -1,0 +1,57 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.CustomerFakes
+@using pbt.CustomerFakes.Dto
+
+@model CreateUpdateCustomerFakeDto
+@{
+    Layout = null;
+}
+<div class="modal fade" id="CustomerFakeCreateModal" tabindex="-1" role="dialog" aria-labelledby="CustomerFakeCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewCustomerFake")))
+            <form name="CustomerFakeCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" role="tab" href="#create-CustomerFake-details">@L("ParentDetails")</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active" id="create-CustomerFake-details">
+
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("FullName")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="FullName" asp-for="FullName" required>
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            
+                            <!-- Phone Number -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("PhoneNumber")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="PhoneNumber" asp-for="PhoneNumber" required>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("Address")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="Address" asp-for="Address">
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

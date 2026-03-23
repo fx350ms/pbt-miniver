@@ -1,0 +1,70 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.DeliveryNote
+@model MyDeliveryNoteIndexViewModel
+@{
+    ViewBag.Title = L("MyDeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryNote/MyDeliveryNote.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryNote/MyDeliveryNote.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("DeliveryNotes")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @await Html.PartialAsync("~/Views/DeliveryNote/MyDeliveryNote.AdvancedSearch.cshtml", Model)
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="DeliveryNoteTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mã phiếu xuất</th>
+                                        <th>Trạng thái </th>
+                                        <th>Thời gian tạo</th>
+                                        <th>Ghi chú</th>
+                                        <th>Khách hàng</th>
+                                        <th>Người nhận</th>
+                                        <th>Địa chỉ giao</th>
+                                        <th>Đối tác VC</th>
+                                        <th>Tổng cân nặng</th>
+                                        <th>Loại thu phí</th>
+                                        <th>Phí VC nội địa</th>
+                                        <th>Phí VC QT</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="labelContent" style="display: none;">
+    </div>
+</section>

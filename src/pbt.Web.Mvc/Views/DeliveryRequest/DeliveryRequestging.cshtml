@@ -1,0 +1,218 @@
+﻿@using pbt.Web.Startup
+@model pbt.Web.Models.Bags.BagDetailModel
+
+@{
+    ViewBag.Title = L("Pages_Bag_close");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Bags/Bagging.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Bags/Bagging.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles
+{
+    <style>
+        .list-group {
+            max-height: 100vh;
+            margin-bottom: 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="row">
+        <div class="col-4">
+            <h1>@L("Bagging")</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <input type="hidden" name="bagId" value="@Model.Dto.Id">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <a class="nav-link nav-bag active" data-toggle="tab" href="#home" data-type="bagging" href="#">@L("Bagging")</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-bag" data-toggle="tab" href="#profile" data-type="listbag" href="#">@L("ListBag")</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="container form-container">
+                                    <h5 class="mb-1">Bao hàng</h5>
+                                    <p class="text-primary">PTH591241</p>
+                                    <div class="form-group">
+                                        <label for="scanType">Loại mã quét</label>
+                                        <select class="form-control" id="scanType" name="scanType">
+                                            <option value="1">Mã kiện</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanCode">Quét mã kiện</label>
+                                        <input type="text" class="form-control" id="scanCode" placeholder="Mã kiện">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="packageWeight">Cân nặng bao (Kg)</label>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" value="@Model.Dto.Weight" id="packageWeight" placeholder="Nhập cân nặng bao">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="packageCheck">
+                                                    <label class="form-check-label" for="packageCheck">Bì</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.Dto.IsClosed)
+                                    {
+                                        <a id="listBaging" href="/Bags/Pending" class="btn btn-primary">@L("Pages_Bags_Pending")</a>
+                                    }
+                                    else
+                                    {
+                                        <button id="ending-packing" disabled="disabled" class="btn btn-primary">@L("EndOfBagging")</button>
+                                    }
+                                    <hr />
+                                    <h5 class="section-title mt-2">Thông tin bao hàng</h5>
+                                    <div class=""><button class="btn btn-sm btn-primary" id="editBag">Sửa</button></div>
+                                    <div class="form-group">
+                                        <label for="packageType">Loại bao</label>
+                                        <select class="form-control" id="packageType">
+                                            <option>Bao riêng</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customer">Khách hàng</label>
+                                        <select class="form-control" id="customer">
+                                            <option>aaaaaaaa</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="size">Kích thước bao</label>
+                                        <select class="form-control" id="size">
+                                            <option>aaaaaaaa</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dimensions">Kích thước (cm)</label>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Dài">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Rộng">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Cao">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tổng cân nặng kiện</label>
+                                        <p class="weight-display"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="specialProperty">Đặc tính</label>
+                                        <p>-</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="service">Dịch vụ</label>
+                                        <p>-</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="originWarehouse">Kho tạo</label>
+                                        <p>TQ</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="destinationWarehouse">Kho đích</label>
+                                        <select class="form-control" id="destinationWarehouse">
+                                            <option>Hà Nội</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="transportType">Loại vận chuyển</label>
+                                        <select class="form-control" id="transportType">
+                                            <option>Đối tác vận chuyển</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carrierName">Tên vận chuyển</label>
+                                        <select class="form-control" id="carrierName">
+                                            <option>KG88</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="receiver">Người nhận</label>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="list-group" id="list-closed-bag">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <label>Danh sách kiện trong bao (<span id="totalPackage">1</span>) </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table id="PackagesBagTable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>@L("PackageNumber")</th>
+                                            <th>@L("TrackingNumber")</th>
+                                            <th>@L("BagNumber")</th>
+                                            <th>@L("Weight")</th>
+                                            <th>@L("Volume")</th>
+                                            <th>@L("Description")</th>
+                                            <th>@L("CreationTime")</th>
+                                            <th>@L("MatchTime")</th>
+                                            <th>@L("DeliveryTime")</th>
+                                            <th>@L("WarehouseStatus")</th>
+                                            <th>@L("ShippingStatus")</th>
+                                            <th style="width: 150px">@L("Actions")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

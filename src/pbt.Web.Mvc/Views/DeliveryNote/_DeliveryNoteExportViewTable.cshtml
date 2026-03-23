@@ -1,0 +1,50 @@
+﻿@using pbt.DeliveryNotes.Dto
+@{
+    Layout = null;
+}
+@model List<DeliveryNoteExportViewDto>
+
+
+@foreach (var pxk in Model)
+{
+    var rowCount = pxk.Items.Count;
+    for (int i = 0; i < pxk.Items.Count; i++)
+    {
+        var pkg = pxk.Items[i];
+        <tr>
+            @* Merge các cột chỉ hiển thị ở dòng đầu tiên *@
+            @if (i == 0)
+            {
+                <td rowspan="@rowCount" class="text-center ">@pxk.DeliveryNoteCode</td>
+                <td rowspan="@rowCount" class="text-center ">@pxk.ExportTime</td>
+                <td rowspan="@rowCount" class="text-center ">@pxk.Receiver</td>
+                <td rowspan="@rowCount" class="text-end ">@((pxk.DeliveryFee).ToString("N0"))</td>
+                <td rowspan="@rowCount" class="text-center ">@pxk.ShippingPartnerName</td>
+            }
+
+            <td>@pkg.ItemCode</td>
+            <td>@pkg.ShippingPartnerName</td>
+
+            <td>
+                @(pkg.IsSolution ? "Dung dịch" :
+                    pkg.IsWoodSealing ? "Đóng gỗ" :
+                    pkg.IsFakeGoods ? "Hàng giả" :
+                    pkg.IsOtherFeature ? pkg.OtherReason : "")
+            </td>
+
+            <td class="text-right">@pkg.TotalAllWeight</td>
+            <td class="text-right">@pkg.Volume.ToString("N2")</td>
+            <td class="text-right">@pkg.TotalPackages</td>
+            <td class="text-right">@pkg.ImportDate</td>
+            <td class="text-right">@pkg.TotalFee.ToString("N0")</td>
+
+            <td class="text-right">@pkg.DomesticShippingFee.ToString("N0")</td>
+            <th> @((pkg.WoodenPackagingFee + pkg.ShockproofFee).ToString("N0")) </th>
+
+            @if (i == 0)
+            {
+                <td rowspan="@rowCount" class=" fw-bold text-primary  text-right">@pxk.TotalFee.ToString("N0")</td>
+            }
+        </tr>
+    }
+}

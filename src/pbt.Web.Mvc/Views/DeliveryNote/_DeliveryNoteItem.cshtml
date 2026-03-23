@@ -1,0 +1,171 @@
+﻿@using pbt
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.DeliveryNote
+@model pbt.Web.Models.DeliveryNote.DeliveryNoteItemViewModel
+@{
+}
+@if (Model != null && Model.DeliveryNote != null)
+{
+    <div class="form-row">
+        <input type="hidden" id="@(Model.DeliveryNote.CustomerId.ToString())-Id" name="Id" value="@Model.DeliveryNote.Id" />
+        <input type="hidden" name="CustomerId" value="@Model.CustomerId" />
+        <div class="form-group col-md-2">
+            <label for="shippingFee">Mã phiếu</label>
+            <input type="text" class="form-control  " value="@Model.DeliveryNote.DeliveryNoteCode" disabled>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="shippingFee">Phí vận chuyển quốc tế</label>
+            <input type="text" class="form-control text-right mask-number" name="ShippingFee" value="@((Model.DeliveryNote.ShippingFee ?? 0).ToCustomNumberFormat())" placeholder="Phí vận chuyển" disabled>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="dimensions">Tổng cân nặng</label>
+            <input type="text" class="form-control text-right mask-number-2" name="TotalWeight" value="@((Model.DeliveryNote.TotalWeight ?? 0).ToCustomNumberFormat())" placeholder="@L("TotalWeight")" disabled>
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label for="customer">Hình thức thu phí & vận chuyển</label>
+                <select class="form-control" name="DeliveryFeeReason">
+                    @if (Model.DeliveryNote.DeliveryFeeReason == (int)DeliveryFeeType.WithFee)
+                    {
+                        <option value="@((int)DeliveryFeeType.WithFee)"> @L("DeliveryWithFee")</option>
+                    }
+                    else
+                    {
+                        <option value="@((int)DeliveryFeeType.WithFee)" selected> @L("DeliveryWithFee")</option>
+                    }
+                    @if (Model.DeliveryNote.DeliveryFeeReason == (int)DeliveryFeeType.WithoutFee)
+                    {
+                        <option value="@((int)DeliveryFeeType.WithoutFee)" selected> @L("DeliveryWithoutFee")</option>
+                    }
+                    else
+                    {
+                        <option value="@((int)DeliveryFeeType.WithoutFee)"> @L("DeliveryWithoutFee")</option>
+                    }
+
+                    @if (Model.DeliveryNote.DeliveryFeeReason == (int)DeliveryFeeType.CustomerPickup)
+                    {
+                        <option value="@((int)DeliveryFeeType.CustomerPickup)" selected> @L("CustomerPickup")</option>
+                    }
+                    else
+                    {
+                        <option value="@((int)DeliveryFeeType.CustomerPickup)"> @L("CustomerPickup")</option>
+                    }
+
+                    @if (Model.DeliveryNote.DeliveryFeeReason == (int)DeliveryFeeType.PartnerDelivery)
+                    {
+                        <option value="@((int)DeliveryFeeType.PartnerDelivery)" selected> @L("PartnerDelivery")</option>
+                    }
+                    else
+                    {
+                        <option value="@((int)DeliveryFeeType.PartnerDelivery)"> @L("PartnerDelivery")</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="deliveryFee">Phí giao hàng</label>
+            <input type="text" class="form-control  text-right mask-number" name="DeliveryFee" value="@((Model.DeliveryNote.DeliveryFee ?? 0).ToCustomNumberFormat())" placeholder="Nhập vào phí giao hàng">
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="financialAmount">Tên người nhận</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="Receiver" placeholder="@L("ReceiverName")" value="@Model.DeliveryNote.Receiver">
+            </div>
+        </div>
+       
+        <div class="form-group col-md-3">
+            <label for="recipientPhone">Số điện thoại người nhận</label>
+            <input type="text" class="form-control" name="RecipientPhoneNumber" value="@Model.DeliveryNote.RecipientPhoneNumber">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="recipientPhone">Đối tác vận chuyển</label>
+            <select name="ShippingPartnerId" class="form-control">
+                <option value="-1">Chọn đối tác vận chuyển</option>
+                @if (Model.ShippingPartners != null && Model.ShippingPartners.Any())
+                {
+                    foreach (var partner in Model.ShippingPartners)
+                    {
+                        if (Model.DeliveryNote.ShippingPartnerId == partner.Id)
+                        {
+                            <option value="@partner.Id" selected>@partner.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@partner.Id">@partner.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="notes">Ghi chú</label>
+            <input type="text" class="form-control" name="Note" value="@Model.DeliveryNote.Note" placeholder="Nhập ghi chú">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="recipientAddress">Địa chỉ người nhận</label>
+            <input type="text" class="form-control" name="RecipientAddress" value="@Model.DeliveryNote.RecipientAddress" placeholder="Nhập địa chỉ giao hàng">
+        </div>
+    </div>
+    <div class="customer-data card">
+        <div class="card-body ready-list">
+            <div class="table-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Left Table -->
+                        <div class="table-wrapper">
+                            <div class="header-title">
+                                Danh sách có thể giao -
+                                <span style="font-weight: bold" class="numberBag"></span> Bao
+                                <span style="font-weight: bold" class="numberPackage"></span> Kiện
+                                <span style="font-weight: bold" class="totalWeight"></span> (kg)
+
+                            </div>
+                            <table class="table table-sm table-bordered bagRequest table-customer-@Model.CustomerId" name="bagRequest" data-customer-id="@Model.CustomerId">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>MÃ XUẤT</th>
+                                        <th>Mã YCG</th>
+                                        <th>CÂN NẶNG/KT</th>
+                                        <th>GHI CHÚ</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-right">
+                            <a class="btn btn-success btn-create-quick-delivery-note" data-customer-id="@Model.CustomerId"> <i class="fas fa-sticky-note"></i> Tạo phiếu xuất nhanh </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Right Table -->
+                        <div class="table-wrapper">
+                            <div class="header-title">Danh sách sẵn sàng giao <span class="label-total"></span></div>
+                            <table class="table table-sm table-bordered tableReadyDelivery">
+                                <thead>
+                                    <tr>
+
+                                        <th>MÃ XUẤT</th>
+                                        <th>Mã YCG</th>
+                                        <th>CÂN NẶNG/KT</th>
+                                        <th>GHI CHÚ</th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

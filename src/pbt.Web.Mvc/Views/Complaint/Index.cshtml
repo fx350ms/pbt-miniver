@@ -1,0 +1,89 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.Complaint
+@using pbt.Complaints.Dto;
+
+@{
+    ViewBag.Title = L("Complaint");
+    ViewBag.CurrentPageName = PageNames.Complaints;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Complaint/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Complaint/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Complaint")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="@Url.Action("Create")"  class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/Complaint/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ComplaintsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("STT")</th>
+                                        <th>@L("CreationTime")</th>
+                                        <th>@L("ComplaintCode")</th>
+                                        <th>@L("OrderCode")</th>
+                                        <th>@L("Status")</th>
+                                        <th>@L("Resolution")</th>
+                                        <th>@L("RefundAmount")</th>
+                                        <th>@L("Reason")</th>
+                                        <th>@L("RefundAmountExpect")</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@* <div class="modal fade" id="ComplaintCreateModal" tabindex="-1" role="dialog" aria-labelledby="ComplaintCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div> *@
+@* @await Html.PartialAsync("~/Views/Complaint/_CreateModal.cshtml", new CreateUpdateComplaintViewModel { Complaint = new CreateUpdateComplaintDto() }); *@
+
+<div class="modal fade" id="ComplaintEditModal" tabindex="-1" role="dialog" aria-labelledby="ComplaintEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

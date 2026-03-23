@@ -1,0 +1,111 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Customers
+@using pbt.CustomerAddresss.Dto
+@using pbt.Authorization
+
+@inject pbtAppSession AppSession
+
+@model CustomerAddressDto
+@{
+    Layout = null;
+}
+<div class="modal fade" id="CustomerAddressCreateModal" tabindex="-1" role="dialog" aria-labelledby="CustomerCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewCustomerAddress")))
+            <form name="CustomerAddressCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" role="tab" href="#create-Customer-details">@L("ParentDetails")</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active" id="create-Customer-details">
+                            <input type="hidden" name="CustomerId" value="@AppSession.CustomerId" />
+                            <input type="hidden" name="FullAddress" />
+                            <!-- Full Name -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("FullName")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="FullName" required maxlength="255">
+                                </div>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("PhoneNumber")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="PhoneNumber" required maxlength="15">
+                                </div>
+                            </div>
+
+                            <!-- Province -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Province")</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="ProvinceId" name="ProvinceId" required>
+                                        <option value="">@L("SelectProvince")</option>
+                                        <!-- Dynamic options -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- District -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("District")</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="DistrictId" name="DistrictId" required>
+                                        <option value="">@L("SelectDistrict")</option>
+                                        <!-- Dynamic options -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Ward -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Ward")</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="WardId" name="WardId" required>
+                                        <option value="">@L("SelectWard")</option>
+                                        <!-- Dynamic options -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Address")</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" id="Address" name="Address" rows="3" required maxlength="500"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Is Default -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("IsDefault")</label>
+                                <div class="col-md-9">
+                                    <input type="hidden" name="IsDefault" value="false"> <!-- Giá trị mặc định -->
+                                    <input type="checkbox" class="form-check-input" name="IsDefault" value="true">
+                                </div>
+                            </div>
+
+                            <!-- Is Receipt Address -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("IsReceiptAddress")</label>
+                                <div class="col-md-9">
+                                    <input type="hidden" name="IsReceiptAddress" value="false"> <!-- Giá trị mặc định -->
+                                    <input type="checkbox" class="form-check-input" name="IsReceiptAddress" value="true">
+                                </div>
+                            </div>
+ 
+                        </div>
+                        
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+

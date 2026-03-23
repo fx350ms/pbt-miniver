@@ -1,0 +1,65 @@
+@model pbt.Web.Models.ShippingCosts.RateTierContentItemViewModel
+@{
+    var x = 1;
+}
+<div class="rate-item" data-line="@Model.ShippingTypeId" data-from="@Model.FromWarehouseId" data-to="@Model.ToWarehouseId">
+    <input type="hidden" name="ShippingTypeId" value="@Model.ShippingTypeId" />
+    <input type="hidden" name="FromWarehouseId" value="@Model.FromWarehouseId" />
+    <input type="hidden" name="ToWarehouseId" value="@Model.ToWarehouseId" />
+
+    <div class="form-row mb-3">
+        <div class="col">
+            @L("ShippingType"): <label>@Model.LineName</label>
+        </div>
+        <div class="col">
+            @L("FromWarehouse"): <label>@Model.FromName</label>
+        </div>
+        <div class="col">
+            @L("ToWarehouse"): <label>@Model.ToName</label>
+        </div>
+        <div class="col-auto">
+            
+            @* <button type="button" class="btn btn-danger remove-tier-data"> *@
+            @*     <i class="fas fa-trash"></i> @L("Delete") *@
+            @* </button> *@
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover text-center">
+        <thead class="bg-light">
+            <tr>
+                @* <th>@L("Category")</th> *@
+                <th>@L("From")</th>
+                <th>@L("To")</th>
+                <th>@L("Unit")</th>
+                <th>@L("PricePerUnit")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var productGroup in Model.ProductGroupTypes)
+            {
+                <tr>
+                    @* <td> *@
+                    @*     <input type="hidden" name="ProductGroupId" value="@productGroup.Id" /> *@
+                    @*     <strong>@productGroup.Name</strong> *@
+                    @* </td> *@
+                    <td><input type="number" class="form-control" name="FromValue" min="0" value="0" /></td>
+                    <td><input type="number" class="form-control" name="ToValue" min="0" value="999999" /></td>
+                    <td>
+                        <select class="form-control" name="Unit">
+                            <option value="KG">KG</option>
+                            @* <option value="M3">M3</option> *@
+                        </select>
+                    </td>
+                    <td><input type="number" class="form-control" name="PricePerUnit" min="0" /></td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm add-tier-row">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,172 @@
+﻿@using pbt.Web.Startup
+@using pbt.Transactions.Dto
+@using pbt.Web.Models.Transactions
+@using pbt.Transactions.Dto
+@using pbt.FundAccounts.Dto
+@using pbt.Authorization
+
+@{
+    ViewBag.Title = L("Transactions");
+    ViewBag.CurrentPageName = PageNames.Transactions;
+    var activeFundAccounts = ViewBag.ActiveFundAccounts as List<FundAccountDto>;
+}
+@section scripts
+{
+    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Function_TransactionApprove))
+    {
+        <script>
+            var canApproveTransaction = true;
+        </script>
+    }
+    else
+    {
+        <script>
+            var canApproveTransaction = false;
+        </script>
+    }
+
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Transaction/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Transaction/Index.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Transaction/CreateReceipt.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Transaction/CreateReceipt.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Transaction/CreatePayment.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Transaction/CreatePayment.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+
+@section styles {
+<style>
+    .select2-selection--single {
+    height: 38px !important;
+    }
+
+    .select2-selection__arrow {
+    top: 5px !important;
+    }
+
+    .select2-dropdown {
+    z-index : 9999;
+    }
+</style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <h1>@L("Transactions")</h1>
+
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-6">
+
+                <a href="@Url.Action("Create")" class="btn bg-green float-sm-right mr-2">
+                    <i class="fa fa-plus-square"></i>
+                    @L("CreateTransaction")
+                </a>
+                <button  class="btn bg-gradient-cyan float-sm-right mr-2 btn-export">
+                    <i class="fa fa-download"></i>
+                    @L("ExportExcel")
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @await Html.PartialAsync("~/Views/Transaction/Index.AdvancedSearch.cshtml", new TransactionFilterModel() { FundAccounts = activeFundAccounts })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            string firstFundData = string.Empty;
+                            if (activeFundAccounts != null && activeFundAccounts.Count > 0)
+                            {
+                                var firstItem = activeFundAccounts.FirstOrDefault();
+                                if (firstItem != null)
+                                {
+                                    firstFundData = firstItem.TotalAmount.ToString("N0") + " " + firstItem.Currency;
+                                    if (firstItem.TotalAmount < 0)
+                                    {
+                                        <h4 class="col-6 mb-0"> Số dư khả dụng: <span class="text-danger">@firstFundData</span> </h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="col-6 mb-0"> Số dư khả dụng: <span class="text-success">@firstFundData</span> </h4>
+                                    }
+                                }
+                                // Format the total amount and currency for the first fund account)
+                              
+                            }
+                        }
+                      
+                        <div class="table-responsive">
+                            
+                            <table id="TransactionsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("CreationTime")</th>
+                                        <th>@L("TransactionId")</th>
+                                        <th>@L("Waybill")</th>
+                                        <th>@L("Customer")</th>
+                                        <th>@L("TransactionContent")</th>
+                                        <th>@L("Amount")</th>
+                                        <th>@L("AmountAfterTrans")</th>
+                                        <th>@L("Currency")</th>
+                                        <th>@L("RefCode")</th>
+                                       
+                                        <th>@L("TransactionType")</th>
+                                        <th>@L("ExecutionSource")</th>
+                                        <th>@L("Status")</th>
+                                        <th ></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Transaction/_CreateReceiptModal.cshtml", new TransactionDto())
+
+@* @await Html.PartialAsync("~/Views/Transaction/_CreatePaymentModal.cshtml", new TransactionDto()) *@
+
+<div class="modal fade" id="TransactionViewFileModal" tabindex="-1" role="dialog" aria-labelledby="TransactionViewFileModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+                                    

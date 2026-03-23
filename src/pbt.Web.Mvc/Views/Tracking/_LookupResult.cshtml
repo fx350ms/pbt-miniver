@@ -1,0 +1,328 @@
+@using pbt.ApplicationUtils
+
+@model pbt.Orders.Dto.TrackingDto
+@functions {
+    private string GetBadgeClass(int status)
+    {
+        switch ((OrderStatus)status)
+        {
+            case OrderStatus.New:
+                return "badge-secondary"; // Gray for "Khởi tạo"
+            case OrderStatus.Sent:
+                return "badge-primary"; // Blue for "Đã ký gửi"
+            case OrderStatus.InChinaWarehouse:
+                return "badge-info"; // Light blue for "Hàng về kho TQ"
+            case OrderStatus.InTransit:
+                return "badge-warning"; // Yellow for "Đang vận chuyển quốc tế"
+            case OrderStatus.InVietnamWarehouse:
+                return "badge-info"; // Light blue for "Đã đến kho VN"
+            case OrderStatus.OutForDelivery:
+                return "badge-warning"; // Yellow for "Đang giao đến khách"
+            case OrderStatus.Delivered:
+                return "badge-success"; // Green for "Đã giao"
+            case OrderStatus.Complaint:
+                return "badge-danger"; // Red for "Khiếu nại"
+            case OrderStatus.Refund:
+                return "badge-dark"; // Dark for "Hoàn tiền"
+            case OrderStatus.Cancelled:
+                return "badge-danger"; // Red for "Huỷ"
+            case OrderStatus.OrderCompleted:
+                return "badge-success"; // Green for "Hoàn thành đơn"
+            default:
+                return "badge-secondary"; // Default gray
+        }
+    }
+}
+@if (Model != null)
+{
+    var currentStep = (OrderStatus)Model.Status;
+    int stepIndex = 0;
+    switch (currentStep)
+    {
+        case OrderStatus.New:
+        case OrderStatus.Sent:
+            stepIndex = 0; // Entrusted
+            break;
+        case OrderStatus.InChinaWarehouse:
+            stepIndex = 1; // InTransitToChinaWarehouse
+            break;
+        case OrderStatus.InTransit:
+            stepIndex = 2; // InInternationTransit
+            break;
+        case OrderStatus.InVietnamWarehouse:
+            stepIndex = 3; // DeliveringToVietnam
+            break;
+        case OrderStatus.OutForDelivery:
+            stepIndex = 4; // OutForDelivery
+            break;
+        case OrderStatus.Delivered:
+            stepIndex = 5; // Delivered
+            break;
+        case OrderStatus.Complaint:
+        case OrderStatus.Refund:
+            stepIndex = 6; // Complaint/Refund
+            break;
+        case OrderStatus.Cancelled:
+            stepIndex = 7; // Cancel
+            break;
+        case OrderStatus.OrderCompleted:
+            stepIndex = 8; // OrderCompleted
+            break;
+        default:
+            stepIndex = 0;
+            break;
+    }
+
+    if (Model.Status == 0)
+    {
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Tiêu đề đơn hàng -->
+                        <h1 class="text-center"><strong class="text-danger">Đã nhận hàng tại kho trung quốc</strong></h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        if (Model.Order != null)
+        {
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Tiêu đề đơn hàng -->
+                            <h1 class="text-center">Chi tiết vận đơn: <strong class="text-danger"> #@Model.TrackingNumber</strong></h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <!-- Timeline theo chiều ngang -->
+                                        <div class="col-10 offset-1">
+                                            <div class="steps">
+                                                <progress id="progress" value="0" max="100"></progress>
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="Sent">
+                                                        @(OrderStatus.Sent.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="Sent">@Model.Order.CreationTime.ToString("dd/MM/yyyy HH:mm")</div>
+                                                    <span class="step-button text-center done" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="InTransitToChinaWarehouse">
+                                                        @(OrderStatus.InChinaWarehouse.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="InTransitToChinaWarehouse">@(Model.Order.InTransitToChinaWarehouseTime.HasValue ? Model.Order.InTransitToChinaWarehouseTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                    <span class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="InTransit">
+                                                        @(OrderStatus.InTransit.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="InTransit">@(Model.Order.InTransitTime.HasValue ? Model.Order.InTransitTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                    <span class="step-button text-center done" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="InTransitToVietnamWarehouse">
+                                                        @(OrderStatus.InVietnamWarehouse.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="InTransitToVietnamWarehouse">@(Model.Order.InTransitToVietnamWarehouseTime.HasValue ? Model.Order.InTransitToVietnamWarehouseTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                    <span class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="OutForDelivery">
+                                                        @(OrderStatus.OutForDelivery.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="OutForDelivery">@(Model.Order.DeliveryTime.HasValue ? Model.Order.DeliveryTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                    <span class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                <div class="step-item">
+                                                    <div class="step-title" data-step-name="Delivered">
+                                                        @(OrderStatus.Delivered.GetDescription())
+                                                    </div>
+                                                    <div class="step-time" data-step-name="Delivered">@(Model.Order.DeliveryTime.HasValue ? Model.Order.DeliveryTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                    <span class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+
+                                                @if ((OrderStatus)Model.Status == OrderStatus.Complaint || (OrderStatus)Model.Status == OrderStatus.Refund)
+                                                {
+                                                    <div class="step-item">
+                                                        <div class="step-title" data-step-name="Complaint">
+                                                            @(OrderStatus.Complaint.GetDescription())
+                                                        </div>
+                                                        <div class="step-time" data-step-name="Complaint">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                                                        <span class="step-button text-center collapsed" type="button">
+                                                            <i class="fa fa-check"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="step-item">
+                                                        <div class="step-title" data-step-name="Refund">
+                                                            @(OrderStatus.Refund.GetDescription())
+                                                        </div>
+                                                        <div class="step-time" data-step-name="Refund">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                                                        <span class="step-button text-center collapsed" type="button">
+                                                            <i class="fa fa-check"></i>
+                                                        </span>
+                                                    </div>
+                                                }
+                                                else if ((OrderStatus)Model.Status == OrderStatus.Cancelled)
+                                                {
+                                                    <div class="step-item">
+                                                        <div class="step-title" data-step-name="Cancelled">
+                                                            @(OrderStatus.Cancelled.GetDescription())
+                                                        </div>
+                                                        <div class="step-time" data-step-name="Cancelled">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                                                        <span class="step-button text-center done" type="button">
+                                                            <i class="fa fa-check"></i>
+                                                        </span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="step-item">
+                                                        <div class="step-title" data-step-name="OrderCompleted">
+                                                            @(OrderStatus.OrderCompleted.GetDescription())
+                                                        </div>
+                                                        <div class="step-time" data-step-name="OrderCompleted">@(Model.Order.OrderCompletedTime.HasValue ? Model.Order.OrderCompletedTime?.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                                        <span class="step-button text-center collapsed" type="button">
+                                                            <i class="fa fa-check"></i>
+                                                        </span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>@L("PackageCode")</th>
+                                                    <th>@L("CreationDate")</th>
+                                                    <th>@L("Status")</th>
+                                                    <th>@L("Width")</th>
+                                                    <th>@L("Height")</th>
+                                                    <th>@L("Length")</th>
+                                                    <th>@L("Weight")</th>
+                                                    <th>@L("VolumeM3")</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Packages != null && Model.Packages.Count > 0)
+                                                {
+                                                    foreach (var item in Model.Packages)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @item.PackageNumber
+                                                            </td>
+                                                            <td>
+                                                                @item.CreationTime.ToString("dd/MM/yyyy HH:mm")
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge @GetBadgeClass(Model.Status)">
+                                                                    @(((PackageDeliveryStatusEnum)item.ShippingStatus).GetDescription())
+                                                                </span>
+
+                                                            </td>
+                                                            <td align="right">
+                                                                @(item.Width ?? 0)
+                                                            </td>
+                                                            <td align="right">
+                                                                @(item.Height ?? 0)
+                                                            </td>
+                                                            <td align="right">
+                                                                @(item.Length ?? 0)
+                                                            </td>
+                                                            <th align="right">@(item.WeightString)</th>
+                                                            <td align="right">
+                                                                @((decimal)((item.Width ?? 0) * (item.Height ?? 0) * (item.Length ?? 0)) / 1000000)
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                  @*   <div class="row">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5>ĐỊA CHỈ NHẬN HÀNG</h5>
+                                                <p><strong>Người nhận:</strong> @Model.CustomerName</p>
+                                                <p><strong>Số điện thoại:</strong> @Model.CustomerPhone</p>
+                                                <p><strong>Địa chỉ:</strong> @Model.CustomerAddress</p>
+                                            </div>
+                                        </div>
+                                    </div> *@
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="~/libs/jquery/jquery-3.7.1.js"></script>
+            <script>
+                (function ($) {
+                      function setStep(index) {
+
+                          const $stepButtons = $('.step-button');
+                          const $progress = $('#progress');
+
+                          // Cập nhật giá trị của progress
+                          $progress.attr('value', index * 100 / ($stepButtons.length - 1));
+
+                          // Cập nhật trạng thái class 'done' cho các nút
+                          $stepButtons.each(function (secIndex) {
+                              if (index >= secIndex) {
+                                  $(this).addClass('done');
+                              } else if (index < secIndex) {
+                                  $(this).removeClass('done');
+                              }
+                          });
+                      }
+                      setStep(@stepIndex);
+                  })(jQuery);
+            </script>
+        }
+    }
+}
+else
+{
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <div class="alert alert-danger text-center">
+                Không tìm thấy thông tin vận đơn.
+            </div>
+        </div>
+    </div>
+}

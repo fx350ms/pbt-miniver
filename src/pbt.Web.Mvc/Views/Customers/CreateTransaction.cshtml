@@ -1,0 +1,140 @@
+﻿@using pbt.Transactions.Dto
+@using pbt.Web.Models.Common.Modals
+@using pbt.FundAccounts.Dto
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.Customers
+
+@model CreateCustomerTransactionModel
+@{
+
+
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Customers/CreateTransaction.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Customers/CreateTransaction.min.js" asp-append-version="true"></script>
+    </environment>
+
+
+}
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new
+                ModalHeaderViewModel(L("CreateTransaction")))
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="modal-create-transaction">
+                        <form name="receiptCreateForm" role="form" class="form-horizontal">
+                            <div class="tab-content mt-4">
+                                <div role="tabpanel" class="tab-pane container active" id="create-receipt-details">
+                                    <input type="hidden" value="@Model.Dto.Id" name="CustomerId" />
+
+                                    <div class="form-group row debt-group">
+                                        <label class="col-md-2 col-form-label">@L("CustomerName")</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control " value="@Model.Dto.Username" readonly>
+                                        </div>
+                                        <label class="col-md-2 col-form-label ">@L("MaxDebt")</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control mask-num" name="MaxDebt" value="0" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row debt-group">
+                                        <label class="col-md-2 col-form-label">@L("TotalDebt")</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="TotalDebt" value="@(Model.Dto.CurrentAmount < 0 ? Math.Abs(Model.Dto.CurrentAmount).ToString("0") : "0")" readonly>
+                                        </div>
+
+                                        <label class="col-md-2 col-form-label">@L("WalletBalance")</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="CurrentAmount" value="@(Model.Dto.CurrentAmount > 0 ? Model.Dto.CurrentAmount.ToString("0") : "0")" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="col-md-2 col-form-label">@L("TransactionType")</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="CustomerTransactionUpdateType" required>
+                                                <option value="@((int)CustomerTransactionUpdateTypeEnum.AddWallet)">@L("CustomerTransactionUpdateTypeEnum.AddWallet")</option>
+                                                <option value="@((int)CustomerTransactionUpdateTypeEnum.SubtractWallet)">@L("CustomerTransactionUpdateTypeEnum.SubtractWallet")</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-md-2 col-form-label">@L("Value")</label>
+                                        <div class="col-md-4">
+                                            <input class="form-control" id="txt-amount" name="Amount" placeholder="@L("InputAmount")" required value="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+
+                                        <label class="col-md-2 col-form-label">@L("TotalDebtAfterChange")</label>
+                                        <div class="col-md-4">
+                                            <input class="form-control " id="txt-TotalDebtAfterChange" readonly value="0">
+                                        </div>
+
+
+                                        <label class="col-md-2 col-form-label">@L("TotalAmountAfterChange")</label>
+                                        <div class="col-md-4">
+                                            <input class="form-control " id="txt-TotalAmountAfterChange" readonly value="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row " id="TransactionContentField">
+                                        <label class="col-md-2 col-form-label">@L("TransactionContent")</label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" name="Description" id="TransactionContent"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row " id="FileUpload">
+                                        <label class="col-md-2 col-form-label">@L("FileUpload")</label>
+                                        <div class="col-md-10">
+                                            <input type="file" class="form-control" name="FileContent" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                                <button type="button" class="btn btn-primary save-button" data-url="@Url.Action("Finance", "Customers", new { id = Model.CustomerId })"><i class="fa fa-list"></i> @L("SaveAndGoToList")</button>
+                                <button type="button" class="btn btn-primary save-button" data-url="@Url.Action("CreateTransaction", "Customers", new { CustomerId = Model.CustomerId })"><i class="fa fa-save"></i> @L("SaveAndCreateNew")</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

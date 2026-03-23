@@ -1,0 +1,261 @@
+﻿@using pbt.Web.Views.Shared.Components.SideBarMenu
+@using pbt.Authorization;
+@using pbt.ApplicationUtils;
+
+@inject Abp.Authorization.IPermissionChecker PermissionChecker
+@model SideBarMenuViewModel
+@{
+    //  var orderedMenuItems = Model.MainMenu.Items.Where(x => x.IsVisible).ToList();
+}
+
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-item">
+            <a href="/" class="nav-link @(Context.Request.Path.Value?.EndsWith("/") == true ? "active" : "")">
+                <i class="nav-icon fas fa-home"></i>
+                <p>@L("Page_Dashboard")</p>
+            </a>
+        </li>
+ 
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Users))
+        {
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Users")"
+                   class="nav-link @(Context.Request.Path.Value?.EndsWith("/Users") == true ? "active" : "")">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>@L("Pages_Users")</p>
+                </a>
+            </li>
+        }
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Roles))
+        {
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Roles")" class="nav-link ">
+                    <i class="nav-icon fas fa-lock"></i>
+                    <p>@L("Pages_Roles")</p>
+                </a>
+            </li>
+        }
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Dictionaries))
+        {
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Dictionary")" class="nav-link ">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>@L("Pages_Dictionaries")</p>
+                </a>
+            </li>
+        }
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Customers))
+        {
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Customers")" class="nav-link ">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>@L("Pages_Customers")</p>
+                </a>
+            </li>
+        }
+       
+         
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Orders))
+        {
+
+            if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Customer)
+            || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Sale))
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <p>
+                            @L("Pages_Order")
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Create", "Orders")" class="nav-link">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>
+                                    @L("Pages_Create")
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Orders")" class="nav-link">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>
+                                    @L("Pages_AllOrder")
+                                </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "SaleAdmin")" class="nav-link">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <p>
+                            @L("Pages_Order")
+                        </p>
+                    </a>
+                </li>
+            }
+
+        }
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Waybill))
+        {
+            <li class="nav-item">
+                <a href="/Waybill" class="nav-link">
+                    <i class="nav-icon fas fa-barcode"></i>
+                    <p>
+                        @L("Pages_Waybill")
+                    </p>
+                </a>
+            </li>
+        }
+       
+
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Process) || await PermissionChecker.IsGrantedAsync(PermissionNames.Function_ScanCodeViewAll))
+        {
+            <li class="nav-item @(Context.Request.Path.Value.StartsWith("/Operate") ? "menu-open" : "")">
+                <a href="#" class="nav-link @(Context.Request.Path.Value.StartsWith("/Operate") ? "active" : "")">
+                    <i class="nav-icon fa fa-people-carry"></i>
+                    <p>
+                        @L("Pages_Operate")
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Process))
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Create", "Operate")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/Operate/Create") == true ? "active" : "")">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>@L("Pages_Operate_action")</p>
+                            </a>
+                        </li>
+                    }
+                    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Function_ScanCodeViewAll))
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Operate")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/Operate") == true ? "active" : "")">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>@L("Pages_Operate_history")</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Packages))
+        {
+            <li class="nav-item @(Context.Request.Path.Value.StartsWith("/Packages") ? "menu-open" : "")">
+
+                <a href="#" class="nav-link @(Context.Request.Path.Value.StartsWith("/Packages") ? "active" : "")">
+                    <i class="nav-icon fas fa-cubes"></i>
+                    <p>
+                        @L("Pages_Packages")
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if (PermissionChecker.IsGranted(PermissionNames.Function_PackageCreate))
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Create", "Packages")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/Packages/Create") == true ? "active" : "")">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>@L("Pages_Create")</p>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index", "Packages")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/Packages") == true ? "active" : "")">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>@L("Pages_Packages_List")</p>
+                        </a>
+                    </li>
+                    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Sale) || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "SaleAdmin")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/SaleAdmin/Index") == true ? "active" : "")">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Theo dõi kiện hàng</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+
+        
+
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Bags))
+        {
+            <li class="nav-item @(Context.Request.Path.Value.StartsWith("/Bags") ? "menu-open" : "")">
+                <a href="#" class="nav-link @(Context.Request.Path.Value.StartsWith("/Bags") ? "active" : "")">
+                    <i class="nav-icon fas fa-luggage-cart"></i>
+                    <p>
+                        @L("Pages_Bags")
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if (PermissionChecker.IsGranted(PermissionNames.Function_BagCreate))
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Create", "Bags")"
+                               class="nav-link @(Context.Request.Path.Value?.EndsWith("/Bags/Create") == true ? "active" : "")">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>@L("Pages_Create")</p>
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index", "Bags")"
+                           class="nav-link @(Context.Request.Path.Value?.EndsWith("/Bags") == true ? "active" : "")">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>@L("Pages_Bags_List")</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        }
+ 
+ 
+        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Configs))
+        {
+            <li class="nav-item @(Context.Request.Path.Value.StartsWith("/ConfigurationSetting") || Context.Request.Path.Value.StartsWith("/ShippingRate") ? "menu-open" : "")">
+                <a href="#" class="nav-link @(Context.Request.Path.Value.StartsWith("/ConfigurationSetting") || Context.Request.Path.Value.StartsWith("/ShippingRate") ? "active" : "")">
+                    <i class="nav-icon fas fa-cogs"></i>
+                    <p>
+                        @L("Pages_Config")
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="@Url.Action("Index", "ConfigurationSetting")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/ConfigurationSetting") == true ? "active" : "")">
+                            <i class="nav-icon far fa-circle"></i>
+                            <p>Cấu hình chung</p>
+                        </a>
+                    </li>
+                  
+                </ul>
+            </li>
+
+        }
+    </ul>
+</nav>
+ 

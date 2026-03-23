@@ -1,0 +1,117 @@
+﻿@using pbt.ApplicationUtils
+@using pbt.FundAccounts.Dto
+@using pbt.Transactions.Dto
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Transactions
+@{
+    var activeFundAccounts = Model.FundAccounts;
+}
+ @model TransactionFilterModel
+
+
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mr-3" type="button" data-toggle="collapse" data-target="#TransactionFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+    
+    <div class="collapse" id="TransactionFilterCollapse">
+        <form id="TransactionSearchForm" class="form-horizontal">
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="TransactionDate">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <!-- Tài  khoản quỹ -->
+                <div class="col-md-3">
+                    <label for="Status">Trạng thái</label>
+                    <select class="form-control" name="FundAccountId" required placeholder="Chọn tài khoản quỹ">
+                        <option value="-1" selected> Chọn tài khoản quỹ</option>
+                        @foreach (var item in Model.FundAccounts)
+                        {
+                            if (item.AccountType == (int)FundAccountType.Bank)
+                            {
+                                <option value="@item.Id" data-ammount="@item.TotalAmount.ToString("N0")" data-currency="@item.Currency"> @item.BankName - @item.AccountNumber - @item.AccountName </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id" data-ammount="@item.TotalAmount.ToString("N0")" data-currency="@item.Currency">@item.AccountName (@L("Cash"))</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-3">
+                    <label for="Status">Trạng thái</label>
+                    <select name="Status" class="form-control">
+                        <option value="-1">-- Chọn trạng thái --</option>
+                        <option value="1">Chờ duyệt</option>
+                        <option value="2">Đã duyệt</option>
+                        <option value="3">Từ chối</option>
+                    </select>
+                </div>
+
+                <!-- Loại giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionType">Loại giao dịch</label>
+                    <select name="TransactionType" class="form-control">
+                        <option value="-1">-- Chọn loại giao dịch --</option>
+                        <option value="1">Nạp tiền</option>
+                        <option value="2">Thanh toán</option>
+                        <option value="3">Rút tiền</option>
+                    </select>
+                </div>
+
+                <!-- Nguồn thực hiện -->
+                <div class="col-md-3">
+                    <label for="ExecutionSource">Nguồn thực hiện</label>
+                    <select name="ExecutionSource" class="form-control">
+                        <option value="-1">-- Chọn nguồn thực hiện --</option>
+                        <option value="1">Thủ công</option>
+                        <option value="2">Tự động</option>
+                    </select>
+                </div>
+
+                <!-- Hướng giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionDirection">Hướng giao dịch</label>
+                    <select name="TransactionDirection" class="form-control">
+                        <option value="-1">-- Chọn hướng giao dịch --</option>
+                        <option value="1">Phiếu thu</option>
+                        <option value="2">Phiếu chi</option>
+                    </select>
+                </div>
+
+                <!-- Thời gian giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionDate">Thời gian giao dịch</label>
+                    <input type="text" class="form-control" name="TransactionDate" id="input-date-range">
+
+                    <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+                    <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+                </div>
+               @*  <!-- Khoảng giá trị giao dịch -->
+                <div class="col-md-3">
+                    <label for="AmountRange">Khoảng giá trị</label>
+                    <div class="input-group">
+                        <input type="number" name="MinAmount" class="form-control" placeholder="Từ">
+                        <div class="input-group-append input-group-prepend">
+                            <span class="input-group-text">-</span>
+                        </div>
+                        <input type="number" name="MaxAmount" class="form-control" placeholder="Đến">
+                    </div>
+                </div> *@
+            </div>
+
+            <!-- Căn phải nút tìm kiếm -->
+            <div class="form-row mt-3">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿@* <div class="abp-advanced-search">
+    <form id="OrderSearchForm" class="form-horizontal">
+        <div class="input-group">
+            <div class="d-flex gap-2 mb-2 w-100">
+                <!-- Phần tìm kiếm mã vận đơn vẫn ở bên trái -->
+                <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("InputOrderNumber")" />
+
+                <!-- Phần chứa input date range và button tìm kiếm di chuyển sang bên phải -->
+                <div class="d-flex gap-2 ms-auto">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+
+                    <!-- Đảm bảo input date range có đủ chiều rộng -->
+                    <input type="text" class="form-control" name="dateRange" id="input-date-range" style="min-width: 200px;">
+
+                    <button type="button" class="btn bg-blue btn-search">
+                        <span class="fas fa-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+        <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+    </form>
+</div>
+ *@
+
+
+
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#OrderFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <!--Use for bulk actions-->
+
+    <a href="@Url.Action("CreateOrderBySale", "SaleAdmin")" class="btn bg-blue float-sm-right" style="margin-right:10px">
+        <i class="fa fa-plus-square"></i>
+        @L("CreateCustomerOrder")
+    </a>
+
+
+    <div class="collapse" id="OrderFilterCollapse">
+        <form id="OrderSearchForm" class="form-horizontal">
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="Status">Khách hàng</label>
+                    <select class="select2 select2-hidden-accessible " name="CustomerId" style="width: 100%;">
+                    </select>
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-3">
+                    <label for="Status">Trạng thái</label>
+
+                    <select name="Status" class="form-control" id="select-filter-order-status">
+
+                        <option value="-1">-- Chọn trạng thái --</option>
+                        <option value="1">Đã ký gửi</option>
+                        <option value="2">Hàng về kho TQ</option>
+                        <option value="3">Đang vận chuyển quốc tế</option>
+                        <option value="4">Đã đến kho VN</option>
+                        <option value="5">Đang giao đến khách</option>
+                        <option value="6">Đã giao</option>
+                        <option value="7">Khiếu nại</option>
+                        <option value="8">Hoàn tiền</option>
+                        <option value="9">Huỷ</option>
+                        <option value="10">Hoàn thành đơn</option>
+                    </select>
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-3">
+                    <label for="OrderType">Loại đơn</label>
+                    <select name="OrderType" class="form-control">
+                        <option value="-1">-- Chọn loại đơn --</option>
+                        <option value="1">Đơn của tôi</option>
+                        <option value="2">Đơn của khách</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="TransactionDate">Thời gian giao dịch</label>
+                    <input type="text" class="form-control" name="TransactionDate" id="input-date-range">
+
+                    <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+                    <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+                </div>
+            </div>
+
+            <div class="form-row mt-3">
+                <!-- Thời gian giao dịch -->
+
+                <div class="col-md-6">
+                    <label for="TransactionDate">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+            </div>
+
+            <!-- Căn phải nút tìm kiếm -->
+            <div class="form-row mt-3">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

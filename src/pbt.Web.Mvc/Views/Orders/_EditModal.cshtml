@@ -1,0 +1,41 @@
+﻿@using pbt.Web.Models.Customers
+@using pbt.Web.Models.Common.Modals
+
+@model CreateUpdateCustomer
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditCustomer")))
+<form name="CategoryEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Customer.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Name")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Name" minlength="1" value="@Model.Customer.FullName" >
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Address")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Address" value="@Model.Customer.Address">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Customers/_EditModal.js" asp-append-version="true"></script>

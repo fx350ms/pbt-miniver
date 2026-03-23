@@ -1,0 +1,177 @@
+@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@using pbt.Web.Models.DeliveryRequests
+
+@inject pbtAppSession AppSession
+
+@model DeliveryRequestDetailModel
+@{
+    ViewBag.Title = L("Bags");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryRequest/Detail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryRequest/Detail.min.js" asp-append-version="true"></script>
+    </environment>
+}
+@if (Model != null)
+{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Tiêu đề đơn hàng -->
+                    <h1 class="text-center">@L("DeliveryRequestPayment"): <strong id="deliveryRequestCode" class="text-danger">#@Model.Dto.RequestCode</strong></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@L("CustomerInformation")</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th style="width:50%">@L("CustomerName"):</th>
+                                 @*    <td>@Model.Dto.Customer.FullName</td> *@
+                                </tr>
+                                <tr>
+                                    <th>@L("PhoneNumber")</th>
+                                    @* <td>@Model.Dto.Customer.PhoneNumber</td> *@
+                                </tr>
+                                <tr>
+                                    <th>@L("ShippingMethod")</th>
+                                    @* <td>@Model.Dto.ShippingMethodString</td> *@
+                                </tr>
+                                <tr>
+                                    <th>@L("PaymentMethod")</th>
+                                    <td>
+                                        <label class="badge badge-info">
+                                            @(((PaymentMethod)Model.Dto.PaymentMethod).GetDescription())
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>@L("TotalAmount")</th>
+                                    <td>@Model.Dto.TotalAmount.ToCurrencyFormat()</td>
+                                </tr>
+                                <tr>
+                                    <th>@L("PackageCount")</th>
+                                    <td>@Model.Dto.PackageCount</td>
+                                </tr>
+                                <tr>
+                                    <th>@L("Note")</th>
+                                    <td>@Model.Dto.Note</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4>@L("PackagesList")</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered" id="PackageTable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã vận đơn</th>
+                                    <th>Mã kiện</th>
+                                    <th>Trạng thái kiện</th>
+                                    <th>Cân nặng (kg)</th>
+                                    <th>Thể tích (m3)</th>
+                                    <th>Ngày tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Packages != null && Model.Packages.Count > 0)
+                                {
+                                    foreach (var item in Model.Packages)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.TrackingNumber</td>
+                                            <td>@item.PackageNumber</td>
+                                            <td>@(((PackageDeliveryStatusEnum)item.ShippingStatus).GetDescription())</td>
+                                            <td>@item.Weight</td>
+                                            <td>@item.Volume</td>
+                                            <td>@item.CreationTime</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" id="DivConfirmPayment">
+                    @if (Model.Dto.Status == (int)DeliveryRequestStatus.New)
+                    {
+                        <h4>
+                            @L("PaymentMethod")
+                        </h4>
+                    }
+                    <form method="post" id="form-payment-confirm">
+                        <input type="hidden" name="deliveryRequestId" value="@Model.Dto.Id" />
+                        <div class="form-group">
+                            <div class="col-md-3">
+
+                                @if (Model.Dto.Status == (int)DeliveryRequestStatus.New)
+                                {
+                                    <select class="form-control" id="paymentMethod" name="paymentMethod">
+                                        <option value="2">@L("Debt")</option>
+                                        <option value="1">@L("Wallet")</option>
+                                    </select>
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default close-button" id="cancelDeliveryRequest" data-dismiss="modal">@L("Cancel")</button>
+                           @*  @if (AppSession.IsCustomer)
+                            {
+                                if (Model.Dto.PaymentStatus == (int)PaymentStatus.Unpaid)
+                                {
+                                    <button type="submit" class="btn btn-primary save-button">@L("SubmitPayment")</button>
+                                }
+                                if (Model.Dto.Status == (int)DeliveryRequestStatus.New)
+                                {
+                                    <button type="button" class="btn btn-danger cancel-button">@L("CancelRequest")</button>
+                                }
+                            }
+                            else
+                            {
+                                if (Model.Dto.Status == (int)DeliveryRequestStatus.Processed)
+                                {
+                                    <button type="button" class="btn btn-success deliver-button">@L("DeliverOrder")</button>
+                                }
+                                if (Model.Dto.Status == (int)DeliveryRequestStatus.Delivery)
+                                {
+                                    <button type="button" class="btn btn-secondary delivered-button">@L("OrderDelivered")</button>
+                                }
+                            } *@
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Danh sách đơn hàng -->
+    </section>
+
+}

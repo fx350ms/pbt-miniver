@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/views/shared/layout/_frontlayout.cshtml";
+}
+
+<header class="mb-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <img src="~/images/logo.png" alt="Logo" class="img-fluid my-3">
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h3 class="text-center mb-4">Tra cứu vận đơn</h3>
+        <form id="tracking-form" method="post" asp-action="Lookup" method="post">
+            <div class="mb-3">
+                <label for="waybillCode" class="form-label">Mã vận đơn</label>
+                <input type="text" class="form-control" id="waybillCode" name="waybillCode" placeholder="Nhập mã vận đơn" required>
+            </div>
+            
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Tra cứu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@if (Model.TrackingInfo != null)
+{
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <h4 class="text-center mb-4">Thông tin vận đơn</h4>
+            <div class="card">
+                <div class="card-body">
+                    <p><strong>Mã vận đơn:</strong> @Model.TrackingInfo.WaybillCode</p>
+                    <p><strong>Trạng thái:</strong> @Model.TrackingInfo.Status</p>
+                    <p><strong>Ngày gửi:</strong> @Model.TrackingInfo.SentDate</p>
+                    <p><strong>Ngày nhận:</strong> @Model.TrackingInfo.ReceivedDate</p>
+                    <p><strong>Người nhận:</strong> @Model.TrackingInfo.ReceiverName</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+        (function () {
+
+        var _$form = $('#tracking-form');
+
+        _$form.submit(function (e) {
+            e.preventDefault();
+
+            if (!_$form.valid()) {
+                return;
+            }
+
+            abp.ui.setBusy(
+                $('body'),
+
+                abp.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    url: _$form.attr('action'),
+                    data: _$form.serialize()
+                })
+            );
+        });
+    })();
+
+</script>

@@ -1,0 +1,83 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.Common.Modals
+@using pbt.Waybills.Dto;
+@using pbt.Web.Models.Waybills
+@{
+    ViewBag.Title = L("WaybillManagement");
+    ViewBag.CurrentPageName = PageNames.Waybills;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Waybills/rematch.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Waybills/rematch.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+@model RematchWaybillModel
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateWaybill")</h1>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="waybillCreate">
+                        <form name="waybillCreateForm" role="form" class="form-horizontal">
+                        <input type ="hidden" name="WaybillIds" value="@Model.OrderIds" />
+                        <input type="hidden" name="CurrentCustomerId" value="@Model.CurrentCustomerId" />
+                            <div class="modal-body">
+                                <div class="form-group row required">
+                                    <label class="col-md-3 col-form-label">@L("SelectCustomer")</label>
+                                    <div class="col-md-9">
+                                        <select class="select2 form-control" id="select-customer" name="CustomerId" style="width: 100%;">
+                                            <option value="">@L("SelectCustomer")</option>
+                                            @foreach (var customer in Model.Customers)
+                                            {
+                                                <option value="@customer.Id">@customer.Username</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row required">
+                                    <label class="col-md-3 col-form-label">@L("WaybillCodesCommaSeparated")</label>
+                                    <div class="col-md-9">
+                                        <textarea type="text" class="form-control" name="WaybillCodes" 
+                                        required placeholder="Enter waybill codes separated by commas" rows="10"  readonly >@Model.WaybillNumberStr </textarea>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 

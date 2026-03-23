@@ -1,0 +1,131 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>pbt.Web.Mvc</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>pbt.Web.Mvc</PackageId>
+    <UserSecretsId>AbpCompanyName-pbt-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+    <RootNamespace>pbt.Web</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Models\FundAcount\**" />
+    <Compile Remove="Views\Export\**" />
+    <Compile Remove="Views\FileUploads\**" />
+    <Compile Remove="wwwroot\view-resources\Views\Export\**" />
+    <Content Remove="Models\FundAcount\**" />
+    <Content Remove="Views\Export\**" />
+    <Content Remove="Views\FileUploads\**" />
+    <Content Remove="wwwroot\view-resources\Views\Export\**" />
+    <EmbeddedResource Remove="Models\FundAcount\**" />
+    <EmbeddedResource Remove="Views\Export\**" />
+    <EmbeddedResource Remove="Views\FileUploads\**" />
+    <EmbeddedResource Remove="wwwroot\view-resources\Views\Export\**" />
+    <None Remove="Models\FundAcount\**" />
+    <None Remove="Views\Export\**" />
+    <None Remove="Views\FileUploads\**" />
+    <None Remove="wwwroot\view-resources\Views\Export\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\DeliveryNote\Detail2.cshtml" />
+    <Content Remove="Views\DeliveryNote\Pending.AdvancedSearch.cshtml" />
+    <Content Remove="Views\Operate\ScanBarCode.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="wwwroot\**\*;Views\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pbt.Application.Cache\pbt.Application.Cache.csproj" />
+    <ProjectReference Include="..\pbt.Web.Core\pbt.Web.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+    <PackageReference Include="MassTransit" Version="8.5.7" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.2" />
+    <PackageReference Include="Abp.HangFire" Version="9.4.1" />
+    <PackageReference Include="Abp.RedisCache" Version="9.4.1" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="9.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Logs\" />
+    <Folder Include="Models\FileUploads\" />
+    <Folder Include="wwwroot\view-resources\Views\_Bundles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Customers\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Customers\_CreateModal.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Customers\_EditModal.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\CustomerTransactions\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\SaleAdmin\CreateOrderBySale.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\view-resources\Views\Orders\CreateMyOrder.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\view-resources\Views\Users\Info.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\view-resources\Views\Users\Info.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Bags\Create.cshtml" />
+    <AdditionalFiles Include="Views\Bags\Index.AdvancedSearch.cshtml" />
+    <AdditionalFiles Include="Views\Bags\Index.cshtml" />
+    <AdditionalFiles Include="Views\Bags\Pending.cshtml" />
+    <AdditionalFiles Include="Views\Bags\_PrintStamp.cshtml" />
+    <AdditionalFiles Include="Views\DeliveryRequest\DeliveryRequestging.cshtml" />
+    <AdditionalFiles Include="Views\DeliveryRequest\Detail.cshtml" />
+    <AdditionalFiles Include="Views\DeliveryRequest\Pending.AdvancedSearch.cshtml" />
+    <AdditionalFiles Include="Views\DeliveryNote\Detail2.cshtml" />
+    <AdditionalFiles Include="Views\DeliveryNote\Pending.AdvancedSearch.cshtml" />
+    <AdditionalFiles Include="Views\Operate\ScanBarCode.cshtml" />
+    <AdditionalFiles Include="Views\Operate\Index.cshtml" />
+  </ItemGroup>
+</Project>

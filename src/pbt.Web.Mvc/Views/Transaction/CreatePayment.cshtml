@@ -1,0 +1,144 @@
+﻿@using pbt.Transactions.Dto
+@using pbt.Web.Models.Common.Modals
+@using pbt.FundAccounts.Dto
+
+@model PaymentTransactionDto
+@{
+
+    var activeFundAccounts = ViewBag.ActiveFundAccounts as List<FundAccountDto>;
+}
+@section scripts
+{
+     
+    <environment names="Development">
+        <script src="~/view-resources/Views/Transaction/CreatePayment.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Transaction/CreatePayment.min.js" asp-append-version="true"></script>
+    </environment>
+}
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            @*  <div class="col-sm-6">
+                <h1>@L("Transactions")</h1>
+            </div>
+            <div class="col-sm-6">
+
+            </div> *@
+
+            <div class="col-md-12">
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new
+                         ModalHeaderViewModel(L("CreatePayment")))
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="DivReceiptCreate">
+                        <form name="paymentCreateForm" role="form" class="form-horizontal">
+                            <div class="tab-content  ">
+                                <div role="tabpanel" class="tab-pane container active" id="create-payment-details">
+                                    <div class="form-group row required">
+                                        <label class="col-md-3 col-form-label">@L("TransactionType")</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="TransactionType" required id="TransactionType">
+                                                @* Thanh toán khoản chi khác *@
+                                                <option value="0">@L("Default")</option>
+                                                @* Khách hàng nạp tiền *@
+                                                <option selected="selected" value="1">@L("Deposit")</option>
+                                                @* Khách hàng rút tiền *@
+                                                <option value="3">@L("Withdraw")</option> 
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="PayerField">
+                                        <label class="col-md-3 col-form-label">@L("Receiver")</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control select2" name="RecipientPayer" required>
+                                                <!-- Populate this dropdown with available customers using Select2 -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="RefCodeField">
+                                        <label class="col-md-3 col-form-label">@L("RefCode")</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" placeholder="@L("InputRefCode")" name="RefCode" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="AmountField">
+                                        <label class="col-md-3 col-form-label">@L("Amount")</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" name="Amount" placeholder="@L("InputAmount")" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="TransactionTimeField">
+                                        <label class="col-md-3 col-form-label">@L("TransactionTime")</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="TransactionTime"
+                                                   value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="TransactionContentField">
+                                        <label class="col-md-3 col-form-label">@L("TransactionContent")</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="TransactionContent">
+
+                                    </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="NotesField">
+                                        <label class="col-md-3 col-form-label">@L("Notes")</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="Notes"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row required" id="FundAccountField">
+                                        <label class="col-md-3 col-form-label">@L("FundAccount")</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="FundAccountId" required>
+                                                @foreach (var account in activeFundAccounts)
+                                                {
+                                                    <option value="@account.Id">@account.AccountName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                  @*   <div class="form-group row required" id="OrderIdField">
+                                        <label class="col-md-3 col-form-label">@L("OrderId")</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="OrderId">
+                                        </div>
+                                    </div> *@
+                                </div>
+                            </div>
+
+                            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,109 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Customers
+@using pbt.Customers.Dto
+
+@model CreateUpdateCustomerDto
+@{
+    Layout = null;
+}
+<div class="modal fade" id="CustomerCreateModal" tabindex="-1" role="dialog" aria-labelledby="CustomerCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewCustomer")))
+            <form name="CustomerCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" role="tab" href="#create-Customer-details">@L("ParentDetails")</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active" id="create-Customer-details">
+
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("FullName")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="FullName" asp-for="FullName" required>
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Email")</label>
+                                <div class="col-md-9">
+                                    <input type="email" class="form-control" name="Email" asp-for="Email" required>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("PhoneNumber")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="PhoneNumber" asp-for="PhoneNumber" required>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("Address")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="Address" asp-for="Address">
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("DateOfBirth")</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="DateOfBirth" asp-for="DateOfBirth">
+                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("Gender")</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="Gender" asp-for="Gender">
+                                        <option value="Male">@L("Male")</option>
+                                        <option value="Female">@L("Female")</option>
+                                        <option value="Other">@L("Other")</option>
+                                    </select>
+                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Status")</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="Status" asp-for="Status">
+                                        <option value="Active">@L("Active")</option>
+                                        <option value="Inactive">@L("Inactive")</option>
+                                    </select>
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("Notes")</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="Notes" asp-for="Notes"></textarea>
+                                    <span asp-validation-for="Notes" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

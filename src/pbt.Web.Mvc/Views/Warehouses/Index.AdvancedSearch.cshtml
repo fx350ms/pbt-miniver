@@ -1,0 +1,40 @@
+﻿<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#FilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+    <div class="collapse" id="FilterCollapse">
+        <form id="SearchForm" class="form-horizontal">
+        <div class="input-group">
+            <div class="form-row ">
+                <div class="col-md-2">
+                    <label for="Keyword">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <!-- Customer -->
+                <div class="col-md-2">
+                    <label>@L("FromWarehouse")</label>
+                    <select class="select2 form-control" id="CustomerSelect" name="FromWarehouseId" style="width: 100%;">
+                        <option value="-1">-- @L("All") --</option>
+
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>@L("ToWarehouse")</label>
+                    <select class="select2 form-control" id="CustomerSelect" name="FromWarehouseId" style="width: 100%;">
+                        <option value="-1">-- @L("All") --</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-2 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+           
+        </div>
+    </form>
+    </div>
+</div>

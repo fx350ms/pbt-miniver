@@ -1,0 +1,190 @@
+﻿@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.Orders
+@using pbt.Web.Models.Common.Modals
+
+@model OrderListIndexModel
+
+@inject pbtAppSession AppSession
+
+@{
+    ViewBag.Title = L("Pages_Orders");
+    ViewBag.CurrentPageName = PageNames.Orders;
+
+    // Lấy trạng thái và màu sắc từ packageDeliveryStatusDescriptions
+   
+
+}
+@section scripts
+{
+    <script>
+        var currentStatus = '@(Model.OrderStatus)';
+        $('#select-filter-order-status').val(currentStatus);
+    </script>
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/Index.min.js" asp-append-version="true"></script>
+    </environment>
+
+}
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        /*    .dataTables_wrapper table td{
+                    padding: 5px;
+                }
+
+                .dataTables_wrapper table th {
+                    padding: 8px;
+                } */
+
+
+        .timeline-item {
+            /* Use flexbox to put the label and value side-by-side */
+            display: flex;
+            /* Ensure they are spread out */
+            justify-content: space-between;
+        }
+
+            .timeline-item .label {
+                /* 1. Label on the left, text CANNED RIGHT */
+                /* Give the label a fixed width to ensure the values line up vertically */
+                min-width: 120px; /* Adjust this value as needed */
+                text-align: left;
+                /* Make the label visually distinct like the original image */
+                font-weight: normal;
+                margin-right:2px;
+            }
+
+            .timeline-item .value {
+                /* 2. Value on the right, text CANNED LEFT */
+                /* Allow the value to take the rest of the space */
+                flex-grow: 1;
+                text-align: left;
+                /* Use bolding to match the original appearance */
+                font-weight: bold;
+            }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Pages_Orders")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+               
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @await Html.PartialAsync("~/Views/Orders/Index.AdvancedSearch.cshtml", new OrderListIndexModel() { Customers = Model.Customers })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body custom-card-body">
+                        <div class="table-responsive">
+                            <table id="OrdersTable" class="table table-striped table-bordered table-parent">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th width="20"></th>
+                                        <th>@L("Customer")</th>
+                                        <th>@L("WaybillNumber")</th>
+                                        <th>@L("LineVC")</th>
+                                        <th>@L("Status")</th>
+                                        <th>@L("BagCoverWeight")</th>
+                                        <th>@L("Weight")</th>
+                                        <th>@L("Volume")</th>
+                                        <th>Phí vận chuyển TQ</th>
+                                        <th colspan="2" class="text-center">Phí dịch vụ</th>
+                                        <th>@L("TotalCost")</th>
+                                        <th>@L("TimeLine")</th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="PackageListModel" tabindex="-1" role="dialog" aria-labelledby="OrderEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("PackageList")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="OrderNote" tabindex="-1" role="dialog" aria-labelledby="OrderNoteModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("OrderNote")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Danh sách ghi chú -->
+
+                        <input type="hidden" id="hidden-order-id" />
+                        <div class="col-md-8 border-end" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@L("Name")</th>
+                                        <th>@L("CreationTime")</th>
+                                        <th>@L("Content")</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="noteList">
+                                    @* Dữ liệu sẽ được render động bằng JS *@
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Nhập ghi chú mới -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="noteContent">@L("NewNote")</label>
+                                <textarea id="noteContent" class="form-control" rows="6" placeholder="@L("EnterNoteHere")"></textarea>
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button id="btnSaveNote" type="button" class="btn btn-primary btn-save-note">@L("SaveNote")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- modal-body -->
+            </div>
+        </div>
+    </div>
+</div>

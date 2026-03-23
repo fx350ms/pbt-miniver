@@ -1,0 +1,87 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using pbt.ApplicationUtils
+@using pbt.Web.Helpers
+
+@model pbt.Web.Models.ShippingCosts.ShippingCostIndexViewModel
+
+<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#ShippingCostFilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+
+    <div class="collapse" id="ShippingCostFilterCollapse">
+        <form id="ShippingCostSearchForm" class="form-horizontal" onsubmit="return false;">
+            <div class="form-row">
+                <!-- Shipping Partner -->
+                <div class="col-md-3">
+                    <label>@L("ShippingPartner")</label>
+                    <select class="select2 form-control" id="ShippingPartnerSelect" name="ShippingPartnerId" style="width: 100%;">
+                        <option value="-1">-- @L("All") --</option>
+                        @foreach (var partner in Model.ShippingPartners)
+                        {
+                            <option value="@partner.Id">@partner.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- From Warehouse -->
+                <div class="col-md-3">
+                    <label>@L("FromWarehouse")</label>
+                    <select class="select2 form-control" id="FromWarehouseSelect" name="FromWarehouseId" style="width: 100%;">
+                        <option value="-1">-- @L("All") --</option>
+                        @foreach (var warehouse in Model.WarehousesCN)
+                        {
+                            <option value="@warehouse.Id">@warehouse.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- To Warehouse -->
+                <div class="col-md-3">
+                    <label>@L("ToWarehouse")</label>
+                    <select class="select2 form-control" id="ToWarehouseSelect" name="ToWarehouseId" style="width: 100%;">
+                        <option value="-1">-- @L("All") --</option>
+                        @foreach (var warehouse in Model.WarehousesVN)
+                        {
+                            <option value="@warehouse.Id">@warehouse.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-3">
+                    <label>@L("Status")</label>
+                    <select name="Status" class="form-control" id="ShippingCostStatus">
+                        <option value="-1">-- @L("All") --</option>
+                        <option value="1">@L("Active")</option>
+                        <option value="0">@L("Inactive")</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row mt-3">
+
+                <div class="col-md-3">
+                    <label for="EffectiveDate">@L("EffectiveDate")</label>
+                    <input type="text" class="form-control date-range" name="EffectiveDate" id="EffectiveDate" target="effective-date">
+                    <input type="hidden" class="form-control float-right start-date effective-date" name="EffectiveStartDateStr" id="start-effective-date">
+                    <input type="hidden" class="form-control float-right end-date effective-date" name="EffectiveEndDateStr" id="end-effective-date">
+                </div>
+
+                <!-- Keyword -->
+                <div class="col-md-3">
+                    <label for="Keyword">@L("Keyword")</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+
+                <!-- Search Button -->
+                <div class="col-md-3 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

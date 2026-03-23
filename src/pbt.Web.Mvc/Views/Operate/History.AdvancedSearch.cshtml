@@ -1,0 +1,56 @@
+﻿@using pbt.ApplicationUtils
+@model pbt.Web.Models.Operate.ScanCodeHistoryViewModel
+<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+    <div class="collapse" id="PackageFilterCollapse">
+        <form id="CreateBarCodeSearchForm" class="form-horizontal">
+            <input type="hidden" name="FilterType" value="all" />
+            <div class="form-row mb-3">
+                
+                <div class="form-group col-md-2">
+                    <label for="action">Hành động</label>
+                    <select class="form-control" id="action" name="ActionType">
+                        <option selected>Chọn</option>
+                        <option value="@((int)OperateActionType.In)">Nhập</option>
+                        <option value="@((int)OperateActionType.Out)">Xuất</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="action">@L("Select-warehouse")</label>
+                    <select class="form-control" name="Warehouse">
+                        <option selected>Chọn</option>
+                        <option value="@((int)WarehouseType.Cn)"></option>
+                        <option value="@((int)WarehouseType.Vn)"></option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>@L("UserScan")</label>
+                    <select class="select2 form-control" id="select-user-scan" name="UserId" style="width: 100%;"></select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy") - @DateTime.Now.ToString("dd/MM/yyyy")">
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy")">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                </div>
+                <div class="col-md-2">
+                    <label for="Keyword">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+            </div>
+
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-12 text-right">
+                    <button type="button" class="btn btn-light btn-refresh" id="ClearSearch">
+                        <i class="fas fa-sync-alt"></i> Làm mới bộ lọc
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-search ml-2">Tìm kiếm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

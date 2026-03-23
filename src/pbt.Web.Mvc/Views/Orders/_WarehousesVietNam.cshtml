@@ -1,0 +1,18 @@
+﻿@using System.Collections.Generic;
+@using pbt.Warehouses.Dto;
+
+@model List<WarehouseDto>
+ 
+
+@if (Model != null && Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <input type="radio" id="rd-stock-@item.Id" name="VNWarehouseId" data-target="stock-@item.Id" value="@item.Id" target="VNWarehouseId">
+                <label class="control-label" for="rd-stock-@item.Id">@item.Name : @item.FullAddress </label>
+            </div>
+         </div>
+    }
+}

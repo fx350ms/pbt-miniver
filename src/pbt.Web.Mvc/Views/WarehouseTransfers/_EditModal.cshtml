@@ -1,0 +1,101 @@
+﻿@using pbt.Web.Models.Warehouses
+@using pbt.Web.Models.Common.Modals
+
+@model CreateUpdateWarehouse
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditWarehouse")))
+<form name="WarehouseEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Warehouse.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Name")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Name" value="@Model.Warehouse.Name">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Code")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Code" value="@Model.Warehouse.Code">
+                    </div>
+                </div>
+
+
+                
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Country")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="CountryId" id="CountryId">
+                            <option value="2" selected="selected">@L("Vietnam")</option>
+                            <option value="1">@L("China")</option>
+                        </select>
+                        <input type="hidden" class="form-control" name="Country" id="Country">
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Phone")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Phone" value="@Model.Warehouse.Phone">
+                    </div>
+                </div>
+
+                <div class="form-group row required" data-country="2">
+                    <label class="col-md-3 col-form-label">@L("City")</label>
+                    <div class="col-md-9">
+                        <select id="EditProvinceId" class="form-control" name="City" value="@Model.Warehouse.City">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row required" data-country="2">
+                    <label class="col-md-3 col-form-label">@L("District")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="District" id="EditDistrictId" value="@Model.Warehouse.District">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row required" data-country="2">
+                    <label class="col-md-3 col-form-label">@L("Ward")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="Ward" id="EditWardId" value="@Model.Warehouse.Ward">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Address")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Address" id="EditAddress" value="@Model.Warehouse.Address">
+                        <input type="hidden" class="form-control" name="FullAddress" id="fullAddress">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Status")</label>
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="Status" @(Model.Warehouse.Status ? "checked" : "") value="true">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Warehouses/_EditModal.js" asp-append-version="true"></script>

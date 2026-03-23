@@ -1,0 +1,89 @@
+@using pbt.FundAccounts.Dto;
+@using pbt.Web.Models.Common.Modals
+
+@model FundAccountDto
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditFundAccount")))
+<form name="fundAccountEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab"
+                    href="#edit-fundAccount-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("AccountName")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="AccountName" minlength="1"
+                            value="@Model.AccountName" required>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("AccountType")</label>
+                    <div class="col-md-9">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="AccountType" id="bank" value="1"
+                                @(Model.AccountType == 1 ? "checked" : "") required>
+                            <label class="form-check-label" for="bank">@L("Bank")</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="AccountType" id="cash" value="2"
+                                @(Model.AccountType == 2 ? "checked" : "") required>
+                            <label class="form-check-label" for="cash">@L("Cash")</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Currency")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Currency" value="@Model.Currency" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("BankName")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="BankName" value="@Model.BankName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("AccountNumber")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="AccountNumber" value="@Model.AccountNumber">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("AccountHolder")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="AccountHolder" value="@Model.AccountHolder">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Notes")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Notes" value="@Model.Notes">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-9 offset-md-3">
+                        <div class="form-check">
+                            <input type="hidden" name="IsActived" id="IsActived" />
+                            <input class="form-check-input" type="checkbox" id="CheckIsActived">
+                            <label class="form-check-label" for="CheckIsActived">@L("IsActived")</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/FundAccount/_EditModal.js" asp-append-version="true"></script>

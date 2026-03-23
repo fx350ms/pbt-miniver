@@ -1,0 +1,42 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Customers
+@using pbt.CustomerAddresss.Dto
+@using pbt
+
+@model CustomerAddressDto
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="CustomerAddressCreateModal" tabindex="-1" role="dialog" aria-labelledby="CustomerCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewCustomerAddress")))
+            <form name="CustomerAddressCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    
+                    <div class="tab-content mt-4 ">
+                        <div role="tabpanel" class="tab-pane container active form-content">
+                            <input type="hidden" name="CustomerId"  />
+                            <input type="hidden" name="FullAddress" />
+                            <!-- Address -->
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Address")</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" id="Address" name="FullAddress" rows="3" required maxlength="500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                    <button type="submit" class="btn btn-primary save-address-button">@L("Save")</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+

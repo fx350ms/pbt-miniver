@@ -1,0 +1,44 @@
+﻿
+@using Abp.Application.Services.Dto;
+@using pbt.Users.Dto;
+@using pbt.Web.Models.Common.Modals;
+@using pbt.Web.Models.Customers;
+@{
+    Layout = null;
+}
+
+@model LinkToUserModel
+
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("LinkToUser")))
+<form name="CustomerAssignToSaleForm" role="form" class="form-horizontal">
+   <input type="hidden" name="Id"  value="@Model.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("SelectUser")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="UserId" >
+                            @if (Model != null && Model.Users != null && Model.Users.Count > 0)
+                            {
+                                foreach (var item in Model.Users)
+                                {
+                                    <option value="@item.Id">@item.FullName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Customers/_LinkToUserModal.js" asp-append-version="true"></script>

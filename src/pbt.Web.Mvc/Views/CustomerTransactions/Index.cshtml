@@ -1,0 +1,190 @@
+﻿@using pbt.Web.Startup
+
+@{
+    ViewBag.Title = L("CustomerTransactions");
+    ViewBag.CurrentPageName = PageNames.Packages;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/CustomerTransactions/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/CustomerTransactions/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CustomerTransactions")</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link nav-package active" data-type="all" href="#">Tất cả</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-package" href="#" data-type="shipment">Nạp tiền</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-package" data-type="deleted" href="#">Thanh toán</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-package" data-type="fail" href="#">Rút tiền</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-package" data-type="non-pack" href="#">Khiếu nại hoàn tiền</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                               
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/CustomerTransactions/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <div class="card-body">
+                        <div class="text-right"><a href="/DeliveryRequest/create" class="btn btn-primary">Tạo mới</a></div>
+                        <div class="table-responsive">
+                            <table id="DepartmentsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Thời gian</th>
+                                        <th>Mã giao dịch</th>
+                                        <th>Loại giao dịch</th>
+                                        <th>Nội dung</th>
+                                        <th>Thời gian nhận</th>
+                                        <th>Giá trị</th>
+                                        <th>Số dư sau giao dịch</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2025-01-18 10:00</td>
+                                        <td>GD00123456</td>
+                                        <td>Nạp tiền</td>
+                                        <td>Nạp tiền qua ví điện tử</td>
+                                        <td>2025-01-18 10:05</td>
+                                        <td>500,000 VNĐ</td>
+                                        <td>5,500,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>2025-01-18 14:20</td>
+                                        <td>GD00123457</td>
+                                        <td>Chuyển tiền</td>
+                                        <td>Chuyển tiền đến tài khoản ABC</td>
+                                        <td>2025-01-18 14:25</td>
+                                        <td>2,000,000 VNĐ</td>
+                                        <td>3,500,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>2025-01-18 18:45</td>
+                                        <td>GD00123458</td>
+                                        <td>Rút tiền</td>
+                                        <td>Rút tiền tại ATM</td>
+                                        <td>2025-01-18 18:50</td>
+                                        <td>1,000,000 VNĐ</td>
+                                        <td>2,500,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>2025-01-19 09:15</td>
+                                        <td>GD00123459</td>
+                                        <td>Nhận tiền</td>
+                                        <td>Nhận tiền từ tài khoản XYZ</td>
+                                        <td>2025-01-19 09:20</td>
+                                        <td>1,500,000 VNĐ</td>
+                                        <td>4,000,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>2025-01-19 12:30</td>
+                                        <td>GD00123460</td>
+                                        <td>Thanh toán</td>
+                                        <td>Thanh toán hóa đơn điện</td>
+                                        <td>2025-01-19 12:35</td>
+                                        <td>300,000 VNĐ</td>
+                                        <td>3,700,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>2025-01-19 15:50</td>
+                                        <td>GD00123461</td>
+                                        <td>Nạp tiền</td>
+                                        <td>Nạp tiền qua ngân hàng</td>
+                                        <td>2025-01-19 15:55</td>
+                                        <td>1,000,000 VNĐ</td>
+                                        <td>4,700,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>2025-01-19 18:10</td>
+                                        <td>GD00123462</td>
+                                        <td>Chuyển tiền</td>
+                                        <td>Chuyển tiền đến tài khoản DEF</td>
+                                        <td>2025-01-19 18:15</td>
+                                        <td>1,200,000 VNĐ</td>
+                                        <td>3,500,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>2025-01-19 20:45</td>
+                                        <td>GD00123463</td>
+                                        <td>Rút tiền</td>
+                                        <td>Rút tiền tại quầy giao dịch</td>
+                                        <td>2025-01-19 20:50</td>
+                                        <td>2,000,000 VNĐ</td>
+                                        <td>1,500,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>2025-01-20 08:00</td>
+                                        <td>GD00123464</td>
+                                        <td>Nhận tiền</td>
+                                        <td>Nhận tiền từ tài khoản GHI</td>
+                                        <td>2025-01-20 08:05</td>
+                                        <td>2,500,000 VNĐ</td>
+                                        <td>4,000,000 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>2025-01-20 10:30</td>
+                                        <td>GD00123465</td>
+                                        <td>Thanh toán</td>
+                                        <td>Thanh toán mua sắm online</td>
+                                        <td>2025-01-20 10:35</td>
+                                        <td>800,000 VNĐ</td>
+                                        <td>3,200,000 VNĐ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/views/shared/layout/_frontlayout.cshtml";
+}
+@using pbt.Orders.Dto;
+
+@model TrackingViewModel
+
+@section styles {
+    <link href="~/libs/bootstrap-steps/bootstrap-steps.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-8/assets/css/timeline-8.css">
+    <style>
+        .bsb-timeline-8 {
+            --bsb-tl-circle-border-color: #28a745;
+            --bsb-tl-circle-color: #28a745;
+        }
+
+        .step-time {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .step-title {
+            height: 55px;
+            align-content: end;
+        }
+
+        #progress {
+            margin-bottom: 0;
+            margin-top: 100px;
+        }
+
+        span.step-button {
+            margin-top: 20px;
+        }
+
+            span.step-button > i {
+                margin-top: 10px;
+            }
+    </style>
+}
+
+<header class="mb-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <a href="~/">
+                    <img src="~/img/logo.png" alt="Logo" class="img-fluid my-3">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h3 class="text-center mb-4">Tra cứu vận đơn</h3>
+        <form id="tracking-form" method="post" asp-action="Lookup" method="post">
+            <div class="mb-3">
+                <label for="waybillCode" class="form-label">Mã vận đơn</label>
+                <input type="text" class="form-control" id="waybillCode" name="waybillCode" value="@Model.WaybillCode" placeholder="Nhập mã vận đơn" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Tra cứu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="lookup-result-container" class="mt-4">
+    @if (Model != null && Model.TrackingResult != null)
+    {
+        @await Html.PartialAsync("~/Views/Tracking/_lookupResult.cshtml", Model.TrackingResult)
+    }
+
+</div>
+@section scripts {
+    <script>
+        (function () {
+            var _$form = $('#tracking-form');
+            var _$resultContainer = $('#lookup-result-container');
+
+            _$form.submit(function (e) {
+                e.preventDefault();
+
+                if (!_$form.valid()) {
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: _$form.attr('action'),
+                    data: _$form.serialize(),
+                    success: function (response) {
+                        // Load the partial view into the result container
+                        _$resultContainer.html(response);
+                    },
+                    error: function (xhr) {
+                        // Display error message
+                        _$resultContainer.html('<div class="alert alert-danger text-center">Có lỗi xảy ra khi tra cứu vận đơn.</div>');
+                    },
+                    complete: function () {
+
+                    }
+                });
+
+            });
+
+            // const waybill = new URLSearchParams(window.location.search).get('waybill');
+            // if (waybill != null) {
+            //     _$form.trigger('submit');
+            // }
+        })();
+    </script>
+}

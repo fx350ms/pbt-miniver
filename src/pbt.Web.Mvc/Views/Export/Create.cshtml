@@ -1,0 +1,406 @@
+﻿@using pbt.Web.Startup
+@using pbt
+@using pbt.ApplicationUtils
+
+@model pbt.Web.Models.DeliveryNote.CreateUpdateDeliveryNote
+
+@{
+    ViewBag.Title = L("CreateExport");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Export/Create.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Export/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles
+{
+    <style>
+        .custom-container {
+            max-width: 100%;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .btn-active {
+            background-color: #f5c97b;
+            color: #fff;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-check-label {
+            font-weight: 500;
+        }
+
+        .customer-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .customer-item:last-child {
+            border-bottom: none;
+        }
+
+        .customer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .customer-detail {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .info-card-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .info-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card .card-body .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-body .header .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #6c757d;
+            margin-right: 15px;
+        }
+
+        .card-body .header .balance {
+            margin-left: 50px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .balance div {
+            color: #28a745;
+        }
+
+        thead tr th {
+            background: #c0d8ff;
+        }
+
+        .customer-list {
+            max-height: calc(100vh - 470px);
+            overflow-y: scroll;
+        }
+
+        .customer-data {
+
+        }
+
+        .customer-item {
+            cursor: pointer;
+        }
+
+        .customer-item:hover {
+            background: #fff6da;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-4">
+            <h1>@L("CreateExport")</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <input type="hidden" name="bagId" value="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="custom-container">
+                            <div class="form-group">
+                                <label class="section-title">Kho xuất</label>
+                                <div class="d-flex">
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="kho_xuat" id="kho_vietnam"
+                                               value="vietnam" checked>
+                                        <label class="form-check-label" for="kho_vietnam">Việt Nam</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="section-title">Đối tượng</label>
+                                <button class="btn btn-active" disabled>Khách hàng</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="section-title">Quét mã</label>
+                               @*  <div class="d-flex">
+                                    <div class="form-check mr-3">
+                                        <input class="form-check-input" type="radio" name="scanCodeType" id="bao"
+                                               value="bag">
+                                        <label class="form-check-label" for="bao">Bao</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="scanCodeType" id="kien"
+                                               value="package" checked>
+                                        <label class="form-check-label" for="kien">Kiện</label>
+                                    </div>
+                                </div> *@
+                                <input type="text" class="form-control mt-2" id="scanCode" placeholder="Mã kiện">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h5 class="customer-title">Danh sách YCG</h5>
+                        <div class="customer-list" id="customer-list">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="card info-card" id="select-customer">
+                    <div class="card-body">
+                        <div class="info-card-title">Thông tin phiếu xuất</div>
+                        <form>
+                            <div class="form-group">
+                                <label for="customer">@L("CustomerName")</label>
+                                <select name="CustomerId" class="form-control select2" id="customer-select" asp-for="CustomerDto.Id" asp-items="@Model.Customers">
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="customer-data d-none card info-card">
+                    <div class="card-body">
+                        <div class="header">
+                            <div class="avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h5 class="m-0" id="customerName"></h5>
+                                <small id="phoneNumber"></small>
+                            </div>
+                            <div class="balance">
+                                <span>Số dư tài khoản</span>
+                                <div id="currentAmount"></div>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="receiver">Người nhận</label>
+                                    <input type="text" class="form-control" id="receiver" placeholder="Mr Tom">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="shippingFee">Phí vận chuyển quốc tế</label>
+                                    <input type="text" class="form-control mask-number" id="shippingFee" placeholder="Nhập phí vận chuyển">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="financialAmount">Phần âm tài chính</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mask-number" id="financialAmount" placeholder="1.234.567 đ">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              @*   <div class="form-group col-md-3">
+                                    <label for="codAmount">COD</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="codAmount"
+                                               placeholder="1.234.567 đ">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">đ</span>
+                                        </div>
+                                    </div>
+                                </div> *@
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="dimensions">Kích thước DxRxC (cm)</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="Length" placeholder="Dài">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="Width" placeholder="Rộng">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="Height" placeholder="Cao">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="deliveryFee">Phí giao hàng</label>
+                                    <input type="text" class="form-control mask-number" id="deliveryFee" placeholder="Nhập vào phí giao hàng">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="customer">@L("Reason")</label>
+                                        <select class="form-control" id="deliveryFeeReason">
+                                            <option value="@((int) DeliveryFeeType.WithFee)"> @L("DeliveryWithFee")</option>
+                                            <option value="@((int) DeliveryFeeType.WithoutFee)">@L("DeliveryWithoutFee")</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="recipientPhone">Đối tác vận chuyển</label>
+                                    <select id="shippingPartner" name="ShippingPartnerId" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="recipientPhone">Số điện thoại người nhận</label>
+                                    <input type="text" class="form-control" id="recipientPhone"
+                                           placeholder="">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="notes">Ghi chú</label>
+                                    <input type="text" class="form-control" id="notes" placeholder="Nhập ghi chú">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="recipientAddress">Địa chỉ người nhận</label>
+                                    <input type="text" class="form-control" id="recipientAddress" placeholder="Nhập địa chỉ giao hàng">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="customer-data d-none card">
+                    <div class="card-body">
+                        <div class="table-container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Left Table -->
+                                    <div class="table-wrapper">
+	                                    <div class="header-title">Danh sách có thể giao -  
+		                                    <span style="font-weight: bold" id="numberBag"></span> Bao  
+		                                    <span style="font-weight: bold" id="numberPackage"></span> Kiện
+		                                    <span style="font-weight: bold" id="totalWeight"></span> (kg)
+		                                    </div>
+                                        <table class="table table-bordered" id="bagRequest">
+                                            <thead>
+                                            <tr>
+                                                <th><input class="" type="checkbox"></th>
+                                                <th>MÃ XUẤT</th>
+                                                <th>Mã YCG</th>
+                                                <th>CÂN NẶNG/KT</th>
+                                                <th>GHI CHÚ</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Right Table -->
+                                    <div class="table-wrapper">
+                                        <div class="header-title">Danh sách sẵn sàng giao <label id="label-total"></label></div>
+                                        <table class="table table-bordered" id="tableReadyDelivery">
+                                            <thead>
+                                            <tr>
+                                                <th><input type="checkbox"></th>
+                                                <th>MÃ XUẤT</th>
+                                                <th>Mã YCG</th>
+                                                <th>CÂN NẶNG/KT</th>
+                                                <th>GHI CHÚ</th>
+                                                <th>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-data d-none text-right">
+                    <button class="btn btn-primary" id="save-exprot-delivery-note" style="width: 200px">Lưu và xuất kho</button>
+                    <button class="btn btn-primary" id="save-delivery-note" style="width: 100px">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">PTH5920112</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered" id="package-list">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>MÃ KIỆN</th>
+                            <th>MÃ ĐƠN HÀNG</th>
+                            <th>CÂN NẶNG</th>
+                            <th>KÍCH THƯỚC</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="labelContent" style="display: none;">
+
+    </div>
+</section>

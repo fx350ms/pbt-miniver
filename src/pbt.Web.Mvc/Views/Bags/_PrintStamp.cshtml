@@ -1,0 +1,53 @@
+
+<div id="labelContent" class="d-none">
+    <div class="label-container">
+        <div class="header">
+            <div style="width: 30%; font-size: 10px">
+                <div>Ngày tạo: <span id="createdDate"></span></div>
+                <div>Ngày xuất: <span id="exportDate"></span></div>
+            </div>
+            <div style="width: 70%">
+                <svg style="width: 100%" id="barcodeImage" class="barcode" alt=""></svg>
+            </div>
+            </div>
+        <div style="text-align: center; font-size: 34px; font-weight: bold; margin-top: 5px;">
+            <span id="bagNo"></span>
+        </div>
+        <div class="shipment-detail">
+            <table>
+                <tr><td rowspan="2" class="bold">FROM</td><td>Name: <span id="fromName"></span></td></tr>
+                <tr><td>Add: <span id="fromNameAdd"></span></td></tr>
+                <tr><td class="bold">TO</td><td ><span style="font-weight: bold" class="bold" id="toName"></span></td></tr>
+            </table>
+        </div>
+        <div class="shipment-detail">
+            <p>
+                Chi tiết hàng hóa
+            </p>
+            <table>
+                <tr>
+                    <th>Total packages</th>
+                    <th>Actual weight</th>
+                    <th>Volume</th>
+                </tr>
+                <tr>
+                    <td class="bold"><span id="packages"></span></td>
+                    <td class="bold"><span id="weight" style="font-weight: bold"></span></td>
+                    <td class="bold"><span id="volume"></span></td>
+                </tr>
+            </table>
+        </div>
+        <p>
+            Product Detail
+        </p>
+        <div class="product-detail">
+            <table id="packageTemplate">
+                <tr><th>Name</th><th>Quantity</th></tr>
+            </table>
+        </div>
+        @* <div class="footer"> *@
+        @*     <div>Payment COD:</div> *@
+        @*     <div>Receiver's signature <p style="line-height: 0; font-size: 11px">(Conrm intact goods)</p></div> *@
+        @* </div> *@
+    </div>
+</div>

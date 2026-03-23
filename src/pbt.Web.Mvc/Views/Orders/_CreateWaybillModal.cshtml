@@ -1,0 +1,29 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Waybills.Dto
+
+@model CreateWaybillSimpleDto
+@{
+    Layout = null;
+}
+<div class="modal fade" id="WaybillCreateModal" tabindex="-1" role="dialog" aria-labelledby="WaybillCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewWaybill")))
+            <form name="waybillCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("WaybillCode")</label>
+                        <div class="col-md-9">
+                            <input type="text" name="WaybillCode" class="form-control" required placeholder="@L("EnterWaybillCode")">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                    <button type="submit" class="btn btn-primary save-waybill-button">@L("Save")</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

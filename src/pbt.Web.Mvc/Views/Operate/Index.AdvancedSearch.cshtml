@@ -1,0 +1,70 @@
+﻿@using pbt.ApplicationUtils
+@model pbt.Web.Models.Operate.ScanCodeHistoryViewModel
+<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+    <div class="collapse" id="PackageFilterCollapse">
+        <form id="BarCodeSearchForm" class="form-horizontal">
+            
+            <div class="form-row mb-3">
+                <div class="col-md-2">
+                    <label for="Keyword">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="action">@L("ActionType")</label>
+                    <select class="form-control" id="action" name="ActionType">
+                        <option value="-1" selected>@L("Select")</option>
+                        <option value="@((int)OperateActionType.In)">Nhập</option>
+                        <option value="@((int)OperateActionType.Out)">Xuất</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="action">@L("CodeType")</label>
+                    <select class="form-control" id="action" name="CodeType">
+                        <option value="-1" selected>@L("Select")</option>
+                        <option value="@((int)CodeType.Bag)">@CodeType.Bag.GetDescription()</option>
+                        <option value="@((int)CodeType.Waybill)">@CodeType.Waybill.GetDescription()</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="action">@L("SelectWarehouse")</label>
+                    <select class="form-control" name="Warehouse">
+                        <option value="-1" selected>@L("Select")</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>@L("UserScan")</label>
+                    <select class="select2 form-control" id="select-user-scan" name="UserId" style="width: 100%;">
+                        <option value="-1" selected>@L("Select")</option>
+                        @if (Model != null && Model.WarehouseUser != null && Model.WarehouseUser.Count > 0)
+                        {
+                            foreach (var item in Model.WarehouseUser)
+                            {
+                                <option value="@item.Id">@item.UserName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy 00:00:00") - @DateTime.Now.ToString("dd/MM/yyyy 23:59:59")">
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date" value="@DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy HH:mm:ss")">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")">
+                </div>
+
+                <div class="col-md-1 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+           
+         
+        </form>
+    </div>
+
+</div>

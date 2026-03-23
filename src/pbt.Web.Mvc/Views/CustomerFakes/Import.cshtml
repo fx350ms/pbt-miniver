@@ -1,0 +1,56 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.CustomerFakes
+@using pbt.CustomerFakes.Dto;
+
+@{
+    ViewBag.Title = L("CustomerFakes");
+    ViewBag.CurrentPageName = PageNames.CustomerFake;
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CustomerFake")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="javascript:;" data-toggle="modal" data-target="#CustomerFakeCreateModal" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                              
+                                <div class="abp-advanced-search">
+                                    <form id="CustomerFakeImportForm" role="form" class="form-horizontal"  method="post" enctype="multipart/form-data">
+                                        <div class="input-group">
+                                            <input type="file" name="file" class="form-control" required />
+                                            <input type="submit" value="Submit" class="btn btn-success" />
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+ 

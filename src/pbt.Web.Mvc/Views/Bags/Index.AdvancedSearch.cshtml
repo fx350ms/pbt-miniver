@@ -1,0 +1,226 @@
+﻿@using pbt.ApplicationUtils
+@model pbt.Web.Models.Bags.BagIndexViewModel
+
+<div class="abp-advanced-search" xmlns="http://www.w3.org/1999/html">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#BagFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <div class="collapse" id="BagFilterCollapse">
+        <form id="PackageSearchForm" class="form-horizontal">
+            <input type="hidden" name="FilterType" value="all" />
+            <div class="form-row">
+                <div class="col-md-2">
+                    <label for="Keyword">Từ khóa</label>
+                    <div class="input-group input-group">
+                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" id="txt-keyword">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#txt-keyword">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="WarehouseCreate">@L("WarehouseCreate")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control search-warehouse" id="selectWarehouseCreate" name="WarehouseCreate">
+                            <option value="-1">-- @L("All") --</option>
+                            @if (Model.WarehousesCN != null && Model.WarehousesCN.Count > 0)
+                            {
+                                foreach (var item in Model.WarehousesCN)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">@L("NoData")</option>
+                            }
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#selectWarehouseCreate">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="WarehouseCreate">@L("WarehouseDestination")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control search-warehouse" name="WarehouseDestination" id="WarehouseDestination" placeholder="@L("WarehouseDestination")">
+                            <option value="-1">-- @L("All") --</option>
+                            @if (Model.WarehousesVN != null && Model.WarehousesVN.Count > 0)
+                            {
+                                foreach (var item in Model.WarehousesVN)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">@L("NoData")</option>
+                            }
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#WarehouseDestination">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Trạng thái -->
+                <div class="col-md-2">
+                    <label for="Status">@L("Status")</label>
+                    <div class="input-group input-group">
+                        <select name="Status" class="form-control" id="select-filter-order-status">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)BagShippingStatus.Initiated)">@L("BagShippingStatus.Initiated")</option>
+                            <option value="@((int)BagShippingStatus.WaitingForShipping)">@L("BagShippingStatus.WaitingForShipping")</option>
+                            <option value="@((int)BagShippingStatus.InTransit)">@L("BagShippingStatus.InTransit")</option>
+                            <option value="@((int)BagShippingStatus.GoToWarehouse)">@L("BagShippingStatus.GoToWarehouse")</option>
+                            <option value="@((int)BagShippingStatus.WarehouseTransfer)">@L("BagShippingStatus.WarehouseTransfer")</option>
+                            <option value="@((int)BagShippingStatus.WaitingForDelivery)">@L("BagShippingStatus.WaitingForDelivery")</option>
+                            <option value="@((int)BagShippingStatus.Delivery)">@L("BagShippingStatus.Delivery")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#select-filter-order-status" target-val="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+
+
+                <!-- Trạng thái -->
+                <div class="col-md-2">
+                    <label for="Status">@L("ShippingPartner")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" name="ShippingPartnerId" id="ShippingPartner" placeholder="@L("ShippingPartner")">
+                            <option value="-1">-- @L("All") --</option>
+                            @if (Model.ShippingPartners != null)
+                            {
+                                foreach (var item in Model.ShippingPartners)
+                                {
+                                    <option value="@((int)item.Id)">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#ShippingPartner" target-val="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-2">
+                    <label for="Status">@L("BagType")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" name="BagType" id="BagType" placeholder="@L("BagType")">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)BagTypeEnum.SeparateBag)">@L("BagTypeEnum.SeparateBag")</option>
+                            <option value="@((int)BagTypeEnum.InclusiveBag)">@L("BagTypeEnum.InclusiveBag")</option>
+
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#BagType" target-val="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- Trạng thái -->
+                <div class="col-md-2">
+                    <label for="Status">@L("BagFilterPackage")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" name="BagFilterPackageType" id="BagFilterPackageType" placeholder="@L("BagFilterPackageType")">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)BagFilterPackageTypeEnum.HasPackage)">@L("FilterPackageTypeEnum.HasPackage")</option>
+                            <option value="@((int)BagFilterPackageTypeEnum.NoPackage)">@L("FilterPackageTypeEnum.NoPackage")</option>
+
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-remove-content" target="#BagType" target-val="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="CreateDate" target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date">
+                </div>
+                <div class="col-md-3">
+                    <label for="ExportDate">@L("ExportDateCN")</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="ExportDate" target-date="export-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date export-date" name="ExportStartDateStr" id="start-export-date">
+                    <input type="hidden" class="form-control float-right end-date export-date" name="ExportEndDateStr" id="end-export-date">
+
+                </div>
+                <div class="col-md-3">
+                    <label for="ImportDate">@L("ImportDateVN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ImportDate" id="ImportDate" target="import-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="ImportDate" target-date="import-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date import-date" name="ImportStartDateStr" id="start-import-date">
+                    <input type="hidden" class="form-control float-right end-date import-date" name="ImportEndDateStr" id="end-import-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>@L("Customer")</label>
+                    <div class="input-group">
+                        <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 80%;"></select> <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-select" target="CustomerSelect" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

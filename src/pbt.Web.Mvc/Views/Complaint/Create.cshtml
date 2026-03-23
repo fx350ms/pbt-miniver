@@ -1,0 +1,124 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Complaint
+@using pbt.ApplicationUtils
+@using pbt.Web.Startup
+@using pbt.Complaints.Dto;
+
+@model CreateUpdateComplaintViewModel
+@{
+    ViewBag.Title = L("Complaint");
+    ViewBag.CurrentPageName = PageNames.Complaints;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Complaint/Create.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Complaint/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateComplaint")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form name="complaintCreateForm" id="complaintCreateForm" role="form" class="form-horizontal">
+                            <div class="modal-body">
+                                <div class="form-group row required">
+                                    <label class="col-md-3 col-form-label">@L("WaybillCode")</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select2" name="OrderId">
+                                            @if (Model.Orders != null && Model.Orders.Count > 0)
+                                            {
+                                                foreach (var item in Model.Orders)
+                                                {
+                                                    <option value="@item.id">@item.text</option>
+                                                }
+                                            }
+                                            
+                                        </select>
+                                        <input type="hidden" class="form-control" name="OrderCode" >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">@L("Reason")</label>
+                                    <div class="col-md-9">
+
+                                        <select class="form-control" name="Reason">
+                                            @if (Model.ComplaintReasons != null && Model.ComplaintReasons.Count > 0)
+                                            {
+                                                foreach (var item in Model.ComplaintReasons)
+                                                {
+                                                    <option value="@item.Name">@item.Name</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="">@L("ComplaintReasonNotAvailable")</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">@L("Description")</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="Description" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">@L("Resolution")</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="Resolution">
+                                            <option value="@ComplaintResolutionType.ReturnAndExchange.GetDescription()">@ComplaintResolutionType.ReturnAndExchange.GetDescription()</option>
+                                            <option value="@ComplaintResolutionType.Refund.GetDescription()">@ComplaintResolutionType.Refund.GetDescription()</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">@L("RefundAmount")</label>
+                                    <div class="col-md-9">
+                                        <input type="number" class="form-control" name="RefundAmount" step="0.01">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">@L("UploadImage")</label>
+                                    <div class="col-md-9">
+                                        <input type="file" class="form-control" name="Images" multiple="true">
+                                    </div>
+                                </div>
+
+                            </div>
+                            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

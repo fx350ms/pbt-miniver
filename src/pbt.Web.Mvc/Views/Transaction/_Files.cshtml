@@ -1,0 +1,47 @@
+﻿@using Abp.Application.Services.Dto;
+@using pbt.Web.Models.Common.Modals;
+@using pbt.Web.Models.Customers;
+@using pbt.Web.Models
+@{
+    Layout = null;
+}
+
+@model ViewFileModel
+
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ShowFile")))
+    <div class="modal-body">
+         
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    @if (Model.Files != null && Model.Files.Any())
+                {
+                    @foreach (var file in Model.Files)
+                    {
+                        <div class="col-md-4 text-center mb-3">
+                            @if (file.FileType.StartsWith("image/")) // Kiểm tra nếu là file ảnh
+                            {
+                                <img src="data:@file.FileType;base64,@Convert.ToBase64String(file.FileContent)" alt="@file.FileName" class="img-thumbnail" style="max-width: 100%; height: auto;" />
+                                <p class="mt-2">@file.FileName</p>
+                            }
+                            else // Nếu là file khác
+                            {
+                                <a href="@file.FilePath" class="btn btn-primary" download="@file.FileName">
+                                    <i class="fas fa-download"></i> @L("Download") @file.FileName
+                                </a>
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center">
+                        <p>@L("NoFilesAvailable")</p>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+    

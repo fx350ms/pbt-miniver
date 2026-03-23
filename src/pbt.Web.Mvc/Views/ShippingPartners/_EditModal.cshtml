@@ -1,0 +1,116 @@
+﻿@using pbt.Web.Models.ShipingPartners
+@using pbt.Web.Models.Common.Modals
+
+@model CreateUpdateShipingPartner
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditShippingPartner")))
+<form name="CategoryEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.ShipingPartner.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerCode")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Code" value="@Model.ShipingPartner.Code">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerName")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Name" value="@Model.ShipingPartner.Name">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerPhone")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Phone" value="@Model.ShipingPartner.Phone">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerEmail")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Email" value="@Model.ShipingPartner.Email">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerAddress")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Address" value="@Model.ShipingPartner.Address">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerType")</label>
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            @if (Model.ShipingPartner.Type == 0)
+                            {
+                                <input class="form-check-input" type="radio" name="Type" id="EditShipingPartnerType0" value="0" checked="checked">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="radio" name="Type" id="EditShipingPartnerType0" value="0">
+                            }
+                            <label class="form-check-label" for="EditShipingPartnerType0">
+                                Quốc tế
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            @if (Model.ShipingPartner.Type == 1)
+                            {
+                                <input class="form-check-input" type="radio" name="Type" id="EditShipingPartnerType1" value="1" checked="checked">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="radio" name="Type" id="EditShipingPartnerType1" value="1">
+                            }
+                            <label class="form-check-label" for="EditShipingPartnerType1">
+                                Nội địa
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerMaxAmount")</label>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" name="MaxAmount" value="@Model.ShipingPartner.MaxAmount">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerMaxWeigth")</label>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" name="MaxWeigth" value="@Model.ShipingPartner.MaxWeigth">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("ShipingPartnerStatus")</label>
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            @if (Model.ShipingPartner.Status)
+                            {
+                                <input class="form-check-input" type="checkbox" name="Status" value="true" checked="checked">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" name="Status" value="true">
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/ShipingPartners/_EditModal.js" asp-append-version="true"></script>

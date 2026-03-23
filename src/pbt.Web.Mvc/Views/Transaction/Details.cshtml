@@ -1,0 +1,162 @@
+@using pbt.Web.Models.Transactions
+@using pbt.Transactions.Dto
+@using pbt.Web.Models.Common.Modals
+@using pbt.FundAccounts.Dto
+@using pbt.ApplicationUtils
+
+@model TransactionDetailViewModel
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Transaction/Details.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Transaction/Details.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("TransactionDetails")))
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="modal-transaction-details">
+
+                        <div class="tab-content mt-8">
+                            <div role="tabpanel" class="tab-pane container active" id="transaction-details">
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("TransactionId")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.TransactionId " readonly>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">@L("TransactionTime")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.CreationTime" readonly>
+                                    </div>
+                                  
+                                </div>
+                              
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("FundAccount")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@(((FundAccountType)Model.FundAccount.AccountType).GetDescription()) - @Model.FundAccount.AccountName" readonly>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">@L("AccountNumber")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.FundAccount.BankName @Model.FundAccount.AccountNumber" readonly>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("TransactionType")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@(((TransactionTypeEnum)Model.Transaction.TransactionType).GetDescription())" readonly>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">@L("TransactionTicketType")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@(((TransactionDirectionEnum)Model.Transaction.TransactionDirection).GetDescription())" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("Amount")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.Amount.ToString("N0")" readonly>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">@L("TotalAmount")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.TotalAmount.ToString("N0")" readonly>
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("Waybill")/@L("OrderCode")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.OrderId" readonly>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">@L("RefCode")</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" value="@Model.Transaction.RefCode" readonly>
+                                    </div>
+                                  
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("Payer")</label>
+                                    <div class="col-md-4">
+                                        @* <input type="text" class="form-control" value="@Model.Transaction" readonly> *@
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("TransactionContent")</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" readonly>@Model.Transaction.TransactionContent</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">@L("Notes")</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" readonly>@Model.Transaction.Notes</textarea>
+                                    </div>
+                                </div>
+
+                                @* <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">@L("FileUpload")</label>
+                                        <div class="col-md-10">
+                                            @if (Model.Files != null && Model.Files.Any())
+                                            {
+                                                <ul>
+                                                    @foreach (var file in Model.Files)
+                                                    {
+                                                        <li><a href="@Url.Action("Download", "File", new { id = file.Id })" target="_blank">@file.FileName</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <p>@L("NoFilesUploaded")</p>
+                                            }
+                                        </div>
+                                    </div> *@
+                            </div>
+                        </div>
+
+                       
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

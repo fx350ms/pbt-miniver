@@ -1,0 +1,210 @@
+@model pbt.Web.Models.DeliveryNote.PrintDeliveryNoteViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Xuất Kho</title>
+    <style>
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .container {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .product {
+            font-size: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .left, .right {
+            width: 48%;
+        }
+
+            .right table {
+                width: 100%;
+            }
+
+            .right td {
+                padding: 2px 0;
+            }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .list {
+            margin-top: 10px;
+        }
+
+        .note {
+            font-size: 10px;
+            margin-top: 15px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+
+            .footer div {
+                width: 45%;
+            }
+
+            .footer .name {
+                margin-top: 50px;
+                font-weight: bold;
+            }
+
+        .info {
+            font-size: 9px;
+        }
+
+        hr {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="code">
+                <span style="font-size: 12px; display: block">@Model.DeliveryNote.DeliveryNoteCode</span>
+                <span style="font-size: 10px; display: block">Ngày @DateTime.Now.ToString("dd/MM/yyyy")</span>
+            </div>
+        </div>
+
+        <div class="title">
+            <h5 style="margin-bottom: 0; line-height: 0">PHIẾU XUẤT KHO</h5>
+            <p style="font-size: 13px;">(Xuất cho khách hàng)</p>
+        </div>
+
+        <div class="info-section">
+            <div class="left">
+                <div class="list bold" style="font-size: 12px">DANH SÁCH XUẤT</div>
+                <div class="product product-package">
+                    @if (Model.Packages.Any())
+                    {
+                        <div style="font-weight: bold; margin: 2px">Kiện:</div>
+                        <table class="item-list">
+                            <tr style="  border-bottom: 1px solid #ddd;">
+                                <td border="1"> <strong>STT </strong> </td>
+                                <td><strong>Mã kiện </strong>  </td>
+                                <td><strong> Cân nặng </strong> </td>
+                            </tr>
+                            @for (int i = 0; i < Model.Packages.Count; i++)
+                            {
+                                var package = Model.Packages[i];
+                                <tr style="  border-bottom: 1px solid #ddd;">
+                                    <td width="30">@(i + 1)</td>
+                                    <td width="250">
+                                        @package.PackageNumber - <i>@package.TrackingNumber</i>
+                                    </td>
+                                    <td width="130">
+                                        @package.Weight (kg)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+                    }
+                </div>
+                <div class="product product-bag">
+                    @if (Model.Bags.Any())
+                    {
+                        <div style="font-weight: bold; margin: 2px">Bao:</div>
+                        @foreach (var bag in Model.Bags)
+                        {
+                            <span style="margin-right: 4px">
+                                <b>@Model.Bags.IndexOf(bag) + 1</b>. @bag.BagCode - @bag.Weight (kg) - @bag.TotalPackages (kiện)
+                            </span>
+                        }
+                    }
+                </div>
+                <hr>
+            </div>
+            <div class="right">
+                <table class="info">
+                    <tr>
+                        <td>Người nhận:</td>
+                        <td><div class="font-bold">@Model.DeliveryNote.Receiver</div></td>
+                    </tr>
+                    <tr>
+                        <td>SĐT:</td>
+                        <td>
+                            <div class="font-bold">
+                                @(string.IsNullOrEmpty(Model.DeliveryNote.RecipientPhoneNumber) && Model.DeliveryNote.RecipientPhoneNumber.Length > 2 ? "******" + Model.DeliveryNote.RecipientPhoneNumber.Substring(Model.DeliveryNote.RecipientPhoneNumber.Length - 2) : "******")
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ người nhận:</td>
+                        <td colspan="2"><div class="font-bold">@Model.DeliveryNote.RecipientAddress</div></td>
+                    </tr>
+                    <tr>
+                        <td>Số lượng xuất:</td>
+                        <td>
+                            <div class="font-bold">@(Model.Bags.Count + Model.Packages.Count)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tổng cân nặng:</td>
+                        <td>
+                            <div class="font-bold">@Model.DeliveryNote.TotalWeight (KG)</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Ghi chú:</td>
+                        <td colspan="2"><span class="font-bold">@Model.DeliveryNote.Note</span></td>
+                    </tr>
+                </table>
+                <hr>
+                <div class="note">
+                    <p>- Quý khách vui lòng kiểm tra số lượng và tình trạng kiện hàng trước khi ký nhận.</p>
+                    <p>- Tiền thu COD được cập nhật vào tài khoản của Quý khách trong vòng 24 giờ.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <div>Người lập phiếu</div>
+                <br>
+                <div class="name">@Model.DeliveryNote.CreatorName</div>
+            </div>
+            <div>
+                <div>Người nhận hàng</div>
+                <br>
+                <div class="name">@Model.DeliveryNote.Receiver</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

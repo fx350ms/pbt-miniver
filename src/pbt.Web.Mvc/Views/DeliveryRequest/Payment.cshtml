@@ -1,0 +1,153 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.DeliveryRequests
+@using pbt.ApplicationUtils
+
+@model DeliveryRequestPaymentModel
+@{
+    ViewBag.Title = L("DeliveryRequestPayment");
+    decimal currentAmount = 0;
+    decimal currentDebt = 0;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryRequest/Payment.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryRequest/Payment.min.js" asp-append-version="true"></script>
+    </environment>
+    <script>
+        var currentAmount = @currentAmount;
+        var currentDebt = @currentDebt;
+    </script>
+}
+@if (Model != null)
+{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Tiêu đề đơn hàng -->
+                    <h1 class="text-center">@L("DeliveryRequestPayment"): <strong class="text-danger">#@Model.Dto.RequestCode</strong></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h4>@L("CustomerInformation")</h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>@L("CustomerName"):</span>
+                           @*  <span class="d-block"><strong>@Model.Dto.Customer.FullName</strong></span> *@
+                        </div>
+                        <div class="col-md-3">
+                            <span>@L("PhoneNumber"):</span>
+                            @* <span class="d-block"><strong>@Model.Dto.Customer.PhoneNumber</strong></span> *@
+                        </div>
+                     
+                        <div class="col-md-3">
+                            <span>@L("CurrentAmount"): </span>
+                            <span class="d-block text-success"><strong>@currentAmount.ToCurrencyFormat()</strong></span>
+                        </div>
+                        <div class="col-md-3">
+                            <span>@L("CurrentDebt"): </span>
+                            <span class="d-block text-danger"><strong> @currentDebt.ToCurrencyFormat()</strong></span>
+                        </div>
+                       
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-md-3">
+                            <span>@L("ShippingMethod"): </span>
+                            @* <span class="d-block"><strong>@Model.Dto.ShippingMethodString</strong></span> *@
+                        </div>
+                       
+                        <div class="col-md-3 row-item">
+                            <span>@L("Note"):</span>
+                            <span class="d-block"><strong>@Model.Dto.Note</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4>@L("PackagesList")</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered" id="PackageTable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã vận đơn</th>
+                                    <th>Mã kiện</th>
+                                    <th>Trạng thái kiện</th>
+                                    <th>Cân nặng (kg)</th>
+                                    <th>Thể tích (m3)</th>
+                                    <th>Ngày tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Packages != null && Model.Packages.Count > 0)
+                                {
+                                    foreach (var item in Model.Packages)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.TrackingNumber</td>
+                                            <td>@item.PackageNumber</td>
+                                            <td>@item.ShippingStatus</td>
+                                            <td>@item.Weight</td>
+                                            <td>@item.Volume</td>
+                                            <td>@item.CreationTime</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" id="DivConfirmPayment">
+                    <h4>@L("PaymentMethod")</h4>
+                    <form method="post" id="form-payment-confirm">
+                        <input type="hidden" name="deliveryRequestId" value="@Model.Dto.Id" />
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="paymentMethod">@L("SelectPaymentMethod"):</label>
+                                <select class="form-control" id="paymentMethod" name="paymentMethod">
+                                    <option value="1">@L("Wallet")</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="BalanceInformation">@L("CurrentAmount"):</label>
+                                <label class="form-control text-success"  >
+                                    @currentAmount.ToCurrencyFormat()
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="BalanceInformation">@L("CurrentDebt"):</label>
+                                <label class="form-control text-danger"  >
+                                    @currentDebt.ToCurrencyFormat()
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" class="btn btn-primary save-button">@L("SubmitPayment")</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Danh sách đơn hàng -->
+    </section>
+
+}

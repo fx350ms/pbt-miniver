@@ -1,0 +1,146 @@
+﻿@using pbt.Web.Models.Customers
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.ShippingRate
+@using pbt.ApplicationUtils
+@using System.Globalization
+
+@model ConfigureTiersModel
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditShippingRateTier")))
+<form name="ShippingRateEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" id="ShippingRateGroupId" value="@Model.GroupId" />
+    <div class="modal-body">
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="card-header">
+                    <!-- Chọn loại vận chuyển và kho -->
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <select class="form-control" id="select-line">
+                                <option value="-1" selected>Chọn line</option>
+                                <option value="@((int) CustomerLine.Line2)">@CustomerLine.Line2.GetDescription()</option>
+                                <option value="@((int) CustomerLine.Line1)">@CustomerLine.Line1.GetDescription()</option>
+                                <option value="@((int) CustomerLine.OfficialTransport)">@CustomerLine.OfficialTransport.GetDescription()</option>
+                                <option value="@((int) CustomerLine.Portable)">@CustomerLine.Portable.GetDescription()</option>
+                                @*   <option value="3">Chính ngạch</option> *@
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" id="select-from-warehouse">
+                                <option value="-1" selected>Chọn kho TQ</option>
+                                @foreach (var item in Model.WarehousesCN)
+                                {
+                                    <option value="@item.Id"> @item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" id="select-to-warehouse">
+                                <option value="-1" selected>Chọn kho VN</option>
+                                @foreach (var item in Model.WarehousesVN)
+                                {
+                                    <option value="@item.Id"> @item.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary add-group"> Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body rate-list" style="max-height:700px; overflow-y:scroll;">
+                    @if (Model.ShippingRates != null && Model.ShippingRates.Any())
+                    {
+                        @foreach (var rate in Model.ShippingRates)
+                        {
+                            <div class="rate-item" data-id="@rate.Id" data-line="@rate.ShippingTypeId" data-from="@rate.WarehouseFromId" data-to="@rate.WarehouseToId">
+
+                                <input type="hidden" name="RateId" value="@rate.Id" />
+                                <input type="hidden" name="LineNumber" value="@rate.ShippingTypeId" />
+                                <input type="hidden" name="FromWarehouseId" value="@rate.WarehouseFromId" />
+                                <input type="hidden" name="ToWarehouseId" value="@rate.WarehouseToId" />
+
+                                <div class="form-row mb-3">
+                                    <div class="col">
+                                        Loại vận chuyển: <label>@(((CustomerLine)rate.ShippingTypeId).GetDescription())</label>
+                                    </div>
+                                    <div class="col">
+                                        Từ: <label>@Model.WarehousesCN.FirstOrDefault(w => w.Id == rate.WarehouseFromId)?.Name</label>
+                                    </div>
+                                    <div class="col">
+                                        Đến: <label>@Model.WarehousesVN.FirstOrDefault(w => w.Id == rate.WarehouseToId)?.Name</label>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-danger float-sm-right remove-tier-data" data-id="@rate.Id"> <i class="fas fa-trash"></i> Xóa</button>
+                                    </div>
+                                </div>
+
+                                <!-- Bảng cấu hình giá -->
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Phân loại</th>
+                                            <th>Từ</th>
+                                            <th>Đến</th>
+                                            <th width="125">Đơn vị tính</th>
+                                            <th>Đơn giá</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var prevTypeId = -1;
+                                            var prevTypName = "";
+                                        }
+                                        @foreach (var tier in rate.Tiers.OrderBy(t => t.ProductTypeId))
+                                        {
+                                            if (prevTypeId != tier.ProductTypeId)
+                                            {
+                                                prevTypeId = tier.ProductTypeId;
+                                                prevTypName = Model.ProductGroupTypes.FirstOrDefault(p => p.Id == tier.ProductTypeId)?.Name;
+                                            }
+                                            <tr data-id="@tier.Id">
+                                                <td>
+                                                    <input type="hidden" name="ProductGroupId" value="@tier.ProductTypeId" />
+                                                    <strong>@prevTypName</strong>
+                                                </td>
+                                                <td><input type="number" class="form-control mask-num" name="FromValue" value="@((long)tier.FromValue)" min="0" max="99999999" maxlength="10" /></td>
+                                                <td><input type="number" class="form-control mask-num" name="ToValue" value="@((long)tier.ToValue)" min="0" max="99999999" maxlength="10" /></td>
+                                                <td>
+                                                    <select class="form-control" name="Unit">
+                                                        @if (tier.Unit == "KG")
+                                                        {
+                                                            <option value="KG" selected>KG</option>
+                                                            <option value="M3">M3</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="KG">KG</option>
+                                                            <option value="M3" selected>M3</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" class="form-control mask-num-price" name="PricePerUnit" value="@(((long)tier.PricePerUnit).ToString("N0", new CultureInfo("en-US")))" /></td>
+                                                <td><button class="btn btn-success btn-sm add-tier-row" title="Thêm hàng">+</button></td>
+                                            </tr>
+
+                                        }
+                                         
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+       
+        @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+    </div>
+
+</form>
+
+<script src="~/view-resources/Views/ShippingRates/ConfigTier.js" asp-append-version="true"></script>

@@ -1,0 +1,40 @@
+﻿@using pbt.Packages.Dto
+@using pbt.ApplicationUtils
+@using pbt.Web.Mvc.Models.DeliveryRequests
+@model DeliveryRequestPackagesByBagIdModel
+
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered table-package table-child">
+    <thead>
+        <tr>
+            <th>Mã kiện</th>
+            <th>Cân nặng</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Packages != null && Model.Packages.Count > 0)
+        {
+            foreach (var item in Model.Packages)
+            {
+                <tr>
+
+                    <td>@item.PackageNumber</td>
+                    <td>
+                        @item.Weight
+                    </td>
+                </tr>
+
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center">@L("NoPackagesFound")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,354 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using pbt.Web.Startup
+@using pbt
+@using pbt.ApplicationUtils
+
+@model pbt.Web.Models.DeliveryNote.CreateQuickDeliveryNote
+
+@{
+    ViewBag.Title = L("CreateDeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+
+@section scripts
+{
+        <environment names="Development">
+            <script src="~/view-resources/Views/DeliveryNote/CreateQuick.js" asp-append-version="true"></script>
+        </environment>
+
+        <environment names="Staging,Production">
+            <script src="~/view-resources/Views/DeliveryNote/CreateQuick.min.js" asp-append-version="true"></script>
+        </environment>
+}
+
+@section styles
+{
+    <style>
+        .custom-container {
+        max-width: 100%;
+        }
+
+        .section-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+
+        .btn-active {
+        background-color: #f5c97b;
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px 10px;
+        }
+
+        .form-group label {
+        font-weight: 500;
+        }
+
+        .form-check-label {
+        font-weight: 500;
+        }
+
+        .customer-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        }
+
+        .customer-item:last-child {
+        border-bottom: none;
+        }
+
+        .customer-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+
+        .customer-detail {
+        margin: 0;
+        font-size: 14px;
+        }
+
+        .info-card-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #333;
+        }
+
+        .info-card {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card .card-body .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .card-body .header .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #6c757d;
+        margin-right: 15px;
+        }
+
+        .card-body .header .balance {
+        margin-left: 50px;
+        text-align: left;
+        font-weight: bold;
+        }
+
+        .balance div {
+        color: #28a745;
+        }
+
+        thead tr th {
+        background: #c0d8ff;
+        }
+
+        .customer-list {
+        max-height: calc(100vh - 470px);
+        overflow-y: scroll;
+        }
+
+        .customer-data {
+        }
+
+        .customer-item {
+        cursor: pointer;
+        }
+
+        .customer-item:hover {
+        background: #fff6da;
+        }
+
+
+        .nav-link.active {
+        color: #ffffff !important;
+        background-color: #007bffaa !important;
+        }
+
+
+        .close-tab {
+        background: none;
+        border: none;
+        color: #ff0000;
+        font-size: 16px;
+        margin-left: 5px;
+        cursor: pointer;
+        }
+
+        .close-tab:hover {
+        color: #ff5555;
+        }
+
+        .select2-selection--single {
+        height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+        top: 5px !important;
+        }
+
+        .select2-dropdown {
+        z-index: 9999;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateDeliveryNote")</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="form-delivery-note">
+                            <div class="col-12">
+                                <div class="customer-data  ">
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="receiver">Người nhận</label>
+                                            <input type="hidden" name="CustomerId" value="@Model.CustomerId" />
+                                            <input type="text" class="form-control" value="@Model.CustomerDto.Username" readonly />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="financialAmount">Phần âm tài chính</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-right mask-number" id="financialAmount" value="@Model.CustomerDto.CurrentDebt.ToString("N0")">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">đ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3 balance">
+                                            <label for="financialAmount">Số dư tài khoản</label>
+
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-right mask-number" id="financialAmount" value="@Model.CustomerDto.CurrentAmount.ToString("N0")">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">đ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-3">
+                                            <label for="dimensions">@L("TotalWeight")</label>
+                                            <input type="text" class="form-control text-right mask-number" id="txt-delivery-note-total-weight" name="TotalWeight" value="@((Model.TotalWeight).ToString("N2"))" placeholder="@L("TotalWeight")">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="deliveryFee">Phí giao hàng</label>
+                                            <input type="text" class="form-control  text-right mask-number" name="DeliveryFee" value="@((Model.DeliveryFee ).ToString("0"))" placeholder="Nhập vào phí giao hàng">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <div class="form-group">
+                                                <label for="customer">@L("Reason")</label>
+                                                <select class="form-control" name="DeliveryFeeReason">
+                                                    <option value="@((int) DeliveryFeeType.WithFee)"> @L("DeliveryWithFee")</option>
+                                                    <option value="@((int) DeliveryFeeType.WithoutFee)" selected> @L("DeliveryWithoutFee")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="financialAmount">Tên người nhận</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="Receiver" placeholder="@L("ReceiverName")" value="@Model.CustomerDto.Username">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="recipientPhone">Đối tác vận chuyển</label>
+                                            <select name="ShippingPartnerId" class="form-control">
+                                                @if (Model.ShippingPartners != null && Model.ShippingPartners.Any())
+                                                {
+                                                    foreach (var partner in Model.ShippingPartners)
+                                                    {
+                                                        if (Model.ShippingPartnerId == partner.Id)
+                                                        {
+                                                                        <option value="@partner.Id" selected>@partner.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                                        <option value="@partner.Id">@partner.Name</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="recipientPhone">Số điện thoại người nhận</label>
+                                            <input type="text" class="form-control" name="RecipientPhoneNumber" value="@Model.CustomerDto.PhoneNumber">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="notes">Ghi chú</label>
+                                            <input type="text" class="form-control" name="Note" value="" placeholder="Nhập ghi chú">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="recipientAddress">Địa chỉ người nhận</label>
+                                            <input type="text" class="form-control" name="RecipientAddress" value="@Model.CustomerDto.Address" placeholder="Nhập địa chỉ giao hàng">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <table class="table table-bordered" id="table-delivery-note-items">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">Mã bao/kiện</th>
+                                                    <th scope="col">Cân nặng (kg)</th>
+                                                    <th scope="col">Loại</th>
+                                                    <th scope="col" width="50"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Items != null && Model.Items.Count > 0)
+                                                {
+                                                    foreach (var item in Model.Items)
+                                                    {
+                                                                                <tr data-id="@item.Id" data-type="@item.Type">
+                                                                    <td>
+                                                                @if (item.Type == 1)
+                                                                {
+                                                                                <a href="@Url.Action("Detail", "Bags", new { id = item.Id})">  @item.Code</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                                <a href="@Url.Action("Detail", "Packages", new { id = item.Id})">  @item.Code</a>
+                                                                }
+                                                                    </td>
+                                                                    <td>
+                                                                @item.TotalWeight
+                                                                    </td>
+                                                                    <td>
+                                                                @(item.Type == 1 ? "BAO" : "KIỆN")
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-sm bg-danger btn-remote-item"><i class="fas fa-trash"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="customer-data text-right">
+                                    <button class="btn btn-primary btn-save-and-export" type="button" style="width: 200px">Lưu và xuất kho</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-3">Danh sách chờ xuất</h4>
+                        @*  <div class="d-inline"><span id="total-package">88</span> Kiện</div>
+                        <div class="pl-2 d-inline"><span id="total-weight">4.069</span> kg</div> *@
+                        <table class="table table-bordered" id="table-bags-packages-pending">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Mã Kiện</th>
+                                    <th scope="col">Cân nặng (kg)</th>
+                                    <th scope="col">Loại</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

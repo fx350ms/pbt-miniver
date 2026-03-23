@@ -1,0 +1,85 @@
+﻿@using pbt.Packages.Dto
+@using pbt.ApplicationUtils
+@model List<PackageDto>
+@{
+    var status = new Dictionary<int, (string text, string color)>
+        {
+            { 0, ("Thiếu thông tin", "danger") },
+            { 1, ("Khởi tạo", "secondary") },
+            { 2, ("Đang vận chuyển", "info") },
+            { 3, ("Chờ vận chuyển", "warning") },
+            { 4, ("Đang VCQT", "primary") },
+            { 5, ("Đã về kho VN", "info") },
+            { 6, ("Chờ giao hàng", "warning") },
+            { 7, ("Yêu cầu giao hàng", "info") },
+            { 8, ("Đang giao hàng", "info") },
+            { 9, ("Đã giao", "success") },
+            { 10, ("Hoàn thành", "success") },
+            { 11, ("Chờ trả hàng", "warning") },
+            { 12, ("Đang trả hàng", "primary") },
+            { 13, ("Đã trả hàng", "success") },
+            { 14, ("Khách không nhận", "danger") },
+            { 15, ("Chờ thông quan", "warning") },
+            { 16, ("Đã thông quan", "success") }
+        };
+}
+
+<table class="table table-striped table-bordered table-package table-child">
+    <thead>
+        <tr>
+            <th >Mã kiện</th>
+            <th>Mã tra cứu</th>
+            <th width="150px">Mã bao</th>
+            <th width="80px">Trạng thái</th>
+            <th>Cân nặng</th>
+            <th>Thể tích</th>
+           
+            <th width="150">@L("CreationTime")</th>
+            <th width="150">@L("MatchTime")</th>
+            <th width="150">@L("ExportDateCN")</th>
+            <th width="150">@L("ImportDateVN")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            var _i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td>@item.PackageNumber</td>
+                    <td>@item.TrackingNumber</td>
+                    <td>
+                        <span>@item.BagNumber</span>
+                    </td>
+                    <td>
+                        @if (status.ContainsKey(item.ShippingStatus))
+                        {
+                            <span class="badge badge-@status[item.ShippingStatus].color">@status[item.ShippingStatus].text</span>
+                        }
+                    </td>
+                    <td>
+                        @item.Weight
+                    </td>
+                    <td align="right">
+                        @( (item.Width ?? 0)  * (item.Height ??  0) * (item.Length ?? 0)/ 1000000)
+                    </td>
+
+                    <th>@( item.CreationTime.ToString("dd/MM/yyyy HH:mm") )</th>
+                    <th>@(item.MatchTime != null ? item.MatchTime.Value.ToString("dd/MM/yyyy HH:mm") : "-")</th>
+                    <th>@(item.ExportDate != null ? item.ExportDate.Value.ToString("dd/MM/yyyy HH:mm") : "-")</th>
+                    <th>@(item.ImportDate != null ? item.ImportDate.Value.ToString("dd/MM/yyyy HH:mm") : "-")</th>
+                </tr>
+                _i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">@L("NoPackagesFound")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

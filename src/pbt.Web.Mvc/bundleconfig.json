@@ -1,0 +1,647 @@
+[
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/account-layout.min.css",
+    "inputFiles": [
+      "wwwroot/libs/font-awesome/css/all.css",
+      "wwwroot/libs-ext/famfamfam-flags/dist/sprite/famfamfam-flags.css",
+      "wwwroot/libs/icheck-bootstrap/icheck-bootstrap.css",
+      "wwwroot/libs/toastr/toastr.css",
+      "wwwroot/libs/admin-lte/dist/css/adminlte.css",
+      "wwwroot/css/style.css",
+      "wwwroot/view-resources/Views/Account/_Layout.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/account-layout.min.js",
+    "inputFiles": [
+      "wwwroot/libs/jquery/jquery.js",
+      "wwwroot/libs/bootstrap/dist/js/bootstrap.bundle.js",
+      "wwwroot/libs/admin-lte/dist/js/adminlte.js",
+      "wwwroot/libs/jquery-validate/jquery.validate.js",
+      "wwwroot/libs/jquery-validate/jquery.validate.unobtrusive.js",
+      "wwwroot/libs/toastr/toastr.min.js",
+      "wwwroot/libs/block-ui/jquery.blockUI.js",
+      "wwwroot/libs/spin/spin.js",
+      "wwwroot/libs-ext/spin/jquery.spin.js",
+      "wwwroot/libs/sweetalert/sweetalert.min.js",
+      "wwwroot/libs/moment/moment-with-locales.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/abp.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
+      "wwwroot/js/main.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/shared-layout.min.css",
+    "inputFiles": [
+      "wwwroot/libs/font-awesome/css/all.min.css",
+      "wwwroot/libs-ext/famfamfam-flags/dist/sprite/famfamfam-flags.min.css",
+      "wwwroot/libs/icheck-bootstrap/icheck-bootstrap.css",
+      "wwwroot/libs/toastr/toastr.css",
+      "wwwroot/libs/admin-lte/dist/css/adminlte.min.css",
+      "wwwroot/libs/datatables/css/dataTables.bootstrap4.min.css",
+      "wwwroot/libs/datatables/css/responsive.bootstrap4.min.css",
+      "wwwroot/libs/datatables/css/buttons.bootstrap4.min.css",
+      "wwwroot/css/style.css",
+      "wwwroot/view-resources/Views/Shared/_Layout.css",
+      "wwwroot/libs/daterangepicker/daterangepicker.css",
+      "wwwroot/libs/select2/css/select2.min.css",
+      "wwwroot/libs/select2/css/select2-bootstrap4.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/shared-layout.min.js",
+    "inputFiles": [
+      "wwwroot/libs/jquery/jquery.js",
+
+      "wwwroot/libs/bootstrap/dist/js/bootstrap.bundle.js",
+      "wwwroot/libs/datatables/js/jquery.dataTables.min.js",
+      "wwwroot/Common/helpers.js",
+      "wwwroot/Common/datatables.ajax.js",
+      "wwwroot/libs/datatables/js/dataTables.bootstrap4.min.js",
+      "wwwroot/libs/datatables/js/dataTables.responsive.min.js",
+      "wwwroot/libs/datatables/js/responsive.bootstrap4.min.js",
+      "wwwroot/libs/datatables/js/dataTables.buttons.js",
+      "wwwroot/libs/datatables/js/buttons.bootstrap4.js",
+      "wwwroot/libs/admin-lte/dist/js/adminlte.js",
+
+      "wwwroot/libs/block-ui/jquery.blockUI.js",
+      "wwwroot/libs/spin/spin.js",
+      "wwwroot/libs-ext/spin/jquery.spin.js",
+      "wwwroot/libs/sweetalert/sweetalert.min.js",
+      "wwwroot/libs/toastr/toastr.min.js",
+      "wwwroot/libs/moment/moment-with-locales.js",
+      "wwwroot/libs/signalr/dist/browser/signalr.js",
+
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/abp.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
+      "wwwroot/libs/abp-web-resources/Abp/Framework/scripts/libs/abp.signalr-client.js",
+
+      "wwwroot/libs/jquery-validate/jquery.validate.js",
+      "wwwroot/libs/jquery-validate/jquery.validate.unobtrusive.js",
+      "wwwroot/libs/push.js/push.js",
+      "wwwroot/libs/daterangepicker/daterangepicker.js",
+      "wwwroot/libs/select2/js/select2.min.js",
+      "wwwroot/libs/jquery.masknumber/jquery.masknumber.min.js",
+      "wwwroot/libs/jquery.masknumber/autonumeric.min.js",
+      "wwwroot/js/abp.dataTable.js",
+      "wwwroot/js/main.js",
+      "wwwroot/js/Util.js",
+      "wwwroot/view-resources/Views/Shared/_Layout.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/home-index.min.js",
+    "inputFiles": [
+      "wwwroot/libs/chartjs/dist/Chart.js",
+      "wwwroot/view-resources/Views/Home/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Tenants/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Tenants/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Users/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Users/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Users/ChangePassword.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Users/ChangePassword.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Users/_ResetUserPassword.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Users/_ResetUserPassword.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Roles/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Roles/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Account/Login.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Account/Login.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Account/Register.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Account/Register.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Shared/Components/TenantChange/Default.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Shared/Components/TenantChange/Default.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Shared/Components/TenantChange/_ChangeModal.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Shared/Components/TenantChange/_ChangeModal.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/datatables.ajax.min.js",
+    "inputFiles": [
+      "wwwroot/Common/datatables.ajax.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/_Bundles/helpers.min.js",
+    "inputFiles": [
+      "wwwroot/Common/helpers.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Users/info.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Users/info.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/CreateMyOrder.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/CreateMyOrder.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/CreateCustomerOrder.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/CreateCustomerOrder.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/Edit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/CreateOrderBySale.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/CreateOrderBySale.js"
+    ]
+  },
+
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/Index.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/Detail.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/Create.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Orders/Import.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Orders/Import.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Customers/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Customers/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Customers/CreateTransaction.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Customers/CreateTransaction.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Customers/IndexChilds.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Customers/IndexChilds.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Customers/Finance.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Customers/Finance.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Complaint/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Complaint/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Complaint/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Complaint/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/Package.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/Package.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/Bags.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/Bags.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/ImportExport.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/ImportExport.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/BagImportExport.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/BagImportExport.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/CreateOrderBySale.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/CreateOrderBySale.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/CustomerDetail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/CustomerDetail.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/SaleAdmin/Order.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/SaleAdmin/Order.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Bags/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Bags/Index.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Bags/Bagging.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Bags/Bagging.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Bags/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Bags/Create.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Bags/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Bags/Detail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Bags/Pending.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Bags/Pending.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Edit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Edit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/EditByAdmin.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/EditByAdmin.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Finance.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Finance.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Detail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/Pending.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/Pending.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Packages/_CloneMultiModal.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Packages/_CloneMultiModal.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Warehouses/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Warehouses/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/WarehouseTransfers/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/WarehouseTransfers/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/WarehouseTransfers/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/WarehouseTransfers/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryRequest/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryRequest/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryRequest/Payment.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryRequest/Payment.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryRequest/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryRequest/Detail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryRequest/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryRequest/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ShipingPartners/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ShipingPartners/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Departments/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Departments/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Dictionary/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Dictionary/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/WalletTransaction/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/WalletTransaction/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Export/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Export/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Export/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Export/Detail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Export/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Export/Index.js"
+    ]
+  },
+
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/Create.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/CreateQuick.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/CreateQuick.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/Detail.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/Detail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/DeliveryNote/MyDeliveryNote.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/DeliveryNote/MyDeliveryNote.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Operate/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Operate/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Operate/Scan.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Operate/Scan.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Operate/History.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Operate/History.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Operate/Pending.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Operate/Pending.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/FundAccount/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/FundAccount/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Transaction/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Transaction/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Transaction/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Transaction/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Transaction/CreateReceipt.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Transaction/CreateReceipt.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Transaction/CreatePayment.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Transaction/CreatePayment.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/CustomerFakes/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/CustomerFakes/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Waybills/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Waybills/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Waybills/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Waybills/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Waybills/Rematch.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Waybills/Rematch.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Operate/Create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Operate/Create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/Messages/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/Messages/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ConfigurationSetting/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ConfigurationSetting/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ShippingRates/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ShippingRates/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ShippingCosts/Index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ShippingCosts/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ShippingCosts/ConfigCost.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ShippingCosts/ConfigCost.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Views/ShippingCosts/ConfigTier.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Views/ShippingCosts/ConfigTier.js"
+    ]
+  }
+
+]

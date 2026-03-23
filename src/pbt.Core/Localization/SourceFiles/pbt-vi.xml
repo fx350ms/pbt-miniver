@@ -1,0 +1,1085 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="vi">
+	<texts>
+		<text name="HomePage" value="Trang chủ" />
+		<text name="About" value="Giới thiệu" />
+		<text name="WelcomeMessage" value="Chào mừng bạn đến với GameXuaVN!" />
+		<text name="FormIsNotValidMessage" value="Biểu mẫu không hợp lệ. Vui lòng kiểm tra và sửa lỗi." />
+		<text name="TenantNameCanNotBeEmpty" value="Tên người thuê không được để trống" />
+		<text name="InvalidUserNameOrPassword" value="Tên người dùng hoặc mật khẩu không hợp lệ" />
+		<text name="ThereIsNoTenantDefinedWithName{0}" value="Không có người thuê nào được định nghĩa với tên {0}" />
+		<text name="TenantIsNotActive" value="Người thuê {0} không hoạt động." />
+		<text name="UserIsNotActiveAndCanNotLogin" value="Người dùng {0} không hoạt động và không thể đăng nhập." />
+		<text name="UserEmailIsNotConfirmedAndCanNotLogin" value="Địa chỉ email của bạn chưa được xác nhận. Bạn không thể đăng nhập." />
+		<text name="UserLockedOutMessage" value="Tài khoản người dùng đã bị khóa. Vui lòng thử lại sau." />
+		<text name="PleaseEnterLoginInformation" value="Vui lòng nhập thông tin đăng nhập" />
+		<text name="TenancyName" value="Tên người thuê" />
+		<text name="UserNameOrEmail" value="Tên người dùng hoặc email" />
+		<text name="Password" value="Mật khẩu" />
+		<text name="ResetPassword" value="Đặt lại mật khẩu" />
+		<text name="UpdatePassword" value="Cập nhật mật khẩu" />
+		<text name="RememberMe" value="Ghi nhớ tôi" />
+		<text name="LogIn" value="Đăng nhập" />
+		<text name="LoginFailed" value="Đăng nhập thất bại!" />
+		<text name="NameSurname" value="Họ và tên" />
+		<text name="UserName" value="Tên người dùng" />
+		<text name="Name" value="Tên" />
+		<text name="Surname" value="Họ" />
+		<text name="EmailAddress" value="Địa chỉ email" />
+		<text name="Tenants" value="Người thuê" />
+		<text name="SavedSuccessfully" value="Lưu thành công" />
+		<text name="CreateNewTenant" value="Tạo người thuê mới" />
+		<text name="AdminEmailAddress" value="Địa chỉ email quản trị" />
+		<text name="AdminPassword" value="Mật khẩu quản trị" />
+		<text name="Save" value="Lưu" />
+		<text name="Cancel" value="Hủy" />
+		<text name="TenantName_Regex_Description" value="Tên người thuê phải có ít nhất 2 ký tự, bắt đầu bằng một chữ cái và tiếp theo là chữ cái, số, dấu gạch ngang hoặc gạch dưới." />
+		<text name="DefaultPasswordIs" value="Mật khẩu mặc định là {0}" />
+		<text name="CanBeEmptyToLoginAsHost" value="Có thể để trống để đăng nhập như một quản trị viên." />
+		<text name="Register" value="Đăng ký" />
+		<text name="OrLoginWith" value="Hoặc đăng nhập bằng" />
+		<text name="WaitingForActivationMessage" value="Tài khoản của bạn đang chờ được kích hoạt bởi quản trị hệ thống." />
+		<text name="TenantSelection" value="Lựa chọn người thuê" />
+		<text name="TenantSelection_Detail" value="Vui lòng chọn một trong các người thuê sau." />
+		<text name="Logout" value="Đăng xuất" />
+		<text name="RegisterFormUserNameInvalidMessage" value="Vui lòng không nhập địa chỉ email cho tên người dùng." />
+		<text name="DatabaseConnectionString" value="Chuỗi kết nối cơ sở dữ liệu" />
+		<text name="Users" value="Người dùng" />
+		<text name="IsActive" value="Trạng thái hoạt động" />
+		<text name="FullName" value="Họ và tên đầy đủ" />
+		<text name="CreateNewUser" value="Tạo người dùng mới" />
+		<text name="Yes" value="Có" />
+		<text name="No" value="Không" />
+		<text name="Optional" value="Tùy chọn" />
+		<text name="LeaveEmptyToSwitchToHost" value="Để trống để chuyển sang quản trị viên" />
+		<text name="CurrentTenant" value="Người thuê hiện tại" />
+		<text name="NotSelected" value="Chưa chọn" />
+		<text name="Change" value="Thay đổi" />
+		<text name="ChangeTenant" value="Thay đổi người thuê" />
+		<text name="MultiLevelMenu" value="Thao tác đa cấp" />
+		<text name="Back" value="Quay lại" />
+		<text name="SuccessfullyRegistered" value="Đã đăng ký thành công" />
+		<text name="WaitingForEmailActivation" value="Địa chỉ email của bạn đang chờ kích hoạt" />
+		<text name="Roles" value="Vai trò" />
+		<text name="DisplayName" value="Tên hiển thị" />
+		<text name="Edit" value="Chỉnh sửa" />
+		<text name="Detail" value="Chi tiết" />
+		<text name="Delete" value="Xóa" />
+		<text name="CreateNewRole" value="Tạo vai trò mới" />
+		<text name="RoleName" value="Tên vai trò" />
+		<text name="Actions" value="Hành động" />
+		<text name="CouldNotCompleteLoginOperation" value="Không thể hoàn thành thao tác đăng nhập. Vui lòng thử lại sau." />
+		<text name="CouldNotValidateExternalUser" value="Không thể xác thực người dùng bên ngoài" />
+		<text name="EditRole" value="Chỉnh sửa vai trò" />
+		<text name="EditTenant" value="Chỉnh sửa người thuê" />
+		<text name="EditUser" value="Chỉnh sửa người dùng" />
+		<text name="TenantIdIsNotActive{0}" value="TenantId {0} không hoạt động" />
+		<text name="UnknownTenantId{0}" value="TenantId {0} không xác định" />
+		<text name="ThisFieldIsRequired" value="Trường này là bắt buộc" />
+		<text name="PleaseWait" value="Vui lòng chờ..." />
+		<text name="Administration" value="Quản trị" />
+		<text name="ClearAll" value="Xóa tất cả" />
+		<text name="ClearOthers" value="Xóa các mục khác" />
+		<text name="LabelOptions" value="Tùy chọn nhãn" />
+		<text name="Permissions" value="Quyền" />
+		<text name="RoleDescription" value="Mô tả vai trò" />
+		<text name="Refresh" value="Làm mới" />
+		<text name="Create" value="Tạo" />
+		<text name="UserDetails" value="Chi tiết người dùng" />
+		<text name="UserRoles" value="Vai trò người dùng" />
+		<text name="ConfirmPassword" value="Xác nhận mật khẩu" />
+		<text name="Version" value="Phiên bản" />
+		<text name="On" value="Bật" />
+		<text name="Off" value="Tắt" />
+		<text name="AreYouSureWantToDelete" value="Bạn có chắc chắn muốn xóa {0} không?" />
+		<text name="SuccessfullyDeleted" value="Xóa thành công" />
+		<text name="StartTyping" value="Bắt đầu gõ" />
+		<text name="Skins" value="Giao diện" />
+		<text name="Settings" value="Cài đặt" />
+		<text name="Filter" value="Lọc" />
+		<text name="CurrentPassword" value="Mật khẩu hiện tại" />
+		<text name="NewPassword" value="Mật khẩu mới" />
+		<text name="ConfirmNewPassword" value="Xác nhận mật khẩu mới" />
+		<text name="PasswordsDoNotMatch" value="Mật khẩu không khớp" />
+		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber" value="Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ thường, chữ hoa và số" />
+		<text name="UserDeleteWarningMessage" value="Người dùng {0} sẽ bị xóa." />
+		<text name="RoleDeleteWarningMessage" value="Vai trò {0} sẽ bị xóa và không còn được gán cho tất cả người dùng đã gán." />
+		<text name="TenantDeleteWarningMessage" value="Người thuê {0} sẽ bị xóa." />
+		<text name="SearchWithThreeDot" value="Tìm kiếm..." />
+		<text name="PleaseEnterAtLeastNCharacter" value="Vui lòng nhập ít nhất {0} ký tự" />
+		<text name="PleaseEnterNoMoreThanNCharacter" value="Vui lòng không nhập quá {0} ký tự" />
+		<text name="InvalidEmailAddress" value="Địa chỉ email không hợp lệ" />
+		<text name="InvalidPattern" value="Không hợp lệ" />
+		<text name="PairsDoNotMatch" value="Không khớp" />
+		<text name="All" value="Tất cả" />
+		<text name="TotalRecordsCount" value="Tổng: {0}" />
+		<text name="Search" value="Tìm kiếm" />
+		<text name="Clear" value="Xóa" />
+		<text name="ResetPasswordStepOneInfo" value="1. Nhập mật khẩu quản trị của bạn" />
+		<text name="ResetPasswordStepTwoInfo" value="2. Sao chép mật khẩu ngẫu nhiên này để gửi cho người dùng" />
+		<text name="UsersActivation" value="Kích hoạt người dùng" />
+		<text name="403PageHeader" value="Cấm" />
+		<text name="403PageDescription" value="Bạn không có quyền truy cập vào tài nguyên này. Vui lòng liên hệ với quản trị viên của bạn." />
+		<text name="403PageButton" value="Quay lại bảng điều khiển" />
+
+		<text name="Category" value="Danh mục" />
+		<text name="Categories" value="Danh mục" />
+		<text name="ParentCategoryId" value="ID Danh mục cha" />
+
+		<text name="CreateNewCategory" value="Tạo mới danh mục" />
+		<text name="GeneralInfomation" value="Thông tin chung" />
+		<text name="Code" value="Mã" />
+		<text name="Address" value="Địa chỉ" />
+		<text name="Phone" value="Số điện thoại" />
+
+		<!--dictionary-->
+		<text name="Dictionaries" value="Từ điển" />
+		<text name="Dictionarys" value="Từ điển" />
+		<text name="Dictionary" value="Từ điển" />
+		<text name="NameVi" value="Tiếng việt" />
+		<text name="NameCn" value="Tiếng trung" />
+		<text name="CreateNewDictionary" value="Tạo từ điển mới" />
+		<text name="EditDictionary" value="Sửa từ điển" />
+		<text name="ParentDetails" value="Thông tin chung" />
+
+		<!--ShippingPartner-->
+		<text name="ShippingPartner" value="Đối tác vận chuyển" />
+		<text name="ShippingPartnerMaxAmount" value="Số tiền tối đa" />
+		<text name="ShippingPartnerMaxWeigth" value="Cân nặng tối đa" />
+
+		<!--warehouse-->
+		<text name="Warehouse" value="Kho" />
+		<text name="Country" value="Quốc gia" />
+		<text name="City" value="Thành phố" />
+
+		<text name="ShippingPartners" value="Đối tác vận chuyển" />
+		<text name="RegisterAccount" value="Đăng ký tài khoản" />
+		<text name="InputUserName" value="Nhập tài khoản" />
+		<text name="InputPassword" value="Nhập mật khẩu" />
+		<text name="InputName" value="Nhập họ tên" />
+
+		<text name="CustomerCode" value="Mã khách hàng" />
+		<text name="Active" value="Hoạt động" />
+		<text name="Inactive" value="Không hoạt động" />
+		<text name="Username" value="Tài khoản" />
+		<text name="YourInformation" value="Thông tin của bạn" />
+		<text name="Information" value="Thông tin" />
+		<text name="PhoneNumber" value="Số điện thoại" />
+		<text name="AddAddress" value="Thêm địa chỉ" />
+
+
+		<text name="Wallet" value="Ví" />
+		<text name="BankAccount" value="Số tài khoản" />
+		<text name="YourAddress" value="Địa chỉ của bạn" />
+		<text name="AccountNumber" value="Số tài khoản" />
+		<text name="BankName" value="Ngân hàng" />
+		<text name="Default" value="Mặc định" />
+
+		<text name="TrackingNumber" value="Mã vận đơn" />
+		<text name="PackageCode" value="Mã Kiện" />
+		<text name="Weight" value="Cân nặng (kg)" />
+		<text name="Service" value="Dịch vụ" />
+		<text name="SellingPrice" value="Giá bán" />
+		<text name="Line" value="Line" />
+		<text name="VCQTPartner" value="Đối tác VCQT" />
+		<text name="VCQTCostPrice" value="Giá vốn VCQT" />
+		<text name="VNCDCostPrice" value="Giá vốn VNCD" />
+		<text name="VNCDPartner" value="Đối tác VNCD" />
+		<text name="TotalAmount" value="Thành tiền" />
+		<text name="Status" value="Trạng thái" />
+		<text name="Action" value="Hành động" />
+		<text name="Profit" value="Lợi nhuận" />
+		<text name="Complaint" value="Khiếu nại" />
+		<text name="IsReceiptAddress" value="Địa chỉ nhận hàng" />
+
+		<text name="SelectProvince" value="Chọn tỉnh/thành" />
+		<text name="SelectDistrict" value="Chọn quận/huyện" />
+		<text name="SelectWard" value="Chọn xã/phường" />
+
+		<text name="Province" value="Tỉnh/Thành" />
+		<text name="District" value="Quận/Huyện" />
+		<text name="Ward" value="Xã/Phường" />
+		<text name="IsDefault" value="Mặc định?" />
+
+		<text name="STT" value="STT" />
+		<text name="CreatedTime" value="Thời gian" />
+		<text name="TransactionCode" value="Mã giao dịch" />
+		<text name="TransactionType" value="Loại giao dịch" />
+		<text name="Description" value="Ghi chú" />
+		<text name="Amount" value="Giá trị" />
+		<text name="BalanceAfterTransaction" value="Số dư sau giao dịch" />
+
+		<text name="Charge" value="Nạp" />
+		<text name="WalletTransaction" value="Lịch sử giao dịch" />
+		<text name="TransactionHistory" value="Lịch sử giao dịch" />
+
+		<text name="Pages_Users" value="Người dùng" />
+		<text name="Pages_Roles" value="Phân quyền" />
+		<text name="Pages_Dictionaries" value="Từ điển" />
+		<text name="Pages_Customers" value="Khách hàng" />
+		<text name="Pages_Departments" value="Phòng ban" />
+		<text name="Pages_ShippingPartners" value="Đối tác vận chuyển" />
+		<text name="Pages_CustomerFakes" value="Khách hàng giả" />
+		<text name="Pages_Packages" value="Kiện hàng" />
+		<text name="Pages_Packages_List" value="Danh sách kiện" />
+		<text name="Pages_Packages_Pending" value="Kiện chờ giao" />
+		<text name="CreationDate" value="Ngày tạo" />
+		<text name="PotentialLevel" value="Mức tiềm năng" />
+		<text name="Customer" value="Khách hàng" />
+
+		<text name="Pages_Action" value="Hành động" />
+		<text name="Pages_Complaint" value="Khiếu nại" />
+		<text name="Pages_CustomerCode" value="Mã khách hàng" />
+		<text name="Pages_Line" value="LineVC" />
+		<text name="Pages_Orders" value="Đơn hàng" />
+		<text name="Pages_AllOrder" value="Tất cả" />
+		<text name="Pages_Order" value="Đơn hàng" />
+		<text name="Pages_PackageCode" value="Mã gói hàng" />
+		<text name="Pages_Profit" value="Lợi nhuận" />
+		<text name="Pages_SellingPrice" value="Giá bán" />
+		<text name="Pages_Service" value="Dịch vụ" />
+		<text name="Pages_Status" value="Trạng thái" />
+		<text name="Pages_TotalAmount" value="Tổng số tiền" />
+		<text name="Pages_RequestDelivery" value="Yêu cầu giao" />
+		<text name="Pages_RequestRefund" value="Yêu rút tiền" />
+
+
+		<text name="Pages_VCQTCostPrice" value="Giá vốn VCQT" />
+		<text name="Pages_VCQTPartner" value="Đối tác VCQT" />
+		<text name="Pages_VNCDCostPrice" value="Giá vốn VNCD" />
+		<text name="Pages_VNCDPartner" value="Đối tác VNCD" />
+		<text name="Pages_Warehouses" value="Kho hàng" />
+		<text name="Pages.Warehouses" value="Kho hàng" />
+		<text name="Pages_Weight" value="Trọng lượng" />
+
+
+		<text name="Pages_Customer" value="Khách hàng" />
+		<text name="Pages_Package" value="Đóng gói" />
+		<text name="Pages_UsersActivation" value="Kích hoạt người dùng" />
+		<text name="Pages_TrackingNumber" value="Theo dõi đơn" />
+		<text name="Pages_OrderCode" value="Mã đơn hàng" />
+		<text name="Pages_Waybill" value="Mã vận đơn" />
+		<text name="Pages_TransactionHistory" value="Lịch sử giao dịch" />
+		<text name="Pages_Report" value="Báo cáo" />
+		<text name="Pages_Process" value="Vận hành" />
+		<text name="Pages_FundAccount" value="Tài khoản quỹ" />
+		<text name="Pages_PendingTransactionVoucher" value="Phiếu chờ giao dịch" />
+		<text name="Pages_PaymentVoucher" value="Phiếu chi" />
+		<text name="Pages_ReceiptVoucher" value="Phiếu thu" />
+		<text name="Pages_CustomerTransactions" value="Lịch sử giao dịch khách hàng" />
+		<text name="Pages_Sale" value="Kinh doanh" />
+
+		<text name="Role_Sale" value="Vai trò bán hàng" />
+
+		<text name="AddressReceiver" value="Địa chỉ giao hàng" />
+		<text name="SelectReceivingWarehouseVietnam" value="Chọn kho Việt Nam" />
+		<text name="SelectReceivingWarehouseChina" value="Chọn kho Trung Quốc" />
+
+		<text name="Insurance" value="Bảo hiểm" />
+		<text name="InputInsuranceValue" value="Nhập giá trị bảo hiểm" />
+		<text name="WoodenPackaging" value="Đóng gỗ" />
+		<text name="ShockproofPackaging" value="Chống sốc" />
+		<text name="DomesticTransportation" value="Ship nội địa" />
+
+		<text name="InputOrderNumber" value="Nhập mã vận đơn" />
+		<text name="SelectShippingLine" value="Chọn line" />
+		<text name="CreateMyOrder" value="Tạo đơn hàng của tôi" />
+		<text name="CreateNewCustomerAddress" value="Tạo địa chỉ khách hàng" />
+
+		<text name="CreateOrder" value="Tạo đơn hàng" />
+
+		<text name="AgentCustomer" value="Khách hàng đại lý" />
+		<text name="AssignToSale" value="Gán cho kinh doanh" />
+
+		<text name="Pending" value="Đang chờ" />
+		<text name="WaitProcessing" value="Đang chờ xử lý" />
+		<text name="Processing" value="Đang xử lý" />
+		<text name="Completed" value="Hoàn thành" />
+
+		<text name="Entrusted" value="Đã ký gửi" />
+		<text name="InChinaWarehouse" value="Hàng về kho TQ" />
+		<text name="DeliveringToVietnam" value="Đã về kho VN" />
+
+
+		<text name="Pages_bags" value="Bao hàng" />
+		<text name="SelectTrackingNumber" value="Chọn mã vận đơn" />
+		<text name="Pages_Bags" value="Bao hàng" />
+		<text name="Pages_Create" value="Tạo mới" />
+		<text name="Pages_Bags_List" value="Danh sách bao hàng" />
+		<text name="SaveAndBag" value="Lưu và đóng bao" />
+		<text name="SelectCustomer" value="Chọn khách hàng" />
+		<text name="WarehouseCreate" value="Kho tạo" />
+		<text name="WarehouseDestination" value="Kho đích" />
+		<text name="Receiver" value="Người nhận" />
+		<text name="Note" value="Ghi chú" />
+		<text name="Feature" value="Đặc tính" />
+		<text name="BagType" value="Loại bao" />
+		<text name="Bags" value="Danh sách bao" />
+		<text name="BagCode" value="Mã bao" />
+		<text name="CustomerName" value="Khách hàng" />
+
+		<text name="OrderDate" value="Ngày đặt" />
+		<text name="OrderNumber" value="Mã đơn hàng" />
+		<text name="OrderType" value="Loại đơn" />
+		<text name="CreateCustomerOrder" value="Tạo đơn cho khách" />
+
+		<text name="Volume" value="Thể tích (m3)" />
+		<text name="PackagesList" value="Danh sách kiện hàng" />
+
+		<text name="InTransitToChinaWarehouse" value="Hàng về kho TQ" />
+		<text name="InInternationTransit" value="Đang VC QT" />
+		<text name="InTransit" value="Đang VC QT" />
+
+		<text name="InTransitToVietnamWarehouse" value="Đã đến kho VN" />
+		<text name="OutForDelivery" value="Đang giao đến khách" />
+		<text name="Delivered" value="Đã giao" />
+		<text name="OrderCompleted" value="Hoàn thành đơn" />
+		<text name="Refund" value="Hoàn tiền" />
+
+		<text name="ShippingLine" value="Line vận chuyển" />
+		<text name="Carrier" value="Hãng vận chuyển" />
+		<text name="ProductValue" value="Giá trị hàng hóa" />
+		<text name="TotalFee" value="Tổng phí" />
+		<text name="Packages" value="Kiện hàng" />
+		<text name="CreatePackage" value="Tạo kiện hàng" />
+
+
+		<text name="History" value="Lịch sử" />
+		<text name="OrderFinance" value="Tài chính đơn" />
+		<text name="Log" value="Log" />
+		<text name="Logs" value="Logs" />
+
+		<text name="CreateBag" value="Tạo bao" />
+		<text name="Pages_Bags_Pending" value="Danh sách bao cần đóng" />
+		<text name="SelectWarehouse" value="Chọn kho" />
+		<text name="Bagging" value="Đóng bao" />
+		<text name="EndOfBagging" value="Kết thúc đóng bao" />
+		<text name="ListBag" value="Danh sách bao" />
+		<text name="DeliveryRequest" value="Danh sách yêu cầu giao" />
+
+		<text name="AddNewAddress" value="Thêm địa chỉ" />
+		<text name="CreationTime" value="Ngày tạo" />
+		<text name="ComplaintCode" value="Mã khiếu nại" />
+		<text name="OrderCode" value="Mã đơn hàng" />
+		<text name="Resolution" value="Phương án" />
+		<text name="RefundAmount" value="Tiền hoàn" />
+		<text name="Reason" value="Lý do" />
+		<text name="RefundAmountExpect" value="Đề nghị hoàn" />
+		<text name="InputOrderNumberOrComplaintCode" value="Nhập mã đơn hàng hoặc mã khiếu nại" />
+		<text name="SelectStatus" value="Chọn trạng thái" />
+		<text name="HandlerName" value="Nhân viên xử lý" />
+
+		<text name="Email" value="Email" />
+		<text name="Gender" value="Giới tính" />
+		<text name="Fale" value="Nam" />
+		<text name="Female" value="Nữ" />
+		<text name="DateOfBirth" value="Ngày sinh" />
+		<text name="Notes" value="Ghi chú" />
+		<text name="CreateNewCustomer" value="Tạo mới khách hàng" />
+		<text name="EditCustomer" value="Sửa khách hàng" />
+
+		<text name="CustomerAccount" value="Tài khoản khách hàng" />
+		<text name="Id" value="Id" />
+		<text name="InProcess" value="Đang xử lý" />
+		<text name="Refunded" value="Hoàn tiền" />
+		<text name="Reject" value="Từ chối" />
+		<text name="Rejected" value="Từ chối" />
+		<text name="AccountType" value="Loại tài khoản" />
+
+		<text name="SaleAdminDashboard" value="Trang chủ" />
+		<text name="YourCustomerTotal" value="Tổng số khách hàng" />
+		<text name="TotalRevenue" value="Tổng doanh thu" />
+		<text name="ConversionRate" value="Tỉ lệ chuyển đổi" />
+
+		<text name="LastModificationTime" value="Lần cập nhật cuối" />
+		<text name="CreateDeliveryRequest" value="Tạo yêu cầu giao" />
+		<text name="Pages_DeliveryRequest" value="Yêu cầu giao" />
+		<text name="AreYouSureWantToCancel" value="Bạn có chắc chắn muốn hủy" />
+		<text name="Pages_Export" value="Xuất kho" />
+		<text name="CreateExport" value="Tạo phiếu xuất kho" />
+		<text name="Pages_Export_Create" value="Tạo phiếu xuất kho" />
+		<text name="NumberPackage" value="Số lượng kiện" />
+		<text name="NumberVirtualPackage" value="Số lượng kiện ảo" />
+		<text name="ClonePackage" value="Tạo nhiều kiện tương tự" />
+		<text name="SelectShippingPartner" value="Chọn đối tác vận chuyển" />
+
+		<text name="PackageNumber" value="Mã kiện" />
+		<text name="Package Number" value="Mã kiện" />
+		<text name="Bag Number" value="Mã bao" />
+		<text name="BagNumber" value="Mã bao" />
+		<text name="Warehouse status" value="trạng thái vận chuyển" />
+		<text name="Shipping status" value="Trạng thái vận chuyển" />
+		<text name="MatchTime" value="Thời gian khớp" />
+		<text name="Match time" value="Thời gian khớp" />
+		<text name="Role_Admin" value="Vai trò Quản trị" />
+		<text name="Role_WareHouse" value="Vai trò Quản lý kho" />
+		<text name="Role_Accounting" value="Vai trò kế toán" />
+		<text name="Role_Customer" value="Vai trò khách hàng" />
+
+		<text name="Current amount" value="Số dư" />
+		<text name="CurrentAmount" value="Số dư" />
+		<text name="Line shipping" value="Line vận chuyển" />
+		<text name="LineShipping" value="Line vận chuyển" />
+		<text name="DeliveryTime" value="Thời gian xuất kho" />
+		<text name="WarehouseStatus" value="Trạng thái kho" />
+		<text name="ShippingStatus" value="Trạng thái vận chuyển" />
+		<text name="All order" value="Tất cả đơn hàng" />
+		<text name="AllOrder" value="Tất cả đơn hàng" />
+		<text name="MyOrder" value="Đơn hàng của tôi" />
+		<text name="Dept" value="Công nợ" />
+		<text name="Customer information" value="Thông tin khách hàng" />
+		<text name="CustomerInformation" value="Thông tin khách hàng" />
+		<text name="Packages_Pending" value="Danh sách kiện chờ giao" />
+		<text name="SaveFailed" value="Tạo mới thất bại!" />
+		<text name="BagsDetail" value="Chi tiết bao" />
+		<text name="Pages_Operate" value="Vận hành" />
+		<text name="Pages_Operate_action" value="Quét mã vạch" />
+		<text name="Pages_Operate_history" value="Lịch sử quét mã" />
+		<text name="AddressReceive" value="Địa chỉ nhận" />
+		<text name="DeliveryNoteDetail" value="Chi tiết phiếu xuất" />
+		<text name="ExportCode" value="Mã xuất" />
+		<text name="DeliveryRequestCode" value="Mã yêu cầu giao" />
+		<text name="Dimension" value="Thể tích" />
+		<text name="BagsPending" value="Khối lượng" />
+
+		<text name="Transactions" value="Giao dịch" />
+		<text name="ExecutionSource" value="Nguồn thực thi" />
+		<text name="TransactionId" value="Mã giao dịch" />
+		<text name="OrderId" value="Mã đơn hàng" />
+		<text name="TransactionContent" value="Nội dung giao dịch" />
+		<text name="RefCode" value="Mã tham chiếu" />
+		<text name="CreateReceipt" value="Tạo biên nhận" />
+		<text name="ReceiptDetails" value="Chi tiết biên nhận" />
+		<text name="TransactionTime" value="Thời gian giao dịch" />
+		<text name="FundAccount" value="Tài khoản quỹ" />
+		<text name="Payer" value="Người thanh toán" />
+		<text name="Deposit" value="Tiền gửi" />
+		<text name="Payment" value="Thanh toán đơn hàng" />
+
+		<text name="AccountName" value="Tên tài khoản" />
+		<text name="Currency" value="Tiền tệ" />
+		<text name="AccountHolder" value="Chủ tài khoản" />
+		<text name="CreateNewFundAccount" value="Tạo tài khoản quỹ mới" />
+		<text name="TotalFundAmount" value="Tổng số tiền quỹ" />
+
+		<text name="Bank" value="Ngân hàng" />
+		<text name="Cash" value="Tiền mặt" />
+		<text name="Error" value="Lỗi" />
+		<text name="ValidationError" value="Lỗi xác thực" />
+
+		<text name="WaybillManagement" value="Quản lý vận đơn" />
+		<text name="WaybillCode" value="Mã vận đơn" />
+		<text name="ReceivedTime" value="Thời gian nhận" />
+		<text name="CreateNewWaybill" value="Tạo vận đơn mới" />
+		<text name="WaybillCodesCommaSeparated" value="Mã vận đơn (phân tách bằng dấu phẩy, dấu cách, xuống dòng)" />
+		<text name="CreateWaybill" value="Tạo mã vận đơn" />
+		<text name="Messages" value="Tin nhắn" />
+		<text name="DeviceName" value="Tên thiết bị" />
+		<text name="DeviceId" value="ID thiết bị" />
+		<text name="Content" value="Nội dung" />
+		<text name="Progress" value="Tiến độ" />
+		<text name="MessageType" value="Loại tin nhắn" />
+		<text name="IsCorrectSyntax" value="Đúng cú pháp" />
+		<text name="CreatedDate" value="Ngày tạo" />
+		<text name="LastUpdatedDate" value="Lần cập nhật cuối" />
+		<text name="TotalAmountAfterChange" value="Số dư sau thay đổi" />
+		<text name="EditFundAccount" value="Cập nhật" />
+		<text name="FundAccounts" value="Tài khoản quỹ" />
+		<text name="IsActived" value="Hoạt động" />
+		<text name="CurrentDebt" value="Công nợ" />
+		<text name="LinkToUser" value="Liên kết tài khoản" />
+		<text name="Customers" value="Khách hàng" />
+		<text name="GeneralInformation" value="Thông tin chung" />
+		<text name="IsAgent" value="Khách hàng đại lý" />
+		<text name="AgentLevel" value="Cấp đại lý" />
+
+		<text name="WaybillNumber" value="Mã vận đơn" />
+		<text name="CustomerOrder" value="Đơn của khách" />
+		<text name="CreatePayment" value="Tạo phiếu chi" />
+
+		<text name="Function.Customer" value="Chức năng khách hàng" />
+		<text name="Pages_Configs" value="Trang Cấu hình" />
+		<text name="Pages_Config" value="Cấu hình" />
+		<text name="Pages_Transactions" value="Trang Giao dịch" />
+		<text name="Role.Accounting" value="Vai trò Kế toán" />
+		<text name="Role.Admin" value="Vai trò Quản trị" />
+		<text name="Role.Customer" value="Vai trò Khách hàng" />
+		<text name="Role.Sale" value="Vai trò Bán hàng" />
+		<text name="Role.WareHouse" value="Vai trò Kho hàng" />
+		<text name="CustomerFake" value="Khách hàng giả" />
+		<text name="RequestCode" value="Mã yêu cầu" />
+		<text name="DateCreated" value="Ngày tạo" />
+		<text name="CreditWallet" value="Cộng tiền khách hàng" />
+		<text name="Withdraw" value="Rút tiền" />
+		<text name="AmountCustomerMustPay" value="Số tiền khách phải trả" />
+
+		<text name="EditCustomerOrder" value="Sửa đơn hàng" />
+		<text name="EditOrder" value="Sửa đơn hàng" />
+
+		<text name="DeliveryNotes" value="Danh sách phiếu xuất kho" />
+
+		<text name="PaymentMethod" value="Phương thức thanh toán" />
+		<text name="DeliveryRequestPayment" value="Yêu cầu thanh toán giao hàng" />
+		<text name="SelectPaymentMethod" value="Chọn phương thức thanh toán" />
+		<text name="Debt" value="Công nợ" />
+		<text name="ShippingMethod" value="Phương thức vận chuyển" />
+		<text name="BalanceInformation" value="Thông tin số dư" />
+		<text name="SubmitPayment" value="Thanh toán" />
+		<text name="TotalCost" value="Tổng chi phí" />
+		<text name="BarcodeTable" value="Bảng mã vạch" />
+		<text name="ScanCode" value="Quét mã" />
+		<text name="CodeType" value="Loại mã" />
+		<text name="OrderDetail" value="Chi tiết đơn hàng" />
+
+		<text name="ReceiptAddress" value="Địa chỉ nhận" />
+		<text name="ScanUser" value="Người quét" />
+		<text name="ScanContent" value="Nội dung quét" />
+		<text name="WarehouseFrom" value="Kho gửi" />
+		<text name="WarehouseTo" value="Kho nhận" />
+		<text name="ShippingType" value="Loại vận chuyển" />
+		<text name="Agency" value="Đại lý" />
+		<text name="DateCreate" value="Ngày tạo" />
+
+		<text name="SelectWaybill" value="Chọn vận đơn" />
+		<text name="WoodSealing" value="Niêm phong gỗ" />
+		<text name="ScanDateTime" value="Thời gian quét" />
+		<text name="Operate" value="Vận hành" />
+
+		<text name="DeliveryRequestDetail" value="Chi tiết yêu cầu giao hàng" />
+		<text name="PackageCount" value="Số kiện hàng" />
+		<text name="CancelRequest" value="Hủy yêu cầu" />
+		<text name="Tracking" value="Tra cứu vận đơn" />
+		<text name="Width" value="Chiều rộng" />
+		<text name="Height" value="Chiều cao" />
+		<text name="Length" value="Chiều dài" />
+		<text name="ScanTime" value="Thời gian quét" />
+		<text name="ScanType" value="Loại quét" />
+		<text name="ScanAction" value="Hành động quét" />
+		<text name="ScanWarehouse" value="Kho quét" />
+		<text name="ScanWarehouseTo" value="Kho nhận quét" />
+		<text name="Scaner" value="Người quét" />
+		<text name="PackageDetail" value="Chi tiết kiện hàng" />
+		<text name="VolumeM3" value="Kích thước (m3)" />
+		<text name="ServiceFee" value="Phí dịch vụ" />
+		<text name="ConfigurationSettings" value="Cài đặt cấu hình" />
+		<text name="Key" value="Khóa" />
+		<text name="Value" value="Giá trị" />
+		<text name="EnterKey" value="Nhập khóa" />
+		<text name="EnterValue" value="Nhập giá trị" />
+		<text name="EditConfigurationSetting" value="Chỉnh sửa cài đặt cấu hình" />
+		<text name="Approve" value="Phê duyệt" />
+		<text name="ShipingPartnerCode" value="Mã đối tác vận chuyển" />
+		<text name="ShipingPartnerName" value="Tên đối tác vận chuyển" />
+		<text name="ShipingPartnerPhone" value="Số điện thoại đối tác vận chuyển" />
+		<text name="ShipingPartnerEmail" value="Email đối tác vận chuyển" />
+		<text name="ShipingPartnerAddress" value="Địa chỉ đối tác vận chuyển" />
+		<text name="ShipingPartnerType" value="Loại đối tác vận chuyển" />
+		<text name="ShipingPartnerMaxAmount" value="Số lượng tối đa của đối tác vận chuyển" />
+		<text name="ShipingPartnerMaxWeigth" value="Khối lượng tối đa của đối tác vận chuyển" />
+		<text name="ShipingPartnerStatus" value="Trạng thái đối tác vận chuyển" />
+		<text name="EditShippingPartner" value="Chỉnh sửa đối tác vận chuyển" />
+		<text name="ShipingPartner" value="Đối tác vận chuyển" />
+		<text name="TotalPackage" value="Số kiện" />
+		<text name="TotalWeight" value="Tổng cân nặng" />
+		<text name="TotalWeightKG" value="Tổng cân nặng(kg)" />
+		<text name="ShippingRates" value="Biểu phí vận chuyển" />
+		<text name="IsDefaultForCustomer" value="Là mặc định cho khách hàng" />
+		<text name="EditShippingRateTier" value="Chỉnh sửa tầng giá vận chuyển" />
+		<text name="InsuranceFee" value="Bảo hiểm" />
+		<text name="WoodenPackagingFee" value="Phí đóng gỗ" />
+		<text name="ShockproofFee" value="Phí quấn bọt khí" />
+		<text name="DomesticShippingFee" value="Phí ship nội địa" />
+		<text name="ECommerceShipping" value="Giá cước" />
+		<text name="BagPrefix" value="Tiền tố mã bao" />
+		<text name="CreateNew" value="Tạo mới" />
+		<text name="AssignCustomers" value="Gán khách hàng" />
+		<text name="Account" value="Tài khoản" />
+		<text name="CNWarehouseDate" value="Ngày nhập kho" />
+
+		<text name="Function_OrderViewAll" value="Xem tất cả đơn hàng" />
+		<text name="Function_TransactionViewAll" value="Xem tất cả giao dịch" />
+		<text name="Function_ScanCodeViewAll" value="Xem tất cả mã quét" />
+		<text name="CreateNewShippingRateGroup" value="Tạo nhóm biểu phí vận chuyển mới" />
+		<text name="AssignCustomersToShippingRate" value="Gán khách hàng vào biểu phí vận chuyển" />
+		<text name="MissingInfo" value="Thiếu thông tin" />
+		<text name="Initiated" value="Khởi tạo" />
+		<text name="WaitingForShipping" value="Chờ vận chuyển" />
+		<text name="GoToWarehouse" value="Đưa vào kho" />
+		<text name="Arrived" value="Đến đích" />
+		<text name="Archived" value="Lưu trữ" />
+		<text name="Pages_Bag_close" value="Đóng bao" />
+		<text name="ScanCodeHistory" value="Lịch sử quét mã" />
+		<text name="Pages_Transaction" value="Giao dịch" />
+		<text name="Pages_Message" value="Tin nhắn" />
+		<text name="Page_Dashboard" value="Trang chủ" />
+		<text name="DeliveryNoteList" value="Danh sách phiếu giao hàng" />
+		<text name="EditPackage" value="Sửa kiện" />
+
+		<text name="ErrorOccurred" value="Đã xảy ra lỗi" />
+		<text name="BadRequestError" value="Yêu cầu không hợp lệ" />
+		<text name="Display" value="Hiển thị" />
+		<text name="Record" value="Bản ghi" />
+		<text name="Total" value="Tổng cộng" />
+
+		<text name="In" value="Nhập" />
+		<text name="Out" value="Xuất" />
+		<text name="China" value="Trung Quốc" />
+		<text name="HaNoi" value="Hà Nội" />
+		<text name="Bag" value="Bao" />
+		<text name="Package" value="Kiện hàng" />
+		<text name="InputCode" value="Nhập mã" />
+		<text name="CurrencyRate" value="Tỷ giá" />
+		<text name="Waybill" value="Vận đơn" />
+		<text name="EmptyTable" value="Không có dữ liệu" />
+
+
+		<text name="InformalTrade" value="Hàng lô" />
+		<text name="TMDT" value="TMDT" />
+		<text name="Ecommerce" value="Thương mại điện tử" />
+		<text name="SelectLine" value="Chọn line vận chuyển" />
+		<text name="ProductInformation" value="Thông tin hàng hóa" />
+		<text name="ProductSpecifications" value="Thông số hàng hóa" />
+		<text name="Shipping" value="Đang VC QT" />
+
+		<text name="ProductNameCn" value="Tên SP tiếng Trung" />
+		<text name="ProductNameVn" value="Tên SP tiếng Việt" />
+		<text name="Quantity" value="Số lượng" />
+		<text name="Price" value="Giá" />
+
+		<text name="PackageList" value="Danh sách kiện" />
+		<text name="PrintStamp" value="In tem" />
+		<text name="PrintStampTmdt" value="In tem TMDT" />
+		<text name="AddSimilarPackage" value="Thêm kiện tương tự" />
+		<text name="AddMultiplePackages" value="Tạo nhiều kiện tương tự" />
+		<text name="QuickCreateBag" value="Tạo bao nhanh" />
+		<text name="WeightKg" value="Cân nặng (kg)" />
+
+
+		<text name="Solution" value="Dung dịch" />
+		<text name="FakeGoods" value="Hàng Fake" />
+		<text name="Other" value="Khác" />
+		<text name="PrivateBag" value="Bao riêng" />
+		<text name="GraftingBag" value="Bao ghép" />
+
+		<text name="AdvancedFilter" value="Bộ lọc nâng cao" />
+		<text name="ScanCodeOrPackageOrWaybill" value="Mã quét / Kiện / Vận đơn" />
+		<text name="WarehouseTransferCode" value="Mã phiếu chuyển kho" />
+		<text name="CurrentWarehouseStatus" value="Trạng thái kho hiện tại" />
+		<text name="InWarehouse" value="Trong kho" />
+		<text name="InWarehouseVN" value="Đã về kho VN" />
+		
+		<text name="Exported" value="Đã xuất" />
+		<text name="CreateDate" value="Ngày tạo" />
+		<text name="UpdateShippingPartner" value="Cập nhật đối tác vận chuyển" />
+		<text name="ExportExcel" value="Xuất excel" />
+		<text name="ExportBagDetails" value="Xuất chi tiết bao" />
+		<text name="ExportBag" value="Xuất bao" />
+		<text name="AllBags" value="Tất cả bao" />
+		<text name="BagsCreatedToday" value="Bao tạo trong ngày" />
+		<text name="ExportExcelPackageStatusTime" value="Xuất Excel thời gian trạng thái kiện" />
+		<text name="AllPackages" value="Tất cả kiện hàng" />
+		<text name="ShipmentPackages" value="Kiện đang giao" />
+		<text name="DeletedPackages" value="Kiện đã xóa" />
+		<text name="FailedPackages" value="Kiện thất bại" />
+		<text name="NonPackedPackages" value="Kiện chưa đóng gói" />
+
+		<text name="Today" value="Hôm nay" />
+		<text name="Yesterday" value="Hôm qua" />
+		<text name="Last7Days" value="7 ngày trước" />
+		<text name="Last30Days" value="30 ngày trước" />
+		<text name="ThisMonth" value="Tháng này" />
+		<text name="LastMonth" value="Tháng trước" />
+		<text name="Undefined" value="Chưa xác định" />
+
+		<text name="Cancelled" value="Đã hủy" />
+		<text name="WarehouseReceived" value="Kho đã nhận" />
+		<text name="ReturnedToWarehouse" value="Trả về kho" />
+		<text name="Processed" value="Đã xử lý" />
+		<text name="ZeroRecords" value="Không có dữ liệu" />
+
+		<text name="DeliveryWithFee" value="Kho trả phí có thu phí" />
+		<text name="DeliveryWithoutFee" value="Kho trả phí không thu phí" />
+		<text name="UpdateInfo" value="Sửa" />
+		<text name="FundAccountBalance" value="Số dư tài khoản quỹ" />
+		<text name="TotalDebt" value="Tổng công nợ" />
+		<text name="MaxDebt" value="Công nợ tối đa" />
+		<text name="Balance" value="Số dư" />
+		<text name="WalletBalance" value="Số dư ví" />
+		<text name="IsUpdateTransaction" value="Có cập nhật giao dịch" />
+		<text name="CustomerTransactionUpdateType" value="Loại cập nhật giao dịch" />
+		<text name="FileUpload" value="Tải lên tệp" />
+		<text name="CreateTransaction" value="Tạo giao dịch" />
+		<text name="TransactionTypeEnum.Deposit" value="Giao dịch nạp tiền" />
+		<text name="TransactionTypeEnum.Payment" value="Giao dịch thanh toán" />
+		<text name="TransactionTypeEnum.Withdraw" value="Giao dịch rút tiền" />
+		<text name="TransactionTypeEnum.None" value="Khác" />
+
+		<text name="TransactionDirectionEnum.Receipt" value="Thu" />
+		<text name="TransactionDirectionEnum.Expense" value="Chi" />
+
+		<text name="InputAmount" value="Nhập số tiền" />
+		<text name="InputRefCode" value="Nhập mã tham chiếu" />
+
+		<text name="CustomerTransactionUpdateTypeEnum.None" value="Không cập nhật" />
+		<text name="CustomerTransactionUpdateTypeEnum.Debt" value="Cập nhật công nợ" />
+		<text name="CustomerTransactionUpdateTypeEnum.Wallet" value="Cập nhật ví" />
+
+		<text name="CustomerTransactionUpdateTypeEnum.AddDebt" value="Tăng công nợ" />
+		<text name="CustomerTransactionUpdateTypeEnum.SubtractDebt" value="Giảm công nợ" />
+		<text name="CustomerTransactionUpdateTypeEnum.AddWallet" value="Cộng ví" />
+		<text name="CustomerTransactionUpdateTypeEnum.SubtractWallet" value="Trừ ví" />
+
+		<text name="IsUpdateCustomerBalance" value="Cập nhật số dư khách hàng" />
+		<text name="TransactionTicketType" value="Loại phiếu" />
+		<text name="FundAccountCurrency" value="Đơn vị tiền tệ" />
+		<text name="IsSolution" value="Dung dịch" />
+		<text name="IsWoodSealing" value="Đóng gỗ" />
+		<text name="IsFakeGoods" value="Hàng giả" />
+		<text name="IsOtherFeature" value="Khác" />
+
+		<text name="AmountAfterTrans" value="Số tiền sau giao dịch" />
+		<text name="OrderCodeOrWaybill" value="Mã đơn hàng hoặc vận đơn" />
+
+
+		<text name="ShipmentReferenceNo" value="Số tham chiếu lô hàng" />
+		<text name="CompanyName" value="Tên công ty" />
+		<text name="ContactName" value="Tên người liên hệ" />
+		<text name="Tel" value="Số điện thoại" />
+		<text name="PostalCode" value="Mã bưu điện" />
+		<text name="UnitPrice" value="Đơn giá" />
+		<text name="TotalValue" value="Tổng giá trị" />
+		<text name="MoreThan2Items" value="Nhiều hơn 2 sản phẩm" />
+		<text name="ShipmentType" value="Loại lô hàng" />
+		<text name="TotalActualWeight" value="Tổng khối lượng thực tế" />
+		<text name="Origin" value="Nơi gửi" />
+		<text name="Destination" value="Nơi nhận" />
+		<text name="ProcessingShipmentDate" value="Ngày xử lý lô hàng" />
+		<text name="HSCODE" value="Mã HS" />
+		<text name="BoxID" value="ID thùng hàng" />
+		<text name="CODValue" value="Giá trị COD" />
+		<text name="ProductCategoryID" value="ID danh mục sản phẩm" />
+		<text name="SortCode" value="Mã sắp xếp" />
+		<text name="SKU" value="Mã SKU" />
+		<text name="TotalCODValue" value="Tổng giá trị COD" />
+		<text name="CategoryZH" value="Danh mục (Tiếng Trung)" />
+		<text name="OrderID" value="Mã đơn hàng" />
+		<text name="Link" value="Liên kết" />
+		<text name="IdOrderItem" value="ID sản phẩm trong đơn hàng" />
+		<text name="CodeItem" value="Mã sản phẩm" />
+		<text name="UnitBlank" value="Đơn vị (trống)" />
+		<text name="PurchasingStaff" value="Nhân viên mua hàng" />
+		<text name="Translated" value="Đã dịch" />
+		<text name="TranslatedShort" value="Dịch ngắn gọn" />
+		<text name="OriginalShort" value="Bản gốc ngắn gọn" />
+		<text name="ChineseAI" value="Tiếng Trung AI" />
+		<text name="VietnameseAI" value="Tiếng Việt AI" />
+		<text name="Unit" value="Đơn vị" />
+		<text name="CitizenIdentityCard" value="Căn cước công dân" />
+		<text name="AgencyName" value="Tên đại lý" />
+		<text name="Properties" value="Thuộc tính" />
+		<text name="Services" value="Dịch vụ" />
+		<text name="StatusChecking" value="Kiểm tra trạng thái" />
+		<text name="DeclaredValue" value="Giá trị khai báo" />
+		<text name="LastmileTrackingNo" value="Mã theo dõi chặng cuối" />
+		<text name="HsCode" value="Mã HS" />
+		<text name="IsFakePackage" value="Là kiện hàng giả" />
+
+		<text name="BagTypeEnum.SeparateBag" value="Bao riêng" />
+		<text name="BagTypeEnum.InclusiveBag" value="Bao ghép" />
+
+		<text name="BagShippingStatus.Initiated" value="Mới" />
+		
+		<text name="BagShippingStatus.WaitingForShipping" value="Chờ vận chuyển" />
+		<text name="BagShippingStatus.GoToWarehouse" value="Tới đích" />
+		<text name="BagShippingStatus.InTransit" value="Đang VC QT" />
+		<text name="BagShippingStatus.Arrived" value="Tới đích" />
+		<text name="BagShippingStatus.WaitingForDelivery" value="Chờ giao" />
+		<text name="BagShippingStatus.Delivery" value="Đang giao" />
+		<text name="BagShippingStatus.Delivered" value="Đã giao" />
+		
+		<text name="BagShippingStatus.Archived" value="Đã vận chuyển" />
+		<text name="BagShippingStatus.WarehouseTransfer" value="Đang chuyển kho" />
+		<text name="BagShippingStatus.DeliveryRequest" value="Yêu cầu giao" />
+		<text name="WarehouseTransfer" value="Chuyển kho" />
+		
+		<text name="WaitingForDelivery" value="Chờ giao" />
+		<text name="ExportDate" value="Ngày xuất" />
+		<text name="ImportDate" value="Ngày nhập" />
+		<text name="NumberOfPackage" value="Số lượng kiện hàng" />
+		<text name="FromWeight" value="Từ khối lượng" />
+		<text name="ToWeight" value="Đến khối lượng" />
+		<text name="NetWeightKg" value="Khối lượng tịnh (kg)" />
+		<text name="ShipFeeTo" value="Phí vận chuyển đến" />
+		<text name="ShipFeeFrom" value="Phí vận chuyển từ" />
+		<text name="WoodPackingFeeFrom" value="Phí đóng gỗ từ" />
+		<text name="WoodPackingFeeTo" value="Phí đóng gỗ đến" />
+		<text name="ImportExport" value="Nhập - Xuất" />
+		<text name="Select" value="Chọn" />
+		<text name="Apply" value="Áp dụng" />
+		<text name="InclusiveBag" value="Bao ghép" />
+		<text name="SeparateBag" value="Bao riêng" />
+
+		<text name="ExportDateCN" value="Ngày xuất kho TQ" />
+		<text name="ImportDateVN" value="Ngày nhập kho VN" />
+
+		<text name="PackageVolumeM3" value="Kích thước kiện hàng (m³)" />
+		<text name="PackageWeightKg" value="Khối lượng kiện hàng (kg)" />
+		<text name="D" value="D" />
+		<text name="R" value="R" />
+		<text name="C" value="C" />
+		<text name="Characteristic" value="Đặc điểm" />
+		<text name="ImportDateHN" value="Ngày nhập Hà Nội" />
+		
+		<text name="BagWithPartner" value="Bao - đối tác" />
+		<text name="Pages_BagWithPartner" value="Bao - đối tác" />
+		<text name="Pages_ImportExport" value="Xuất - nhập" />
+		<text name="Delivering" value="Đang giao" />
+		<text name="LineShipping.InformalTrade" value="Hàng lô" />
+		<text name="LineShipping.Ecommerce" value="TMĐT" />
+		<text name="LineShipping.OfficialChannel" value="Chính ngạch" />
+		<text name="LineShipping.Portable" value="Xách tay" />
+
+		<text name="PackageDeliveryStatusEnum.Initiate" value="Khởi tạo" />
+		<text name="PackageDeliveryStatusEnum.Lost" value="Thất lạc" />
+		<text name="PackageDeliveryStatusEnum.InWarehouse" value="Kiện về kho" />
+		<text name="PackageDeliveryStatusEnum.WaitingForShipping" value="Chờ vận chuyển" />
+		<text name="PackageDeliveryStatusEnum.Shipping" value="Đang vận chuyển" />
+		<text name="PackageDeliveryStatusEnum.WaitingForDelivery" value="Chờ giao" />
+		<text name="PackageDeliveryStatusEnum.DeliveryRequest" value="Yêu cầu giao" />
+		<text name="PackageDeliveryStatusEnum.DeliveryInProgress" value="Đang giao" />
+		<text name="PackageDeliveryStatusEnum.Received" value="Đã nhận" />
+		<text name="PackageDeliveryStatusEnum.WaitingForReturn" value="Chờ trả hàng" />
+		<text name="PackageDeliveryStatusEnum.Returning" value="Đang trả hàng" />
+		<text name="PackageDeliveryStatusEnum.Returned" value="Đã trả hàng" />
+		<text name="PackageDeliveryStatusEnum.Closed" value="Ngừng hoạt động" />
+		<text name="PackageDeliveryStatusEnum.CustomerNotClaiming" value="Khách không nhận" />
+		<text name="PackageDeliveryStatusEnum.WaitingForClearance" value="Chờ thanh lý" />
+		<text name="PackageDeliveryStatusEnum.Clearance" value="Đã thanh lý" />
+		<text name="PackageDeliveryStatusEnum.WarehouseTransfer" value="Trung chuyển" />
+		<text name="WarehouseCurrent" value="Kho hiện tại" />
+		<text name="WarehouseStatus.InStock" value="Trong kho" />
+		<text name="WarehouseStatus.OutOfStock" value="Xuất kho" />
+		<text name="DeliveryTimeVN" value="Ngày xuất kho VN" />
+		<text name="LineVC" value="Line VC" />
+		<text name="CreateNewOrder" value="Tạo đơn mới" />
+		<text name="SaleAdminPackage" value="Theo dõi kiện hàng" />
+		<text name="InputWaybill" value="Nhập vận đơn" />
+		<text name="InputWaybillNumber" value="Nhập số vận đơn" />
+		<text name="SelectAddress" value="Chọn địa chỉ" />
+
+		<text name="VCStatus" value="Trạng thái VC" />
+		<text name="SelectFile" value="Chọn tệp" />
+		<text name="ImportOrder" value="Nhập đơn hàng" />
+		<text name="DownloadTemplate" value="Tải mẫu" />
+		<text name="ImportResult" value="Kết quả nhập" />
+		<text name="TotalOrders" value="Tổng số đơn hàng" />
+		<text name="SuccessCount" value="Số lượng thành công" />
+		<text name="FailedCount" value="Số lượng thất bại" />
+		<text name="ErrorMessages" value="Thông báo lỗi" />
+		<text name="Upload" value="Tải lên" />
+		<text name="InsurancePercentage" value="Phần trăm bảo hiểm" />
+		
+		<text name="ShipTQ" value="Phí ship TQ" />
+		<text name="SecuringCost" value="Phí gia cố" />
+		<text name="ShipVN" value="Phần trăm bảo hiểm" />
+		<text name="ShippingPartnerVN" value="Đối tác xuất" />
+		<text name="ExportDateVN" value="Ngày xuất kho VN" />
+		<text name="Pages_Report_ImportExport" value="Theo dõi nhập xuất" />
+		<text name="OrderNote" value="Ghi chú đơn hàng" />
+		<text name="EnterNoteHere" value="Nhập ghi chú tại đây" />
+		<text name="SaveNote" value="Lưu ghi chú" />
+		<text name="NewNote" value="Ghi chú mới" />
+
+		<text name="ReceiptName" value="Người nhận" />
+		<text name="BagOrPackageCode" value="Mã bao/kiện" />
+		<text name="CustomerChilds" value="Khách hàng con" />
+		<text name="Pages_Customers_Childs" value="Khách hàng con" />
+		<text name="UpdateOrder" value="Cập nhật" />
+		<text name="CancelOrder" value="Hủy đơn" />
+		<text name="Function_IndexChild" value="Khách hàng con" />
+		<text name="AddChildCustomer" value="Thêm khách hàng con" />
+		<text name="CreateDeliveryNote" value="Tạo phiếu xuất kho" />
+
+		<text name="DimensionM3" value="Thể tích" />
+		<text name="DomesticShippingFeeCN" value="Phí ship TQ" />
+		<text name="DomesticShippingFeeVN" value="Phí ship VN" />
+		<text name="ShippingFeeAbsorbedByWarehouse" value="Ship VN chịu " />
+		<text name="Function.ViewAllCustomer" value="Xem tất cả khách hàng" />
+
+		<text name="CreateComplaint" value="Tạo mới khiếu nại" />
+		<text name="UploadImage" value="Upload hình ảnh" />
+		<text name="InputWaybillHereToSearch" value="Nhập mã vận đơn ở đây để tìm kiếm" />
+		<text name="BagCoverWeight" value="Cân nặng bì" />
+		
+		<text name="ShippingPartnerDomestic" value="Đối tác VC VN" />
+		<text name="ShippingFee" value="Phí VC" />
+		<text name="ShippingPartnerIntern" value="Đối tác VC QT" />
+		
+		<text name="Initiate" value="Mới" />
+		<text name="DeliveryInProgress" value="Đang giao" />
+		<text name="WarehouseScan" value="Kho quét" />
+		<text name="UserScan" value="Người quét" />
+		<text name="SelectAll" value="Chọn tất cả" />
+		<text name="CurrentWarehouse" value="Đang ở kho" />
+		<text name="TotalCode" value="Tổng số mã" />
+		<text name="Keyword" value="Từ khóa" />
+		<text name="GoToList" value="Chuyển đến danh sách" />
+		<text name="SaveAndGoToList" value="Lưu và chuyển đến danh sách" />
+		<text name="SaveAndCreateNew" value="Lưu và tạo mới" />
+
+		<text name="LockCustomer" value="Khóa khách hàng" />
+		<text name="AreYouSure" value="Bạn có chắc chắn không?" />
+		<text name="Confirm" value="Xác nhận" />
+		<text name="PleaseConfirm" value="Vui lòng xác nhận?" />
+		<text name="AreYouChecked" value="Hãy kiểm tra kĩ thông tin." />
+		<text name="ExportBagDetail" value="Xuất chi tiết bao" />
+		<text name="DeliveryNote" value="Phiếu xuất" />
+		<text name="TransactionDetails" value="Chi tiết giao dịch" />
+		<text name="SelectShippingRateGroup" value="Chọn nhóm giá" />
+		<text name="SelectShippingRateGroupFor" value="Chọn biểu giá cho" />
+		<text name="MarkAsDelivered" value="Đánh dấu là đã giao" />
+		<text name="AreYouSureWantToMarkAsDelivered" value="Bạn có muốn đánh dấu là đã giao?" />
+		<text name="AreYouSureWantToMarkAsCompleted" value="Bạn có muốn kết thúc đơn hàng?" />
+		<text name="MarkAsCompleted" value="Hoàn thành" />
+		<text name="SuccessfullyUpdated" value="Cập nhật thành công" />
+		<text name="AddChild" value="Thêm khách hàng con" />
+		<text name="AreYouSureWantToLock" value="Bạn muốn khóa tài khoản" />
+		<text name="AreYouSureWantToUnLock" value="Bạn muốn mở khóa tài khoản" />
+		<text name="SuccessfullyUnLock" value="Mở khóa thành công" />
+		<text name="SuccessfullyLock" value="Khóa thành công" />
+		<text name="Pages_DeliveryRequest_edit" value="Yêu cầu giao - chỉnh sửa" />
+		<text name="Pages_WarehouseTransfer" value="Phiếu chuyển kho" />
+		<text name="Pages_WarehouseTransfer_Create" value="Tạo mới" />
+		<text name="WarehouseTransfers" value="Chuyển kho" />
+		<text name="WarehouseTransferList" value="Danh sách phiếu chuyển kho" />
+		<text name="List" value="Danh sách" />
+		<text name="ChangeWarehouse" value="Chuyển kho" />
+		<text name="TransferCode" value="Mã phiếu chuyển kho" />
+		<text name="FromWarehouse" value="Kho nguồn" />
+		<text name="ToWarehouse" value="Kho đích" />
+		<text name="SelectNewWarehouse" value="Chọn kho mới" />
+		<text name="CreateWarehouseTransfer" value="Tạo phiếu chuyển kho" />
+		<text name="UpdateDebtMax" value="Cập nhật công nợ cho phép" />
+		<text name="ChangePassword" value="Thay đổi mật khẩu" />
+		<text name="Lock" value="Khóa" />
+		<text name="ShippingRate" value="Bảng giá" />
+		<text name="SaleUser" value="Nhân viên kinh doanh" />
+		<text name="WarehouseName" value="Kho nhận" />
+		<text name="TotalDebtAfterChange" value="Tổng công nợ sau thay đổi" />
+		<text name="SeparateWoodenCrate" value="Đóng gỗ riêng" />
+		<text name="SharedWoodenCrate" value="Đóng gỗ chung" />
+		<text name="NewWoodenPacking" value="Đóng mới" />
+		<text name="OfficialChannel" value="Chính ngạch" />
+		<text name="Portable" value="Xách tay" />
+		<text name="EditAmount" value="Chỉnh sửa số dư tài khoản" />
+		<text name="Function_EditUserSpecialPIN" value="Sửa mã PIN đặc biệt" />
+		<text name="Function_EditCustomerAmount" value="Sửa số dư" />
+		<text name="ResetSpecialPin" value="Cập nhật PIN" />
+		<text name="NewAmount" value="Số tiền mới" />
+		<text name="UpdateAmount" value="Cập nhật số tiền" />
+		<text name="SpecialPassword" value="Mật khẩu đặc biệt" />
+		<text name="ConfirmSpecialPassword" value="Cập nhật mật khẩu đặc biệt" />
+		<text name="Unbag" value="Xóa khỏi bao" />
+		<text name="TimeLine" value="Mốc thời gian" />
+		<text name="OriginShippingCost" value="Giá gốc" />
+		<text name="ShippingCostGroups" value="Nhóm giá gốc" />
+		<text name="CreateShippingCostGroup" value="Tạo Nhóm giá gốc" />
+		<text name="FromDate" value="Từ ngày" />
+		<text name="ToDate" value="Đến ngày" />
+		<text name="ConfigShippingCost" value="Cấu hình giá" />
+		<text name="SelectFromWarehouse" value="Vận chuyển từ" />
+		<text name="SelectToWarehouse" value="Vận chuyển đến" />
+		<text name="ConfigureShippingCost" value="Cấu hình giá gốc" />
+
+		<text name="Role.WareHouseVN" value="Kho Việt Nam" />
+		<text name="Role.WareHouseCN" value="Kho Trung Quốc" />
+		<text name="Role.SaleAdmin" value="Quản trị bán hàng" />
+		<text name="Function_BagDelete" value="Xóa bao" />
+		<text name="Pages_DeliveryNote_ViewAllWarehouse" value="Xem tất cả kho - phiếu giao hàng" />
+		<text name="Function_PackageViewAll" value="Xem tất cả kiện" />
+		<text name="Function_BagViewAll" value="Xem tất cả bao" />
+
+		<text name="AreYouSureWantToDeleteAllOfYourCode" value="Bạn có chắc chắn muốn xóa toàn bộ mã của bạn không?" />
+		<text name="DeleteAll" value="Xóa tất cả" />
+		<text name="OnlyMyCode" value="Chỉ xem mã của tôi" />
+		
+		<text name="New" value="Tạo mới" />
+		<text name="WTShipping" value="Đang chuyển kho" />
+		<text name="SaveAndTransfer" value="Lưu và chuyển" />
+		<text name="EnterBagOrPackageCode" value="Nhập mã bao hoặc mã kiện" />
+		<text name="BagAndPackageList" value="Danh sách bao và kiện" />
+		<text name="AreYouSureWantToConfirm" value="Xác nhận?" />
+		<text name="Transfered" value="Đã chuyển" />
+
+		<text name="WarehouseTransferStatusEnum.New" value="Mới" />
+		<text name="WarehouseTransferStatusEnum.InTransit" value="Đang chuyển" />
+		<text name="WarehouseTransferStatusEnum.Received" value="Đã chuyển" />
+		
+		<text name="ShippingService" value="Dịch vụ vận chuyển" />
+
+		<text name="OrderStatus.New" value="Mới tạo" />
+		<text name="OrderStatus.Sent" value="Đã gửi" />
+		<text name="OrderStatus.InTransitToChinaWarehouse" value="Đã về kho Trung Quốc" />
+		<text name="OrderStatus.InTransit" value="Đang vận chuyển QT" />
+		<text name="OrderStatus.InTransitToVietnamWarehouse" value="Đã về kho Việt Nam" />
+		<text name="OrderStatus.OutForDelivery" value="Đang giao hàng" />
+		<text name="OrderStatus.Delivered" value="Đã giao hàng" />
+		<text name="OrderStatus.Complaint" value="Khiếu nại" />
+		<text name="OrderStatus.Refund" value="Hoàn tiền" />
+		<text name="OrderStatus.Cancelled" value="Đã hủy" />
+		<text name="OrderStatus.OrderCompleted" value="Hoàn thành" />
+		<text name="Function_Package_Finance" value="Tài chính kiện" />
+		<text name="PackageFinance" value="Tài chính kiện" />
+
+		<text name="admin" value="Admin" />
+		<text name="accounting" value="Kế toán" />
+		<text name="saleadmin" value="Quản lý kinh doanh" />
+		<text name="customer" value="Khách hàng" />
+		<text name="warehousetq" value="Kho TQ" />
+		<text name="sale" value="Kinh doanh" />
+		<text name="warehousevn" value="Kho VN" />
+		<text name="warehouse" value="Kho" />
+		<text name="InBagType.InBag" value="Đã đóng bao" />
+		<text name="InBagType.UnBag" value="Ngoài bao" />
+		<text name="UnBagType" value="Phân loại bao" />
+
+		<text name="ExportExcelFull" value="Xuất Excel đầy đủ" />
+		<text name="ExportExcelWithFinance" value="Xuất excel tài chính kiện" />
+		<text name="PartnerDelivery" value="Đối tác giao hàng" />
+		<text name="CustomerPickup" value="Khách hàng tự lấy" />
+		
+		<text name="ExcludeCoverWeightTypeFilter.ExcludeCoverWeight" value="Không hiển thị kiện bì" />
+		<text name="ExcludeCoverWeightTypeFilter.CoverWeightOnly" value="Chỉ hiển thị kiện bì" />
+		<text name="ExcludeCoverWeightType" value="Hiển thị kiện bì" />
+
+		<text name="PackgeNotFound" value="Không tìm thấy kiện hàng" />
+		<text name="PackageWarehouseNotMatch" value="Kho của kiện hàng không khớp" />
+		<text name="PackageInAnotherBag" value="Kiện hàng đang nằm trong bao khác" />
+		<text name="PackageCustomerIsNotMatch" value="Khách hàng của kiện hàng không khớp" />
+		<text name="PackageWarehouseDestinationIsNotMatch" value="Kho đích của kiện hàng không khớp" />
+		<text name="AddPackageSuccess" value="Thêm kiện hàng thành công" />
+		<text name="PackageNotInBag" value="Kiện hàng không nằm trong bao" />
+		<text name="RemovePackageSuccess" value="Xóa kiện hàng thành công" />
+		<text name="PackageWasInBag" value="Kiện đã được đóng bao rồi" />
+		<text name="PleaseCheckTheCustomer" value="Vui lòng kiểm tra lại khách hàng" />
+
+		<text name="Function_BagCreate" value="Tạo bao" />
+		<text name="Function_PackageCreate" value="Tạo kiện" />
+		<text name="Function_TransactionApprove" value="Phê duyệt giao dịch" />
+
+		<text name="Function_PackageEdit" value="Sửa lại kiện" />
+		<text name="Function_Order_Rematch" value="Khớp lại đơn" />
+
+		
+		<text name="BagFilterPackage" value="Lọc bao có kiện" />
+		<text name="BagFilterPackageType" value="BagFilterPackageType" />
+		<text name="FilterPackageTypeEnum.HasPackage" value="Có kiện" />
+		<text name="FilterPackageTypeEnum.NoPackage" value="Không có kiện" />
+		<text name="PendingDeliveryNote" value="Phiếu xuất chờ" />
+		<text name="MyDeliveryNote" value="Phiếu xuất" />
+		<text name="EnterNote" value="Nhập ghi chú" />
+		<text name="EnterAddress" value="Nhập địa chỉ" />
+		<text name="SubmitRequest" value="Gửi yêu cầu" />
+		
+	</texts>
+</localizationDictionary>

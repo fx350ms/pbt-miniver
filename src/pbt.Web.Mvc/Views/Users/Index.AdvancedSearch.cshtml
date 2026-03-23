@@ -1,0 +1,63 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.Users
+@using pbt.Authorization
+@using pbt.Web.Models.Common.Modals
+
+@model UserListViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="collapse" id="UserFilterCollapse">
+    <div class="abp-advanced-search">
+        <form id="UsersSearchForm" class="form-horizontal">
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="Keyword">Từ khóa</label>
+                    <div class="input-group input-group">
+                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" id="txt-keyword">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="WarehouseId">@L("Warehouse")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" id="WarehouseId" name="WarehouseId">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="RoleId">@L("Roles")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control  " id="RoleId" name="RoleId">
+                            <option value="-1"> @L("All")</option>
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@role.Id">@L(role.Name)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="RoleId">Quản lý</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" id="SaleUserId" name="SaleUserId">
+                            <option value="-1"> @L("All")</option>
+                            @foreach (var user in Model.SaleUsers)
+                            {
+                                <option value="@user.Id">@user.UserName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-top:10px;">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn bg-blue btn-search">
+                        <span class="fas fa-search" aria-hidden="true">Tìm kiếm</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

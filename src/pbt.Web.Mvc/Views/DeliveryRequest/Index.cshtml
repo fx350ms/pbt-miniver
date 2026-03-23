@@ -1,0 +1,63 @@
+﻿@using pbt.ApplicationUtils
+@using pbt.Authorization
+@using pbt.Web.Startup
+
+@{
+    ViewBag.Title = L("DeliveryRequest");
+    // ViewBag.CurrentPageName = PageNames.de;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryRequest/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryRequest/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("DeliveryRequest")</h1>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @await Html.PartialAsync("~/Views/DeliveryRequest/Index.AdvancedSearch.cshtml")
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="DeliveryRequestTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("RequestCode")</th>
+                                        <th>@L("CustomerName")</th>
+
+                                        <th>@L("ShippingMethod")</th>
+                                        <th>@L("Address")</th>
+                                        <th>@L("Note")</th>
+                                        <th>@L("DateCreated")</th>
+                                        <th>@L("Status")</th>
+                                        <th style="width: 50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,75 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.Customers
+@using pbt.Customers.Dto;
+
+@{
+    ViewBag.Title = L("ImportOrder");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/Import.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/Import.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("ImportOrder")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="~/view-resources/template/order.xlsx" class="btn bg-green float-sm-right">
+                    <i class="fa fa-download"></i>
+                    @L("DownloadTemplate")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <form id="ImportForm" role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-8  form-row">
+                                <div class="col-8 offset-2">
+                                    <label for="Keyword">@L("SelectFile")</label>
+                                    <input type="file" name="FileContent" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                            <button type="submit" class="btn btn-primary save-button">@L("Upload")</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="col-12">
+                    <h3>@L("ImportResult")</h3>
+                    <div id="import-result" class="card card-body" style="display: none;">
+                        <p><strong>@L("TotalOrders"):</strong> <span id="total-orders">0</span></p>
+                        <p><strong>@L("SuccessCount"):</strong> <span id="success-count">0</span></p>
+                        <p><strong>@L("FailedCount"):</strong> <span id="failed-count">0</span></p>
+                        <div id="error-messages" style="display: none;">
+                            <h5>@L("ErrorMessages"):</h5>
+                            <ul id="error-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

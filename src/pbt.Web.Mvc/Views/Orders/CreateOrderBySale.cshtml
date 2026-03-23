@@ -1,0 +1,184 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Startup
+@using pbt.Customers.Dto
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.Orders
+@using pbt
+@using pbt.Authorization
+@using pbt.CustomerAddresss.Dto
+@using pbt.Waybills.Dto
+
+@model CreateCustomerOrderModel
+
+@{
+    ViewBag.Title = L("CreateMyOrder");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/CreateOrderBySale.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/CreateOrderBySale.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("CreateCustomerBySale"): <strong class="text-primary">@Model.Dto.OrderNumber</strong>  </h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        @if (Model != null)
+                        {
+
+                            <form id="form-create-my-order" role="form" class="form-horizontal">
+                                <input type="hidden" name="CustomerName" value="" />
+                                <input type="hidden" name="IsCustomerOrder" value="true" />
+                                <div class="modal-body">
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col-md-6">
+                                                    <select class="select2 select2-hidden-accessible " name="WaybillNumber" asp-for="Dto.WaybillNumber" style="width: 100%;">
+                                                    </select>
+                                                    <span asp-validation-for="Dto.WaybillNumber" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#WaybillCreateModal">@L("CreateNewWaybill")</button>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-6">
+                                                    <select class="form-control" name="Line" asp-for="Dto.ShippingLine" required>
+                                                        <option value="-1">@L("SelectShippingLine")</option>
+                                                        <option value="@((int)CustomerLine.Line1)">@CustomerLine.Line1.GetDescription()</option>
+                                                        <option value="@((int)CustomerLine.Line2)">@CustomerLine.Line2.GetDescription()</option>
+                                                        <option value="@((int)CustomerLine.OfficialTransport)">@CustomerLine.OfficialTransport.GetDescription()</option>
+                                                    </select>
+                                                    <span asp-validation-for="Dto.ShippingLine" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 d-flex justify-content-end">
+                                            <div class="form-group row">
+                                                <label>@L("Service")</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                         
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" id="select-insurance">
+                                                        <label class="custom-control-label" for="select-insurance">@L("Insurance")</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="number" class="form-control" name="InsuranceValue" asp-for="Dto.Insurance" placeholder="@L("InputInsuranceValue")" required min="0" value="@Model.Dto.Insurance">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" id="select-wooden-packaging">
+                                                        <label class="custom-control-label" for="select-wooden-packaging">@L("WoodenPackaging")</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" id="select-shockproof-packaging">
+                                                        <label class="custom-control-label" for="select-shockproof-packaging">@L("ShockproofPackaging")</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" id="select-domestic-transportation">
+                                                        <label class="custom-control-label" for="select-domestic-transportation">@L("DomesticTransportation")</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <h4>@L("SelectReceivingWarehouseChina")</h4>
+                                            <input type="hidden" name="CNWarehouseId" id="CNWarehouseId" value="@Model.Dto.CNWarehouseId" asp-for="Dto.CNWarehouseId" required />
+                                            @await Html.PartialAsync("~/Views/Orders/_WarehousesChina.cshtml", Model.WarehousesChina)
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>@L("SelectReceivingWarehouseVietnam")</h4>
+                                            <input type="hidden" name="VNWarehouseId" id="VNWarehouseId" value="@Model.Dto.VNWarehouseId" asp-for="Dto.VNWarehouseId" required />
+                                            @await Html.PartialAsync("~/Views/Orders/_WarehousesVietNam.cshtml", Model.WarehousesVietNam)
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h4>@L("AddressReceiver")</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <a href="javascript:;" data-toggle="modal" data-target="#UserCreateModal" class="btn bg-blue ">
+                                                        <i class="fa fa-plus-square"></i>
+                                                        @L("AddNewAddress")
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="AddressId" id="AddressId" value="@Model.Dto.AddressId" asp-for="Dto.AddressId" required />
+                                            <div id="address-box">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default close-button" data-dismiss="modal">@L("Cancel")</button>
+                                    <button type="submit" class="btn btn-primary save-button">@L("CreateOrder")</button>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Orders/_CreateAddressModal.cshtml", new CustomerAddressDto() { })
+@await Html.PartialAsync("~/Views/Orders/_CreateWaybillModal.cshtml", new CreateWaybillSimpleDto() { }) 

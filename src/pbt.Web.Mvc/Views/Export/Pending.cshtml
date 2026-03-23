@@ -1,0 +1,79 @@
+﻿@using pbt.Web.Startup
+
+@{
+    ViewBag.Title = L("DeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+@section scripts
+{
+<environment names="Development">
+    <script src="~/view-resources/Views/Bags/Pending.js" asp-append-version="true"></script>
+</environment>
+
+<environment names="Staging,Production">
+    <script src="~/view-resources/Views/Bags/Pending.min.js" asp-append-version="true"></script>
+</environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("BagsPending")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-default">Cập nhật đối tác vận chuyển</button>
+                <button type="button" class="btn btn-default">Xuất Excel</button>
+                <button type="button" class="btn btn-default">Xuất chi tiết bao</button>
+                <button type="button" class="btn btn-default">Xuất bao</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link nav-bag active" data-type="all" href="#">Tất cả bao</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-bag" data-type="today" href="#">Bao tạo trong ngày</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @await Html.PartialAsync("~/Views/Bags/Pending.AdvancedSearch.cshtml")
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="DepartmentsTable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@L("BagCode")</th>
+                                    <th>@L("Receiver")</th>
+                                    <th>@L("BagType")</th>
+                                    <th>@L("CustomerName")/@L("CustomerCode")</th>
+                                    <th>@L("Agency")</th>
+                                    <th>@L("DateCreate")</th>
+                                    <th>@L("WarehouseCreate")</th>
+                                    <th>@L("WarehouseDestination")</th>
+                                    <th style="width: 150px">@L("Actions")</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

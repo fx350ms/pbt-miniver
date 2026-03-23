@@ -1,0 +1,43 @@
+﻿<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <div class="collapse" id="PackageFilterCollapse">
+        <form id="ShippingRateSearchForm" class="form-horizontal">
+            <input type="hidden" name="ProcessType" value="wait" />
+            <div class="form-row mb-3">
+                <div class="col-md-3">
+                    <label for="Keyword">@L("Keyword")</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <div class="col-md-1 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+
+                @*   <div class="col">
+                    <input type="text" class="form-control" placeholder="Mã quét / Kiện / Vận đơn" name="Code" id="Code">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Mã phiếu chuyển kho" name="WarehouseTransferCode" id="WarehouseTransferCode">
+                </div>
+
+
+                <div class="col">
+                    <input class="form-control" type="date" name="CreateDate" id="CreateDate" />
+                </div> *@
+                @* <div class="col-auto">
+                    <button type="button" class="btn btn-info" id="ClearSearch">@L("Clear")</button>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary btn-search">Tìm kiếm</button>
+                </div> *@
+               
+            </div>
+           
+        </form>
+    </div>
+</div>

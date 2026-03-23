@@ -1,0 +1,29 @@
+﻿<div class="abp-advanced-search" xmlns="http://www.w3.org/1999/html">
+    <form id="PackageSearchForm" class="form-horizontal">
+        <input type="hidden" name="FilterType" value="all" />
+        <div class="form-row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="@L("BagCode")" name="BagCode" id="BagCode">
+            </div>
+            <div class="col">
+                <select class="form-control search-warehouse" name="WarehouseCreate">
+                    <option value="">@L("WarehouseCreate")</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control search-warehouse" name="WarehouseDestination" id="WarehouseDestination" placeholder="@L("WarehouseDestination")">
+                    <option value="">@L("WarehouseDestination")</option>
+                </select>
+            </div>
+            <div class="col">
+                <input class="form-control" type="date" name="CreateDate" id="CreateDate" />
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-info" id="ClearSearch">@L("Clear")</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary btn-search">Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+</div>

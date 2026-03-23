@@ -1,0 +1,80 @@
+﻿@using pbt.ApplicationUtils
+@* <div class="abp-advanced-search" xmlns="http://www.w3.org/1999/html">
+    <form id="PackageSearchForm" class="form-horizontal">
+        @DeliveryRequestStatus.New.ToString()
+        <input type="hidden" name="Status" value="@((int)DeliveryRequestStatus.New)"/>
+        <div class="form-row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="@L("Code")" name="Code" id="Code">
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" name="CreateDateRange" id="CreateDateRange"/>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-info" id="ClearSearch">@L("Clear")</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary btn-search">Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+</div> *@
+
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#TransactionFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+    <a href="@Url.Action("Create", "DeliveryRequest")" class="btn bg-blue float-sm-right" style="margin-right:10px">
+        <i class="fa fa-plus-square"></i>
+        @L("CreateNew")
+    </a>
+    <div class="collapse" id="TransactionFilterCollapse">
+        <form id="DeliveryRequestSearchForm" class="form-horizontal">
+            <div class="form-row">
+                <!-- Trạng thái -->
+                <div class="col-md-3">
+                    <label for="Status">Mã yêu cầu</label>
+                    <input type="text" class="form-control" placeholder="@L("Code")" name="Code" id="Code">
+                </div>
+
+                <!-- Loại giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionDate">Thời gian giao dịch</label>
+                    <input type="text" class="form-control" name="TransactionDate" id="input-date-range">
+                    <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+                    <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="CustomerId">Khách hàng</label>
+                    <select name="CustomerId" id="CustomerId" class="form-control" >
+                    </select>
+                </div>
+                <!-- Trạng thái -->
+                <div class="col-md-3">
+                    <label for="Status">Trạng thái</label>
+                    <select name="Status" class="form-control" id="select-filter-status">
+                        <option value="-1">-- Chọn trạng thái --</option>
+                        <option value="1">Yêu cầu mới</option>
+                        <option value="2">Đang xử lý</option>
+                        <option value="3">Đã xử lý</option>
+                        <option value="4">Đã lấy hàng</option>
+                        <option value="5">Hoàn thành</option>
+                        <option value="6">Hủy</option>
+                        <option value="7">Thất bại</option>
+                    </select>
+                </div>
+            </div>
+ 
+            <!-- Căn phải nút tìm kiếm -->
+            <div class="form-row mt-3">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

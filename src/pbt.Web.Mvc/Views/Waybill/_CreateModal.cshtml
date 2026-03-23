@@ -1,0 +1,45 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Waybills.Dto
+@using pbt.Web.Models.Waybills
+
+@model CreateWaybillListModel
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="WaybillCreateModal" tabindex="-1" role="dialog" aria-labelledby="WaybillCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewWaybill")))
+            <form name="waybillCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("SelectCustomer")</label>
+                        <div class="col-md-9">
+                            <select class="select2 form-control" id="select-customer" name="CustomerId" style="width: 100%;">
+                                <option value="">@L("SelectCustomer")</option>
+                                @foreach (var customer in Model.Customers)
+                                {
+                                    <option value="@customer.Id">@customer.Username</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("WaybillCodesCommaSeparated")</label>
+                        <div class="col-md-9">
+                            <textarea type="text" class="form-control" name="WaybillCodes" required placeholder="Enter waybill codes separated by commas" rows="10"> </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">@L("Note")</label>
+                        <div class="col-md-9">
+                            <textarea type="text" class="form-control" name="Note" placeholder="Nhập ghi chú" rows="2"> </textarea>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

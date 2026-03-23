@@ -1,0 +1,39 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Customers
+@using pbt.CustomerAddresss.Dto
+@using pbt
+@using pbt.Complaints.Dto
+@using pbt.ApplicationUtils
+
+@model List<ComplaintDto>
+@{
+    Layout = null;
+}
+<table id="ComplaintsTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>@L("ComplaintCode")</th>
+            <th>@L("OrderCode")</th>
+            <th>@L("CreationTime")</th>
+            <th>@L("HandlerName")</th>
+            <th>@L("Status")</th>
+            <th>@L("Reason")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ComplaintCode</td>
+                    <td>@item.OrderCode</td>
+                    <td>@item.CreationTimeString</td>
+                    <td>@item.AssignToUserName</td>
+                    <td>@(((ComplaintStatus)item.Status).GetDescription())</td>
+                    <td>@item.Reason</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table> 

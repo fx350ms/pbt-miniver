@@ -1,0 +1,269 @@
+﻿@using pbt.ApplicationUtils
+@using pbt.Web.Startup
+
+@model pbt.Web.Models.DeliveryNote.DeliveryNoteDetailModel
+@{
+    ViewBag.Title = L("DeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryNote/Detail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryNote/Detail.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<style>
+    .log-box {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .log-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .log-item img {
+            margin-left: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .log-item .log-content {
+            flex-grow: 1;
+        }
+
+        .log-item .log-time {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .log-item .log-text strong {
+            font-weight: bold;
+        }
+</style>
+
+
+@if (Model.Dto != null)
+{
+    <section class="content-header">
+        <input type="hidden" name="bagId" value="">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>@L("DeliveryNoteDetail") # @Model.Dto.DeliveryNoteCode</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <button type="button" class="btn btn-default print-delivery-note">  <i class="fas fa-print"></i> In phiếu</button>
+                    <a type="button" class="btn btn-default export-delivery-note" href="@Url.Action("ExportExcel", new { id = Model.Dto.Id })">  <i class="fas fa-download"></i>   @L("ExportExcel")</a>
+                    <a type="button" class="btn btn-default export-delivery-note-full" href="@Url.Action("ExportExcelFull", new { id = Model.Dto.Id })"> <i class="fas fa-file-download"></i>@L("ExportExcelFull")</a>
+                    <a type="button" class="btn btn-default export-delivery-note-finance" href="@Url.Action("ExportExcelWithFinanceFull", new { id = Model.Dto.Id })"> <i class="fas fa-file-invoice-dollar"></i> @L("ExportExcelWithFinance")</a>
+                    @if (Model.Dto.Status == 0)
+                    {
+                        <button type="button" class="btn btn-primary" id="btn-export">Xuất kho</button>
+                    }
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-9">
+                    <div class="card">
+                        <div class="card-body" style="border-top: 4px solid #2b4df3">
+                            <input type="hidden" name="deliveryNoteId" id="deliveryNoteId" value="@Model.Dto.Id">
+                            <h5>Thông tin phiếu xuất</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span>Người tạo</span>
+                                    <span class="d-block"><strong>@Model.Dto.CreatorName</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Thời gian tạo</span>
+                                    <span class="d-block"><strong>@Model.Dto.CreationTimeFormat</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Trạng thái</span>
+                                    <span class="d-block"><strong>@(((DeliveryNoteStatus)Model.Dto.Status).GetDescription())</strong></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span>Người xuất</span>
+                                    <span class="d-block"><strong>@(Model.Dto.ExporterName ?? "-")</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Thời gian xuất</span>
+                                    <span class="d-block"><strong>@(Model.Dto.ExportTimeFormat ?? "-")</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Kho xuất</span>
+                                    <span class="d-block"><strong>@(Model.Dto.ExportWarehouseName ?? "-")</strong></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span>Tổng cân nặng</span>
+                                    <span class="d-block"><strong>@Model.Dto.TotalWeight kg</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Phí vận chuyển QT</span>
+                                    <span class="d-block"><strong>@((Model.Dto.TotalFee.HasValue ? Model.Dto.TotalFee.Value : 0).ToCurrencyFormat())</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Phí ship VN</span>
+
+
+                                    <span class="d-block">
+                                        <strong>@((Model.Dto.DeliveryFee.HasValue ? Model.Dto.DeliveryFee.Value : 0).ToCurrencyFormat())</strong>
+                                        @if (Model.Dto.DeliveryFeeReason == (int)DeliveryFeeType.WithoutFee)
+                                        {
+                                            <span class="badge badge-success">Không thu phí</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success">Thu lại phí</span>
+                                        }
+                                    </span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body" style="border-top: 4px solid #2b4df3">
+                            <h5>Thông tin người nhận</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span>Người nhận</span>
+                                    <span class="d-block"><strong>@Model.Dto.Receiver</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>SĐT người nhận</span>
+                                    <span class="d-block"><strong>@Model.Dto.RecipientPhoneNumber</strong></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>Địa chỉ</span>
+                                    <span class="d-block"><strong>@Model.Dto.RecipientAddress</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body" style="border-top: 4px solid #2b4df3">
+                            <h5>Ghi chú</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    @Model.Dto.Note
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label>Danh sách xuất (<span id="totalItems"></span>) </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table id="PackagesPendingTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>@L("ExportCode")</th>
+                                                <th>@L("DeliveryRequestCode")</th>
+                                                <th>@L("OrderCode")</th>
+                                                <th>@L("AddressReceive")</th>
+                                                <th>@L("Weight")</th>
+                                                <th>@L("Dimension")</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <label>Log hành động</label>
+                        </div>
+                        <div class="card-body">
+                            <div id="deliveryNote-logs" class="list-group overflow-auto" style="max-height: 100vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel">PTH5920112</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered" id="package-list">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>MÃ KIỆN</th>
+                                    <th>MÃ ĐƠN HÀNG</th>
+                                    <th>CÂN NẶNG</th>
+                                    <th>KÍCH THƯỚC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="labelContent" style="display: none;">
+        </div>
+    </section>
+
+}
+else
+{
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                </div>
+            </div>
+        </div>
+    </section>
+
+}

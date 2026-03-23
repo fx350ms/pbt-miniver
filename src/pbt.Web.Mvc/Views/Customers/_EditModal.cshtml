@@ -1,0 +1,103 @@
+﻿@using pbt.Web.Models.Customers
+@using pbt.Web.Models.Common.Modals
+@using pbt.Customers.Dto
+
+@model CustomerDto
+
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditCustomer")))
+
+<form name="CategoryEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInformation")</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Name")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="FullName" minlength="1" value="@Model.FullName">
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Email")</label>
+                    <div class="col-md-9">
+                        <input type="email" class="form-control" name="Email" value="@Model.Email">
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label class="col-md-3 col-form-label">@L("PhoneNumber")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("BagPrefix")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="BagPrefix" asp-for="BagPrefix">
+                        <span asp-validation-for="BagPrefix" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Address")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Address" value="@Model.Address">
+                    </div>
+                </div>
+                <!-- WarehouseId -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Warehouse")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="WarehouseId" asp-for="WarehouseId" asp-items="ViewBag.WarehouseSelectList">
+                        </select>
+                        <span asp-validation-for="WarehouseId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- InsurancePercentage -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("InsurancePercentage")</label>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" name="InsurancePercentage" value="@(Model.InsurancePercentage ?? 0)" asp-for="InsurancePercentage">
+                        <span asp-validation-for="InsurancePercentage" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                @if (User.IsInRole("admin"))
+                {
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">@L("IsAgent")</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" id="IsAgent" name="IsAgent" value="true" @(Model.IsAgent ? "checked" : "")>
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Notes")</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" name="Notes">@Model.Notes</textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+
+</form>
+
+
+<script src="~/view-resources/Views/Customers/_EditModal.js" asp-append-version="true"></script>

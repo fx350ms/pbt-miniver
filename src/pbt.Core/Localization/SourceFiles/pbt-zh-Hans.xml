@@ -1,0 +1,1018 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="zh-Hans">
+	<texts>
+		<text name="HomePage" value="主页"/>
+		<text name="About" value="关于我们"/>
+		<text name="WelcomeMessage" value="欢迎使用 pbt!"/>
+		<text name="FormIsNotValidMessage" value="部分输入信息不符合要求，请检查并改正.."/>
+		<text name="TenantNameCanNotBeEmpty" value="租户名不能为空"/>
+		<text name="InvalidUserNameOrPassword" value="用户名或密码无效"/>
+		<text name="ThereIsNoTenantDefinedWithName{0}" value="租户 {0}不存在"/>
+		<text name="TenantIsNotActive" value="租户 {0} 未激活."/>
+		<text name="UserIsNotActiveAndCanNotLogin" value="用户 {0} 未激活，不能登录."/>
+		<text name="PleaseEnterLoginInformation" value="请输入登录信息"/>
+		<text name="TenancyName" value="租户标识"/>
+		<text name="UserNameOrEmail" value="用户名或邮箱地址"/>
+		<text name="Password" value="密码"/>
+		<text name="RememberMe" value="记住我"/>
+		<text name="ForgetPassword" value="忘记密码"/>
+		<text name="NotSelected" value="未选"/>
+		<text name="ChangeTenant" value="更改租户"/>
+		<text name="LeaveEmptyToSwitchToHost" value="留空以切换到Host"/>
+		<text name="LogIn" value="登录"/>
+		<text name="LoginFailed" value="登录失败!"/>
+		<text name="AppName">pbt</text>
+		<text name="UserNamePlaceholder">请输入账户</text>
+		<text name="PasswordPlaceholder">请输入密码</text>
+		<text name="CopyRight">© 2018 pbt</text>
+		<text name="LoginPrompt">正在登陆，请稍候！</text>
+		<text name="UserProfile">用户资料</text>
+		<text name="Users">用户</text>
+		<text name="Roles">角色</text>
+		<text name="Tenants">租户</text>
+		<text name="Logout">注销</text>
+		<text name="ManageMenu">菜单</text>
+		<text name="LabelOptions">页签操作</text>
+		<text name="ClearAll">关闭所有</text>
+		<text name="ClearOthers">关闭其他</text>
+		<text name="Create">创建</text>
+		<text name="Add">添加</text>
+		<text name="Edit">编辑</text>
+		<text name="Detail" value="详情" />
+		<text name="Delete">删除</text>
+		<text name="Find">查找</text>
+		<text name="CreationTime">创建时间</text>
+		<text name="Actions">操作</text>
+		<text name="Keyword">关键字</text>
+		<text name="NoDatas">没有结果</text>
+		<text name="Select">请选择</text>
+		<text name="SelectDate">请选择</text>
+		<text name="Tips">提示</text>
+		<text name="DeleteConfirm">确定删除？</text>
+		<text name="Title">标题</text>
+		<text name="Content">内容</text>
+		<text name="ChangePassword">修改密码</text>
+		<text name="PasswordComplexityNotSatisfied">密码复杂度要求不符.</text>
+		<text name="PasswordRequireDigit">密码至少需要一位是0到9的数字.</text>
+		<text name="PasswordRequireLowercase">密码至少需要一位是a到z的小写字母.</text>
+		<text name="PasswordRequireNonAlphanumeric">密码至少需要包含一个特殊字符（非字母或数字的字符）.</text>
+		<text name="PasswordRequireUppercase">密码至少需要一位是A到Z的大写字母.</text>
+		<text name="PasswordTooShort">密码长度太短</text>
+		<text name="UserName">用户名</text>
+		<text name="Name">名称</text>
+		<text name="IsActive">是否启用</text>
+		<text name="LastLoginTime">最近登陆时间</text>
+		<text name="RoleName">角色名</text>
+		<text name="DisplayName">显示名</text>
+		<text name="Description">描述</text>
+		<text name="IsStatic">是否内置</text>
+
+		<text name="All">全部</text>
+		<text name="Actived">启用</text>
+		<text name="NoActive">未启用</text>
+
+		<text name="Yes">是</text>
+		<text name="No">否</text>
+
+		<text name="Cancel">取消</text>
+		<text name="OK">确定</text>
+		<text name="CreateNewRole">创建新角色</text>
+		<text name="RoleDetails">角色详情</text>
+		<text name="RolePermission">角色权限</text>
+		<text name="EditRole">编辑角色</text>
+		<text name="DeleteRolesConfirm">确认删除该角色？</text>
+
+		<text name="CreateNewUser">创建新用户</text>
+		<text name="UserDetails">用户详情</text>
+		<text name="UserRoles">用户角色</text>
+		<text name="ConfirmPassword">确认密码</text>
+		<text name="EmailAddress">邮箱地址</text>
+		<text name="Surname">姓</text>
+		<text name="DeleteUserConfirm">确认删除该用户？</text>
+		<text name="EditUser">编辑用户</text>
+
+		<text name="CreateNewTenant">创建新租户</text>
+		<text name="DatabaseConnectionString">数据库连接</text>
+		<text name="AdminEmailAddress">管理员邮箱地址</text>
+		<text name="DefaultPasswordIs">默认密码为：{0}</text>
+		<text name="DeleteTenantConfirm">确认删除该租户？</text>
+		<text name="EditTenant">编辑租户</text>
+		<text name="SearchWithThreeDot">搜索...</text>
+
+
+		<!--ShippingPartner-->
+		<text name="ShippingPartner" value="运输合作伙伴"/>
+		<text name="ShippingPartnerMaxAmount" value="最大金额"/>
+		<text name="ShippingPartnerMaxWeigth" value="最大重量"/>
+
+		<!--warehouse-->
+		<text name="Warehouse" value="仓库"/>
+		<text name="Country" value="国家"/>
+		<text name="City" value="城市"/>
+
+		<text name="ShippingPartners" value="运输合作伙伴"/>
+		<text name="RegisterAccount" value="注册账户"/>
+		<text name="InputUserName" value="输入用户名"/>
+		<text name="InputPassword" value="输入密码"/>
+		<text name="InputName" value="输入姓名"/>
+
+		<text name="CustomerCode" value="客户编号"/>
+		<text name="Active" value="激活"/>
+		<text name="Inactive" value="未激活"/>
+		<text name="Username" value="用户名"/>
+		<text name="YourInformation" value="您的信息"/>
+		<text name="Information" value="信息"/>
+		<text name="PhoneNumber" value="电话号码"/>
+		<text name="AddAddress" value="添加地址"/>
+
+		<text name="Category" value="类别"/>
+		<text name="Categories" value="类别"/>
+		<text name="ParentCategoryId" value="父类别ID"/>
+
+		<text name="CreateNewCategory" value="创建新类别"/>
+		<text name="GeneralInfomation" value="一般信息"/>
+		<text name="Code" value="编码"/>
+		<text name="Address" value="地址"/>
+		<text name="Phone" value="电话"/>
+
+		<!--dictionary-->
+		<text name="Dictionaries" value="字典"/>
+		<text name="Dictionarys" value="字典"/>
+		<text name="Dictionary" value="字典"/>
+		<text name="NameVi" value="越南语"/>
+		<text name="NameCn" value="中文"/>
+		<text name="CreateNewDictionary" value="创建新字典"/>
+		<text name="EditDictionary" value="编辑字典"/>
+		<text name="ParentDetails" value="一般信息"/>
+
+		<text name="Wallet" value="钱包"/>
+		<text name="BankAccount" value="账户号码"/>
+		<text name="YourAddress" value="您的地址"/>
+		<text name="AccountNumber" value="账户号码"/>
+		<text name="BankName" value="银行"/>
+		<text name="Default" value="默认"/>
+
+		<text name="TrackingNumber" value="运单号"/>
+		<text name="PackageCode" value="包裹编号"/>
+		<text name="Weight" value="重量"/>
+		<text name="Service" value="服务"/>
+		<text name="SellingPrice" value="销售价格"/>
+		<text name="Line" value="产品线"/>
+		<text name="VCQTPartner" value="VCQT合作伙伴"/>
+		<text name="VCQTCostPrice" value="VCQT成本价格"/>
+		<text name="VNCDCostPrice" value="VNCD成本价格"/>
+		<text name="VNCDPartner" value="VNCD合作伙伴"/>
+		<text name="TotalAmount" value="总金额"/>
+		<text name="Status" value="状态"/>
+		<text name="Action" value="操作"/>
+		<text name="Profit" value="利润"/>
+		<text name="Complaint" value="投诉"/>
+		<text name="IsReceiptAddress" value="收货地址"/>
+
+		<text name="SelectProvince" value="选择省/市"/>
+		<text name="SelectDistrict" value="选择区/县"/>
+		<text name="SelectWard" value="选择乡/镇"/>
+
+		<text name="Province" value="省/市"/>
+		<text name="District" value="区/县"/>
+		<text name="Ward" value="乡/镇"/>
+		<text name="IsDefault" value="默认？"/>
+
+		<text name="STT" value="序号"/>
+		<text name="CreatedTime" value="创建时间"/>
+		<text name="TransactionCode" value="交易代码"/>
+		<text name="TransactionType" value="交易类型"/>
+		<text name="Amount" value="金额"/>
+		<text name="BalanceAfterTransaction" value="交易后余额"/>
+
+		<text name="Charge" value="充值"/>
+		<text name="WalletTransaction" value="钱包交易历史"/>
+		<text name="TransactionHistory" value="交易历史"/>
+
+		<text name="Pages_Users" value="用户"/>
+		<text name="Pages_Roles" value="角色"/>
+		<text name="Pages_Dictionaries" value="字典"/>
+		<text name="Pages_Customers" value="客户"/>
+		<text name="Pages_Departments" value="部门"/>
+		<text name="Pages_ShippingPartners" value="运输合作伙伴"/>
+		<text name="Pages_CustomerFakes" value="虚假客户"/>
+		<text name="Pages_Packages" value="包裹"/>
+		<text name="CreationDate" value="创建日期"/>
+		<text name="PotentialLevel" value="潜力级别"/>
+		<text name="Customer" value="客户"/>
+
+		<text name="Pages_Action" value="操作"/>
+		<text name="Pages_Complaint" value="投诉"/>
+		<text name="Pages_Customer code" value="客户编号"/>
+		<text name="Pages_Line" value="产品线"/>
+		<text name="Pages_Order" value="订单"/>
+		<text name="Pages_Orders" value="订单"/>
+		<text name="Pages_Package code" value="包裹编号"/>
+		<text name="Pages_Profit" value="利润"/>
+		<text name="Pages_Selling price" value="销售价格"/>
+		<text name="Pages_Service" value="服务"/>
+		<text name="Pages_Status" value="状态"/>
+		<text name="Pages_Total amount" value="总金额"/>
+		<text name="Pages_Tracking number" value="跟踪号码"/>
+		<text name="Pages_Users activation" value="用户激活"/>
+		<text name="Pages_VCQTCost price" value="VCQT成本价格"/>
+		<text name="Pages_VCQTPartner" value="VCQT合作伙伴"/>
+		<text name="Pages_VNCDCost price" value="VNCD成本价格"/>
+		<text name="Pages_VNCDPartner" value="VNCD合作伙伴"/>
+		<text name="Pages_Warehouses" value="仓库"/>
+		<text name="Pages_Weight" value="重量"/>
+
+		<text name="SelectTrackingNumber" value="选择运单号" />
+		<text name="Pages_Create" value="新建" />
+		<text name="SelectCustomer" value="选择客户" />
+		<text name="WarehouseDestination" value="目的仓库" />
+		<text name="Receiver" value="收货人" />
+		<text name="Note" value="备注" />
+		<text name="Feature" value="特性" />
+		<text name="BagType" value="货袋类型" />
+		<text name="Bags" value="货袋列表" />
+		<text name="CustomerName" value="客户名称" />
+		<text name="Volume" value="体积 (m³)" />
+		<text name="Packages" value="包裹列表" />
+		<text name="CreateBag" value="创建货袋" />
+		<text name="Pages_Bags_Pending" value="待打包货袋列表" />
+		<text name="SelectWarehouse" value="选择仓库" />
+		<text name="Bagging" value="打包" />
+		<text name="EndOfBagging" value="结束打包" />
+		<text name="ListBag" value="货袋列表" />
+		<text name="DeliveryRequest" value="交付请求列表" />
+		<text name="CreateDeliveryRequest" value="创建交付请求" />
+		<text name="Pages_DeliveryRequest" value="交付请求" />
+		<text name="AreYouSureWantToCancel" value="您确定要取消吗" />
+		<text name="Pages_Export" value="出库" />
+		<text name="CreateExport" value="创建出库单" />
+		<text name="Pages_Export_Create" value="创建出库单" />
+		<text name="NumberPackage" value="包裹数量" />
+		<text name="NumberVirtualPackage" value="虚拟包裹数量" />
+		<text name="ClonePackage" value="创建多个相似包裹" />
+		<text name="SelectShippingPartner" value="选择运输合作伙伴" />
+		<text name="Packages_Pending" value="待交付包裹列表" />
+		<text name="DeliveryTime" value="出库时间" />
+		<text name="SaveFailed" value="创建失败！" />
+		<text name="BagsDetail" value="货袋详情" />
+		<text name="Pages_Operate" value="操作" />
+		<text name="Pages_Operate_action" value="扫描条码" />
+		<text name="Pages_Operate_history" value="条码扫描历史" />
+		<text name="AddressReceive" value="收货地址" />
+		<text name="DeliveryNoteDetail" value="出库单详情" />
+		<text name="ExportCode" value="出库编号" />
+		<text name="DeliveryRequestCode" value="交付请求编号" />
+
+		<text name="Dimension" value="重量" />
+		<text name="BagsPending" value="体积" />
+		<text name="Transactions" value="交易" />
+		<text name="ExecutionSource" value="执行来源" />
+		<text name="TransactionId" value="交易编号" />
+		<text name="OrderId" value="订单编号" />
+		<text name="TransactionContent" value="交易内容" />
+		<text name="RefCode" value="参考代码" />
+		<text name="CreateReceipt" value="创建收据" />
+		<text name="ReceiptDetails" value="收据详情" />
+		<text name="TransactionTime" value="交易时间" />
+		<text name="FundAccount" value="基金账户" />
+		<text name="Payer" value="付款人" />
+		<text name="Deposit" value="存款" />
+		<text name="Payment" value="订单支付" />
+
+		<text name="AccountName" value="账户名称" />
+		<text name="Currency" value="货币" />
+		<text name="AccountHolder" value="账户持有人" />
+		<text name="CreateNewFundAccount" value="创建新基金账户" />
+		<text name="TotalFundAmount" value="总基金金额" />
+
+		<text name="Bank" value="银行" />
+		<text name="Cash" value="现金" />
+		<text name="ValidationError" value="验证错误" />
+
+		<text name="WaybillManagement" value="运单管理" />
+		<text name="WaybillCode" value="运单编号" />
+		<text name="ReceivedTime" value="接收时间" />
+		<text name="CreateNewWaybill" value="创建新运单" />
+		<text name="WaybillCodesCommaSeparated" value="运单编号（逗号分隔）" />
+		<text name="CreateWaybill" value="创建运单编号" />
+		<text name="Messages" value="消息" />
+		<text name="DeviceName" value="设备名称" />
+		<text name="DeviceId" value="设备ID" />
+
+		<text name="Progress" value="进度" />
+		<text name="MessageType" value="消息类型" />
+		<text name="IsCorrectSyntax" value="语法正确" />
+		<text name="CreatedDate" value="创建日期" />
+		<text name="LastUpdatedDate" value="最后更新时间" />
+		<text name="TotalAmountAfterChange" value="变更后余额" />
+		<text name="EditFundAccount" value="更新" />
+		<text name="FundAccounts" value="基金账户" />
+		<text name="IsActived" value="激活状态" />
+		<text name="CurrentDebt" value="当前负债" />
+		<text name="LinkToUser" value="关联账户" />
+		<text name="Customers" value="客户" />
+		<text name="GeneralInformation" value="基本信息" />
+		<text name="IsAgent" value="代理客户" />
+		<text name="AgentLevel" value="代理级别" />
+		<text name="WaybillNumber" value="运单编号" />
+		<text name="CustomerOrder" value="客户订单" />
+		<text name="CreatePayment" value="创建付款单" />
+
+		<text name="Function.Customer" value="客户功能" />
+		<text name="Pages_Configs" value="配置页面" />
+		<text name="Pages_Transactions" value="交易页面" />
+		<text name="Role.Accounting" value="会计角色" />
+		<text name="Role.Admin" value="管理员角色" />
+		<text name="Role.Customer" value="客户角色" />
+		<text name="Role.Sale" value="销售角色" />
+		<text name="Role.WareHouse" value="仓库角色" />
+		<text name="CustomerFake" value="虚拟客户" />
+		<text name="RequestCode" value="请求编号" />
+		<text name="DateCreated" value="创建日期" />
+		<text name="CreditWallet" value="客户钱包充值" />
+		<text name="Withdraw" value="提现" />
+		<text name="AmountCustomerMustPay" value="客户应付金额" />
+
+		<text name="EditCustomerOrder" value="编辑订单" />
+		<text name="EditOrder" value="编辑订单" />
+
+		<text name="BadRequestError" value="无效数据" />
+		<text name="DeliveryNotes" value="出库单列表" />
+
+		<text name="PaymentMethod" value="支付方式" />
+		<text name="DeliveryRequestPayment" value="送货付款请求" />
+		<text name="SelectPaymentMethod" value="选择支付方式" />
+		<text name="Debt" value="应付款项" />
+		<text name="ShippingMethod" value="运输方式" />
+		<text name="BalanceInformation" value="余额信息" />
+		<text name="SubmitPayment" value="支付" />
+		<text name="TotalCost" value="总成本" />
+		<text name="BarcodeTable" value="条码表" />
+		<text name="ScanCode" value="扫描条码" />
+		<text name="CodeType" value="代码类型" />
+		<text name="OrderDetail" value="订单详情" />
+		<text name="ReceiptAddress" value="收货地址" />
+		<text name="ScanUser" value="扫描人员" />
+		<text name="ScanContent" value="扫描内容" />
+		<text name="WarehouseFrom" value="发货仓库" />
+		<text name="WarehouseTo" value="收货仓库" />
+		<text name="ShippingType" value="运输类型" />
+		<text name="Agency" value="代理" />
+		<text name="DateCreate" value="创建日期" />
+
+		<text name="SelectWaybill" value="选择运单" />
+		<text name="WoodSealing" value="木质封装" />
+		<text name="ScanDateTime" value="扫描时间" />
+		<text name="Operate" value="操作" />
+
+		<text name="DeliveryRequestDetail" value="送货请求详情" />
+		<text name="PackageCount" value="包裹数量" />
+		<text name="CancelRequest" value="取消请求" />
+		<text name="Tracking" value="运单查询" />
+		<text name="Width" value="宽度" />
+		<text name="Height" value="高度" />
+		<text name="Length" value="长度" />
+		<text name="VolumeM3" value="体积 (m³)" />
+		<text name="ServiceFee" value="服务费用" />
+		<text name="ConfigurationSettings" value="配置设置" />
+		<text name="Key" value="键" />
+		<text name="Value" value="值" />
+		<text name="EnterKey" value="输入键" />
+		<text name="EnterValue" value="输入值" />
+		<text name="EditConfigurationSetting" value="编辑配置设置" />
+		<text name="Approve" value="批准" />
+		<text name="ShipingPartnerCode" value="运输合作伙伴代码" />
+		<text name="ShipingPartnerName" value="运输合作伙伴名称" />
+		<text name="ShipingPartnerPhone" value="运输合作伙伴电话" />
+		<text name="ShipingPartnerEmail" value="运输合作伙伴邮箱" />
+		<text name="ShipingPartnerAddress" value="运输合作伙伴地址" />
+		<text name="ShipingPartnerType" value="运输合作伙伴类型" />
+		<text name="ShipingPartnerMaxAmount" value="运输合作伙伴最大数量" />
+		<text name="ShipingPartnerMaxWeigth" value="运输合作伙伴最大重量" />
+		<text name="ShipingPartnerStatus" value="运输合作伙伴状态" />
+		<text name="EditShippingPartner" value="编辑运输合作伙伴" />
+		<text name="ShipingPartner" value="运输合作伙伴" />
+		<text name="TotalPackage" value="包裹总数" />
+		<text name="TotalWeight" value="包裹总重量 (kg)" />
+		<text name="ShippingRates" value="运费率" />
+		<text name="IsDefaultForCustomer" value="是否为客户默认" />
+		<text name="EditShippingRateTier" value="编辑运费分层" />
+		<text name="InsuranceFee" value="保险费" />
+		<text name="WoodenPackagingFee" value="木质包装费" />
+		<text name="ShockproofFee" value="防震泡沫费" />
+		<text name="DomesticShippingFee" value="国内运输费" />
+		<text name="ECommerceShipping" value="电商运费" />
+		<text name="BagPrefix" value="货袋前缀" />
+		<text name="CreateNew" value="创建新的" />
+		<text name="AssignCustomers" value="分配客户" />
+		<text name="Account" value="账户" />
+		<text name="CNWarehouseDate" value="入库日期" />
+		<text name="Pages_Packages_Pending" value="待交付包裹" />
+		<text name="ScanCodeHistory" value="扫码历史" />
+		<text name="Pages_Transaction" value="交易页面" />
+		<text name="Pages_Message" value="消息页面" />
+		<text name="Pages_Waybill" value="运单页面" />
+		<text name="Page_Dashboard" value="仪表板页面" />
+		<text name="DeliveryNoteList" value="交货单列表" />
+		<text name="SuccessfullyDeleted" value="删除成功" />
+		<text name="SavedSuccessfully" value="保存成功" />
+		<text name="ErrorOccurred" value="发生错误" />
+		<text name="AreYouSureWantToDelete" value="您确定要删除吗？" />
+		<text name="Display" value="显示" />
+		<text name="Record" value="记录" />
+		<text name="Total" value="总计" />
+
+		<text name="In" value="入" />
+		<text name="Out" value="出" />
+		<text name="China" value="中国" />
+		<text name="HaNoi" value="河内" />
+		<text name="Bag" value="货袋" />
+		<text name="Package" value="包裹" />
+		<text name="InputCode" value="输入编码" />
+		<text name="CurrencyRate" value="汇率" />
+		<text name="Waybill" value="运单" />
+		<text name="EmptyTable" value="没有数据" />
+		<text name="CreatePackage" value="创建包裹" />
+		<text name="InformalTrade" value="散货" />
+		<text name="TMDT" value="电子商务" />
+		<text name="Ecommerce" value="电子商务" />
+		<text name="SelectLine" value="选择运输线路" />
+
+		<text name="ProductInformation" value="货物信息" />
+		<text name="ProductSpecifications" value="货物规格" />
+		<text name="Shipping" value="运输" />
+		<text name="ProductNameCn" value="产品名称（中文）" />
+		<text name="ProductNameVn" value="产品名称（越南语）" />
+		<text name="Quantity" value="数量" />
+		<text name="Price" value="价格" />
+
+		<text name="Insurance" value="保险" />
+		<text name="InputInsuranceValue" value="输入保险价值" />
+		<text name="DomesticTransportation" value="国内运输" />
+		<text name="PackageList" value="包裹清单" />
+		<text name="PrintStamp" value="打印标签" />
+		<text name="PrintStampTmdt" value="打印电商标签" />
+		<text name="AddSimilarPackage" value="添加相似包裹" />
+		<text name="AddMultiplePackages" value="批量创建相似包裹" />
+		<text name="QuickCreateBag" value="快速创建货袋" />
+		<text name="WeightKg" value="重量 (kg)" />
+		<text name="Save" value="保存" />
+
+		<text name="Solution" value="溶液" />
+		<text name="FakeGoods" value="假货" />
+		<text name="Other" value="其他" />
+		<text name="PrivateBag" value="独立包" />
+		<text name="GraftingBag" value="拼包" />
+		<text name="Search" value="搜索" />
+		<text name="Clear" value="清除" />
+
+		<text name="PackageNumber" value="包裹数量" />
+		<text name="BagNumber" value="货袋数量" />
+		<text name="MatchTime" value="对账时间" />
+		<text name="WarehouseStatus" value="仓库状态" />
+		<text name="ShippingStatus" value="运输状态" />
+		<text name="Pending" value="等待处理" />
+		<text name="Processing" value="处理中" />
+		<text name="Processed" value="已处理" />
+		<text name="AdvancedFilter" value="高级筛选" />
+		<text name="ScanCodeOrPackageOrWaybill" value="扫码 / 包裹 / 运单" />
+		<text name="WarehouseTransferCode" value="仓库转移单号" />
+		<text name="CurrentWarehouseStatus" value="当前仓库状态" />
+		<text name="InWarehouse" value="在仓库" />
+		<text name="Exported" value="已出库" />
+		<text name="CreateDate" value="创建日期" />
+
+		<text name="Initiated" value="已创建" />
+		<text name="WaitingForShipping" value="等待运输" />
+		<text name="GoToWarehouse" value="入仓" />
+		<text name="Arrived" value="已到达" />
+		<text name="Archived" value="已归档" />
+		<text name="InTransit" value="国际运输中" />
+
+		<text name="UpdateShippingPartner" value="更新运输合作伙伴" />
+		<text name="ExportExcel" value="导出 Excel" />
+		<text name="ExportBagDetails" value="导出货袋详情" />
+		<text name="ExportBag" value="导出货袋" />
+		<text name="AllBags" value="所有货袋" />
+		<text name="BagsCreatedToday" value="今日创建的货袋" />
+		<text name="ExportExcelPackageStatusTime" value="导出 Excel 包裹状态时间" />
+		<text name="AllPackages" value="所有包裹" />
+		<text name="ShipmentPackages" value="正在运输的包裹" />
+		<text name="DeletedPackages" value="已删除的包裹" />
+		<text name="FailedPackages" value="失败的包裹" />
+		<text name="NonPackedPackages" value="未打包的包裹" />
+		<text name="Today" value="今天" />
+		<text name="Yesterday" value="昨天" />
+		<text name="Last7Days" value="最近7天" />
+		<text name="Last30Days" value="最近30天" />
+		<text name="ThisMonth" value="本月" />
+		<text name="LastMonth" value="上个月" />
+		<text name="Undefined" value="未定义" />
+
+		<text name="Cancelled" value="已取消" />
+		<text name="WarehouseReceived" value="仓库已签收" />
+		<text name="ReturnedToWarehouse" value="退回仓库" />
+
+		<text name="Received" value="已接收" />
+		<text name="MissingInformation" value="缺少信息" />
+		<text name="WaitingForDelivery" value="等待发货" />
+		<text name="ZeroRecords" value="没有数据" />
+		<text name="Delivering" value="进行中" />
+		<text name="LineShipping.InformalTrade" value="散货" />
+		<text name="LineShipping.Ecommerce" value="电商" />
+
+		<text name="PackageDeliveryStatusEnum.Initiate" value="已创建" />
+		<text name="PackageDeliveryStatusEnum.Lost" value="丢失" />
+		<text name="PackageDeliveryStatusEnum.InWarehouse" value="已入库" />
+		<text name="PackageDeliveryStatusEnum.WaitingForShipping" value="等待运输" />
+		<text name="PackageDeliveryStatusEnum.Shipping" value="运输中" />
+		<text name="PackageDeliveryStatusEnum.WaitingForDelivery" value="等待派送" />
+		<text name="PackageDeliveryStatusEnum.DeliveryRequest" value="派送请求" />
+		<text name="PackageDeliveryStatusEnum.DeliveryInProgress" value="派送中" />
+		<text name="PackageDeliveryStatusEnum.Received" value="已签收" />
+		<text name="PackageDeliveryStatusEnum.WaitingForReturn" value="等待退货" />
+		<text name="PackageDeliveryStatusEnum.Returning" value="退货中" />
+		<text name="PackageDeliveryStatusEnum.Returned" value="已退货" />
+		<text name="PackageDeliveryStatusEnum.Closed" value="已关闭" />
+		<text name="PackageDeliveryStatusEnum.CustomerNotClaiming" value="客户未认领" />
+		<text name="PackageDeliveryStatusEnum.WaitingForClearance" value="等待清关" />
+		<text name="PackageDeliveryStatusEnum.Clearance" value="已清关" />
+
+		<text name="WarehouseCurrent" value="当前仓库" />
+		<text name="WarehouseStatus.InStock" value="在库" />
+		<text name="WarehouseStatus.OutOfStock" value="已出库" />
+		<text name="DeliveryTimeVN" value="越南出库日期" />
+		<text name="LineVC" value="VC线路" />
+		<text name="CreateNewOrder" value="创建新订单" />
+		<text name="SaleAdminPackage" value="包裹跟踪" />
+		<text name="InputWaybill" value="输入运单" />
+		<text name="InputWaybillNumber" value="输入运单号" />
+		<text name="SelectAddress" value="选择地址" />
+		<text name="VCStatus" value="运输状态" />
+		<text name="SelectFile" value="选择文件" />
+		<text name="ImportOrder" value="导入订单" />
+		<text name="DownloadTemplate" value="下载模板" />
+		<text name="ImportResult" value="导入结果" />
+		<text name="TotalOrders" value="订单总数" />
+		<text name="SuccessCount" value="成功数量" />
+		<text name="FailedCount" value="失败数量" />
+		<text name="ErrorMessages" value="错误信息" />
+		<text name="Upload" value="上传" />
+		<text name="InsurancePercentage" value="保险比例" />
+
+		<text name="ShipTQ" value="中国运费" />
+		<text name="SecuringCost" value="加固费用" />
+		<text name="ShipVN" value="保险比例" />
+		<text name="ShippingPartnerVN" value="越南发货合作伙伴" />
+		<text name="ExportDateVN" value="越南出库日期" />
+		<text name="Pages_Report_ImportExport" value="进出库跟踪" />
+		<text name="OrderNote" value="订单备注" />
+		<text name="EnterNoteHere" value="在此输入备注" />
+		<text name="SaveNote" value="保存备注" />
+		<text name="NewNote" value="新备注" />
+
+		<text name="ReceiptName" value="收货人" />
+		<text name="BagOrPackageCode" value="货袋/包裹编号" />
+		<text name="CustomerChilds" value="子客户" />
+		<text name="Pages_Customers_Childs" value="子客户" />
+		<text name="UpdateOrder" value="更新订单" />
+		<text name="CancelOrder" value="取消订单" />
+		<text name="Function_IndexChild" value="子客户功能" />
+		<text name="AddChildCustomer" value="添加子客户" />
+		<text name="CreateDeliveryNote" value="创建出库单" />
+		<text name="DimensionM3" value="体积" />
+		<text name="DomesticShippingFeeCN" value="中国国内运费" />
+		<text name="DomesticShippingFeeVN" value="越南国内运费" />
+		<text name="ShippingFeeAbsorbedByWarehouse" value="越南仓承担运费" />
+		<text name="Function.ViewAllCustomer" value="查看所有客户" />
+
+		<text name="CreateComplaint" value="创建投诉" />
+		<text name="UploadImage" value="上传图片" />
+		<text name="InputWaybillHereToSearch" value="在此输入运单号以搜索" />
+		<text name="BagCoverWeight" value="毛重" />
+		<text name="BagShippingStatus.Delivery" value="运输中" />
+		<text name="ShippingPartnerDomestic" value="越南运输合作伙伴" />
+		<text name="ShippingFee" value="运输费用" />
+		<text name="ShippingPartnerIntern" value="国际运输合作伙伴" />
+
+		<text name="Initiate" value="新建" />
+		<text name="DeliveryInProgress" value="派送中" />
+		<text name="WarehouseScan" value="仓库扫码" />
+		<text name="UserScan" value="用户扫码" />
+		<text name="SelectAll" value="全选" />
+		<text name="Pages_BagWithPartner" value="货袋 - 合作伙伴" />
+		<text name="Pages_ImportExport" value="出库 - 入库" />
+		<text name="Pages_FundAccount" value="资金账户" />
+		<text name="Pages_Packages_List" value="包裹列表" />
+		<text name="BagShippingStatus.Initiated" value="新建" />
+		<text name="BagShippingStatus.WaitingForDelivery" value="等待运输" />
+		<text name="BagShippingStatus.WaitingForShipping" value="等待运输" />
+		<text name="BagShippingStatus.GoToWarehouse" value="送达仓库" />
+		<text name="BagShippingStatus.InTransit" value="运输中" />
+		<text name="BagShippingStatus.Arrived" value="已到达" />
+		<text name="BagShippingStatus.Archived" value="已运输" />
+		<text name="ExportDate" value="出库日期" />
+		<text name="ImportDate" value="入库日期" />
+		<text name="BagTypeEnum.SeparateBag" value="单独袋" />
+		<text name="BagTypeEnum.InclusiveBag" value="合并袋" />
+		<text name="CurrentWarehouse" value="当前所在仓库" />
+		<text name="Pages_AllOrder" value="所有订单" />
+
+		<text name="Pages_CustomerCode" value="客户编号" />
+		<text name="Pages_PackageCode" value="包裹编号" />
+		<text name="Pages_SellingPrice" value="销售价" />
+		<text name="Pages_TotalAmount" value="总金额" />
+		<text name="Pages_RequestDelivery" value="申请发货" />
+		<text name="Pages_RequestRefund" value="申请提现" />
+
+		<text name="Pages_VCQTCostPrice" value="国际运输成本价" />
+		<text name="Pages_VNCDCostPrice" value="越南本地运输成本价" />
+		<text name="Pages.Warehouses" value="仓库" />
+
+		<text name="Pages_Customer" value="客户" />
+		<text name="Pages_Package" value="打包" />
+		<text name="Pages_UsersActivation" value="用户激活" />
+		<text name="Pages_TrackingNumber" value="订单追踪" />
+		<text name="Pages_OrderCode" value="订单编号" />
+		<text name="Pages_TransactionHistory" value="交易记录" />
+		<text name="Pages_Report" value="报表" />
+		<text name="Pages_Process" value="运营" />
+		<text name="Pages_PendingTransactionVoucher" value="待处理交易单" />
+		<text name="Pages_PaymentVoucher" value="付款单" />
+		<text name="Pages_ReceiptVoucher" value="收款单" />
+		<text name="Pages_CustomerTransactions" value="客户交易记录" />
+
+		<text name="Role_Sale" value="销售角色" />
+
+		<text name="AddressReceiver" value="收货地址" />
+		<text name="SelectReceivingWarehouseVietnam" value="选择越南仓库" />
+		<text name="SelectReceivingWarehouseChina" value="选择中国仓库" />
+
+		<text name="WoodenPackaging" value="木箱包装" />
+		<text name="ShockproofPackaging" value="防震包装" />
+
+		<text name="InputOrderNumber" value="输入运单号" />
+		<text name="SelectShippingLine" value="选择航线" />
+		<text name="CreateMyOrder" value="创建我的订单" />
+		<text name="CreateNewCustomerAddress" value="创建客户地址" />
+
+		<text name="CreateOrder" value="创建订单" />
+
+		<text name="AgentCustomer" value="代理客户" />
+		<text name="AssignToSale" value="分配给销售" />
+
+		<text name="WaitProcessing" value="等待处理" />
+		<text name="Completed" value="已完成" />
+
+		<text name="Entrusted" value="已委托" />
+		<text name="InChinaWarehouse" value="货到中国仓" />
+		<text name="DeliveringToVietnam" value="货到越南仓" />
+
+		<text name="Pages_Bags" value="包裹" />
+		<text name="Pages_Bags_List" value="包裹列表" />
+		<text name="SaveAndBag" value="保存并打包" />
+		<text name="WarehouseCreate" value="创建仓库" />
+		<text name="BagCode" value="包号" />
+
+		<text name="OrderDate" value="下单日期" />
+		<text name="OrderNumber" value="订单编号" />
+		<text name="OrderType" value="订单类型" />
+		<text name="CreateCustomerOrder" value="为客户创建订单" />
+
+		<text name="PackagesList" value="货件清单" />
+
+		<text name="InTransitToChinaWarehouse" value="货到中国仓" />
+		<text name="InInternationTransit" value="国际运输中" />
+
+		<text name="InTransitToVietnamWarehouse" value="货到越南仓" />
+		<text name="OutForDelivery" value="派送中" />
+		<text name="Delivered" value="已送达" />
+		<text name="OrderCompleted" value="订单完成" />
+		<text name="Refund" value="退款" />
+
+		<text name="ShippingLine" value="运输线路" />
+		<text name="Carrier" value="承运商" />
+		<text name="ProductValue" value="货物价值" />
+		<text name="UserEmailIsNotConfirmedAndCanNotLogin" value="您的邮箱地址尚未验证，无法登录。" />
+		<text name="UserLockedOutMessage" value="用户账户已被锁定，请稍后再试。" />
+		<text name="ResetPassword" value="重置密码" />
+		<text name="UpdatePassword" value="更新密码" />
+		<text name="NameSurname" value="姓名" />
+		<text name="AdminPassword" value="管理员密码" />
+		<text name="TenantName_Regex_Description" value="租户名称至少需要 2 个字符，以字母开头，可包含字母、数字、连字符或下划线。" />
+		<text name="CanBeEmptyToLoginAsHost" value="可留空以管理员身份登录。" />
+		<text name="Register" value="注册" />
+		<text name="OrLoginWith" value="或使用以下方式登录" />
+		<text name="WaitingForActivationMessage" value="您的账户正在等待系统管理员激活。" />
+		<text name="TenantSelection" value="选择租户" />
+		<text name="TenantSelection_Detail" value="请从以下租户中选择一个。" />
+		<text name="RegisterFormUserNameInvalidMessage" value="请勿在用户名中输入电子邮箱地址。" />
+		<text name="FullName" value="全名" />
+		<text name="Optional" value="可选" />
+		<text name="CurrentTenant" value="当前租户" />
+		<text name="Change" value="更改" />
+		<text name="MultiLevelMenu" value="多级菜单操作" />
+		<text name="Back" value="返回" />
+		<text name="SuccessfullyRegistered" value="注册成功" />
+		<text name="WaitingForEmailActivation" value="您的邮箱地址正在等待激活" />
+		<text name="CouldNotCompleteLoginOperation" value="无法完成登录操作，请稍后再试。" />
+		<text name="CouldNotValidateExternalUser" value="无法验证外部用户" />
+		<text name="TenantIdIsNotActive{0}" value="租户 ID {0} 未激活" />
+		<text name="UnknownTenantId{0}" value="未知的租户 ID {0}" />
+		<text name="ThisFieldIsRequired" value="此字段为必填项" />
+		<text name="PleaseWait" value="请稍候..." />
+		<text name="Administration" value="管理" />
+		<text name="Permissions" value="权限" />
+		<text name="RoleDescription" value="角色描述" />
+		<text name="Refresh" value="刷新" />
+		<text name="Version" value="版本" />
+		<text name="On" value="开启" />
+		<text name="Off" value="关闭" />
+		<text name="StartTyping" value="开始输入" />
+		<text name="Skins" value="界面主题" />
+		<text name="Settings" value="设置" />
+		<text name="Filter" value="筛选" />
+		<text name="CurrentPassword" value="当前密码" />
+		<text name="NewPassword" value="新密码" />
+		<text name="ConfirmNewPassword" value="确认新密码" />
+		<text name="PasswordsDoNotMatch" value="两次输入的密码不一致" />
+		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber" value="密码长度至少 8 个字符，且包含大小写字母和数字" />
+		<text name="UserDeleteWarningMessage" value="用户 {0} 将被删除。" />
+		<text name="RoleDeleteWarningMessage" value="角色 {0} 将被删除，并且将从所有已分配的用户中移除。" />
+		<text name="TenantDeleteWarningMessage" value="租户 {0} 将被删除。" />
+		<text name="PleaseEnterAtLeastNCharacter" value="请输入至少 {0} 个字符" />
+		<text name="PleaseEnterNoMoreThanNCharacter" value="请输入不超过 {0} 个字符" />
+		<text name="InvalidEmailAddress" value="无效的电子邮件地址" />
+		<text name="InvalidPattern" value="无效" />
+		<text name="PairsDoNotMatch" value="不匹配" />
+		<text name="TotalRecordsCount" value="总计: {0}" />
+		<text name="ResetPasswordStepOneInfo" value="1. 输入您的管理员密码" />
+		<text name="ResetPasswordStepTwoInfo" value="2. 复制此随机密码并发送给用户" />
+		<text name="UsersActivation" value="用户激活" />
+		<text name="403PageHeader" value="禁止访问" />
+		<text name="403PageDescription" value="您没有权限访问此资源。请联系您的管理员。" />
+		<text name="403PageButton" value="返回控制面板" />
+		<text name="Pages_bags" value="包裹" />
+		<text name="TotalFee" value="总费用" />
+		<text name="History" value="历史记录" />
+		<text name="OrderFinance" value="订单财务" />
+		<text name="Log" value="日志" />
+		<text name="Logs" value="日志记录" />
+		<text name="AddNewAddress" value="添加地址" />
+		<text name="ComplaintCode" value="投诉编号" />
+		<text name="OrderCode" value="订单编号" />
+		<text name="Resolution" value="解决方案" />
+		<text name="RefundAmount" value="退款金额" />
+		<text name="Reason" value="原因" />
+		<text name="RefundAmountExpect" value="申请退款金额" />
+		<text name="InputOrderNumberOrComplaintCode" value="输入订单号或投诉编号" />
+		<text name="SelectStatus" value="选择状态" />
+		<text name="HandlerName" value="处理人员" />
+		<text name="Email" value="电子邮件" />
+		<text name="Gender" value="性别" />
+		<text name="Fale" value="男" />
+		<text name="Female" value="女" />
+		<text name="DateOfBirth" value="出生日期" />
+		<text name="Notes" value="备注" />
+		<text name="CreateNewCustomer" value="新建客户" />
+		<text name="EditCustomer" value="编辑客户" />
+		<text name="CustomerAccount" value="客户账户" />
+		<text name="Id" value="编号" />
+		<text name="InProcess" value="处理中" />
+		<text name="Refunded" value="已退款" />
+		<text name="Reject" value="拒绝" />
+		<text name="Rejected" value="已拒绝" />
+		<text name="AccountType" value="账户类型" />
+		<text name="SaleAdminDashboard" value="首页" />
+		<text name="YourCustomerTotal" value="客户总数" />
+		<text name="TotalRevenue" value="总收入" />
+		<text name="ConversionRate" value="转化率" />
+		<text name="LastModificationTime" value="最后更新时间" />
+		<text name="Package Number" value="包裹编号" />
+		<text name="Bag Number" value="袋编号" />
+		<text name="Warehouse status" value="仓库状态" />
+		<text name="Shipping status" value="运输状态" />
+		<text name="Match time" value="匹配时间" />
+		<text name="Role_Admin" value="管理员角色" />
+		<text name="Role_WareHouse" value="仓库管理员角色" />
+		<text name="Role_Accounting" value="会计角色" />
+		<text name="Role_Customer" value="客户角色" />
+		<text name="Current amount" value="余额" />
+		<text name="CurrentAmount" value="余额" />
+		<text name="Line shipping" value="运输线路" />
+		<text name="LineShipping" value="运输线路" />
+		<text name="All order" value="所有订单" />
+		<text name="AllOrder" value="所有订单" />
+		<text name="MyOrder" value="我的订单" />
+		<text name="Dept" value="欠款" />
+		<text name="Customer information" value="客户信息" />
+		<text name="CustomerInformation" value="客户信息" />
+		<text name="Error" value="错误" />
+		<text name="Pages_Config" value="配置" />
+		<text name="ScanTime" value="扫描时间" />
+		<text name="ScanType" value="扫描类型" />
+		<text name="ScanAction" value="扫描操作" />
+		<text name="ScanWarehouse" value="扫描仓库" />
+		<text name="ScanWarehouseTo" value="接收仓库" />
+		<text name="Scaner" value="扫描员" />
+		<text name="PackageDetail" value="包裹详情" />
+		<text name="Function_OrderViewAll" value="查看所有订单" />
+		<text name="Function_TransactionViewAll" value="查看所有交易" />
+		<text name="Function_ScanCodeViewAll" value="查看所有扫描码" />
+		<text name="CreateNewShippingRateGroup" value="创建新的运费组" />
+		<text name="AssignCustomersToShippingRate" value="分配客户到运费组" />
+		<text name="MissingInfo" value="信息缺失" />
+		<text name="Pages_Bag_close" value="封袋" />
+		<text name="EditPackage" value="编辑包裹" />
+		<text name="InWarehouseVN" value="已到越南仓" />
+		<text name="DeliveryWithFee" value="付费提货仓" />
+		<text name="DeliveryWithoutFee" value="免费提货仓" />
+		<text name="UpdateInfo" value="编辑" />
+		<text name="FundAccountBalance" value="基金账户余额" />
+		<text name="TotalDebt" value="总欠款" />
+		<text name="MaxDebt" value="最大欠款" />
+		<text name="Balance" value="余额" />
+		<text name="WalletBalance" value="钱包余额" />
+		<text name="IsUpdateTransaction" value="是否更新交易" />
+		<text name="CustomerTransactionUpdateType" value="交易更新类型" />
+		<text name="FileUpload" value="上传文件" />
+		<text name="CreateTransaction" value="创建交易" />
+		<text name="TransactionTypeEnum.Deposit" value="充值交易" />
+		<text name="TransactionTypeEnum.Payment" value="支付交易" />
+		<text name="TransactionTypeEnum.Withdraw" value="提现交易" />
+		<text name="TransactionTypeEnum.None" value="未定义" />
+		<text name="TransactionDirectionEnum.Receipt" value="收入" />
+		<text name="TransactionDirectionEnum.Expense" value="支出" />
+		<text name="InputAmount" value="输入金额" />
+		<text name="InputRefCode" value="输入参考码" />
+		<text name="CustomerTransactionUpdateTypeEnum.None" value="不更新" />
+		<text name="CustomerTransactionUpdateTypeEnum.Debt" value="更新欠款" />
+		<text name="CustomerTransactionUpdateTypeEnum.Wallet" value="更新钱包" />
+		<text name="CustomerTransactionUpdateTypeEnum.AddDebt" value="增加欠款" />
+		<text name="CustomerTransactionUpdateTypeEnum.SubtractDebt" value="减少欠款" />
+		<text name="CustomerTransactionUpdateTypeEnum.AddWallet" value="增加钱包余额" />
+		<text name="CustomerTransactionUpdateTypeEnum.SubtractWallet" value="减少钱包余额" />
+		<text name="IsUpdateCustomerBalance" value="更新客户余额" />
+		<text name="TransactionTicketType" value="单据类型" />
+		<text name="FundAccountCurrency" value="货币单位" />
+		<text name="IsSolution" value="液体" />
+		<text name="IsWoodSealing" value="木箱包装" />
+		<text name="IsFakeGoods" value="假货" />
+		<text name="IsOtherFeature" value="其他" />
+		<text name="AmountAfterTrans" value="交易后金额" />
+		<text name="OrderCodeOrWaybill" value="订单号或运单号" />
+		<text name="ShipmentReferenceNo" value="货运参考号" />
+		<text name="CompanyName" value="公司名称" />
+		<text name="ContactName" value="联系人姓名" />
+		<text name="Tel" value="电话号码" />
+		<text name="PostalCode" value="邮政编码" />
+		<text name="UnitPrice" value="单价" />
+		<text name="TotalValue" value="总价值" />
+		<text name="MoreThan2Items" value="超过2个商品" />
+		<text name="ShipmentType" value="货运类型" />
+		<text name="TotalActualWeight" value="总实际重量" />
+		<text name="Origin" value="发货地" />
+		<text name="Destination" value="收货地" />
+		<text name="ProcessingShipmentDate" value="货运处理日期" />
+		<text name="HSCODE" value="海关编码" />
+		<text name="BoxID" value="箱子ID" />
+		<text name="CODValue" value="货到付款金额" />
+		<text name="ProductCategoryID" value="产品分类ID" />
+		<text name="SortCode" value="排序码" />
+		<text name="SKU" value="库存单位" />
+		<text name="TotalCODValue" value="货到付款总额" />
+		<text name="CategoryZH" value="分类（中文）" />
+		<text name="OrderID" value="订单ID" />
+		<text name="Link" value="链接" />
+		<text name="IdOrderItem" value="订单商品ID" />
+		<text name="CodeItem" value="商品编码" />
+		<text name="UnitBlank" value="单位（空）" />
+		<text name="PurchasingStaff" value="采购员" />
+		<text name="Translated" value="已翻译" />
+		<text name="TranslatedShort" value="简译" />
+		<text name="OriginalShort" value="原文简短" />
+		<text name="ChineseAI" value="中文AI" />
+		<text name="VietnameseAI" value="越南语AI" />
+		<text name="Unit" value="单位" />
+		<text name="CitizenIdentityCard" value="公民身份证" />
+		<text name="AgencyName" value="代理名称" />
+		<text name="Properties" value="属性" />
+		<text name="Services" value="服务" />
+		<text name="StatusChecking" value="状态检查" />
+		<text name="DeclaredValue" value="申报价值" />
+		<text name="LastmileTrackingNo" value="末端追踪号" />
+		<text name="HsCode" value="海关编码" />
+		<text name="IsFakePackage" value="是否为假货包裹" />
+		<text name="NumberOfPackage" value="包裹数量" />
+		<text name="FromWeight" value="起始重量" />
+		<text name="ToWeight" value="结束重量" />
+		<text name="NetWeightKg" value="净重（公斤）" />
+		<text name="ShipFeeTo" value="运费到" />
+		<text name="ShipFeeFrom" value="运费从" />
+		<text name="WoodPackingFeeFrom" value="木箱包装费从" />
+		<text name="WoodPackingFeeTo" value="木箱包装费到" />
+		<text name="ImportExport" value="进出口" />
+		<text name="Apply" value="应用" />
+		<text name="InclusiveBag" value="拼包" />
+		<text name="SeparateBag" value="独包" />
+		<text name="ExportDateCN" value="中国出库日期" />
+		<text name="ImportDateVN" value="越南入库日期" />
+		<text name="PackageVolumeM3" value="包裹体积（立方米）" />
+		<text name="PackageWeightKg" value="包裹重量（公斤）" />
+		<text name="D" value="长" />
+		<text name="R" value="宽" />
+		<text name="C" value="高" />
+		<text name="Characteristic" value="特征" />
+		<text name="ImportDateHN" value="河内入库日期" />
+		<text name="BagWithPartner" value="包裹 - 合作伙伴" />
+		<text name="LineShipping.OfficialChannel" value="正式渠道" />
+		<text name="LineShipping.Portable" value="携带" />
+		<text name="TotalCode" value="总编码数" />
+		<text name="GoToList" value="转到列表" />
+		<text name="SaveAndGoToList" value="保存并转到列表" />
+		<text name="SaveAndCreateNew" value="保存并新建" />
+		<text name="LockCustomer" value="锁定客户" />
+		<text name="AreYouSure" value="您确定吗？" />
+		<text name="Confirm" value="确认" />
+		<text name="PleaseConfirm" value="请确认" />
+		<text name="AreYouChecked" value="请仔细核对信息。" />
+		<text name="ExportBagDetail" value="导出包裹明细" />
+		<text name="DeliveryNote" value="出库单" />
+		<text name="TransactionDetails" value="交易明细" />
+		<text name="SelectShippingRateGroup" value="选择运价组" />
+		<text name="SelectShippingRateGroupFor" value="选择运价表用于" />
+		<text name="MarkAsDelivered" value="标记为已交付" />
+		<text name="AreYouSureWantToMarkAsDelivered" value="您确定要标记为已交付吗？" />
+		<text name="AreYouSureWantToMarkAsCompleted" value="您确定要标记为已完成订单吗？" />
+		<text name="MarkAsCompleted" value="完成" />
+		<text name="SuccessfullyUpdated" value="更新成功" />
+		<text name="AddChild" value="添加子客户" />
+		<text name="AreYouSureWantToLock" value="您确定要锁定账户吗？" />
+		<text name="AreYouSureWantToUnLock" value="您确定要解锁账户吗？" />
+		<text name="SuccessfullyUnLock" value="解锁成功" />
+		<text name="SuccessfullyLock" value="锁定成功" />
+		<text name="Pages_DeliveryRequest_edit" value="交付请求 - 编辑" />
+		<text name="Pages_WarehouseTransfer" value="仓库调拨单" />
+		<text name="Pages_WarehouseTransfer_Create" value="新建" />
+		<text name="WarehouseTransfers" value="仓库调拨" />
+		<text name="WarehouseTransferList" value="仓库调拨单列表" />
+		<text name="List" value="列表" />
+		<text name="ChangeWarehouse" value="切换仓库" />
+		<text name="TransferCode" value="调拨单号" />
+		<text name="FromWarehouse" value="来源仓库" />
+		<text name="ToWarehouse" value="目标仓库" />
+		<text name="SelectNewWarehouse" value="选择新仓库" />
+		<text name="CreateWarehouseTransfer" value="创建仓库调拨单" />
+		<text name="UpdateDebtMax" value="更新最大欠款限额" />
+		<text name="Lock" value="锁定" />
+		<text name="ShippingRate" value="价格表" />
+		<text name="SaleUser" value="销售人员" />
+		<text name="WarehouseName" value="收货仓库" />
+		<text name="TotalDebtAfterChange" value="变更后总欠款" />
+		<text name="SeparateWoodenCrate" value="单独木箱包装" />
+		<text name="SharedWoodenCrate" value="共用木箱包装" />
+		<text name="NewWoodenPacking" value="重新打木箱" />
+		<text name="OfficialChannel" value="正式渠道" />
+		<text name="Portable" value="手提" />
+		<text name="EditAmount" value="修改账户余额" />
+		<text name="Function_EditUserSpecialPIN" value="修改特殊PIN码" />
+		<text name="Function_EditCustomerAmount" value="修改余额" />
+		<text name="ResetSpecialPin" value="更新PIN码" />
+		<text name="NewAmount" value="新金额" />
+		<text name="UpdateAmount" value="更新金额" />
+		<text name="SpecialPassword" value="特殊密码" />
+		<text name="ConfirmSpecialPassword" value="确认特殊密码" />
+		<text name="Unbag" value="移出包裹" />
+		<text name="TimeLine" value="时间线" />
+		<text name="OriginShippingCost" value="原价" />
+		<text name="ShippingCostGroups" value="原价分组" />
+		<text name="CreateShippingCostGroup" value="创建原价分组" />
+		<text name="FromDate" value="起始日期" />
+		<text name="ToDate" value="结束日期" />
+		<text name="ConfigShippingCost" value="配置价格" />
+		<text name="SelectFromWarehouse" value="从仓库发货" />
+		<text name="SelectToWarehouse" value="运送至仓库" />
+		<text name="ConfigureShippingCost" value="配置原价" />
+		<text name="Role.WareHouseVN" value="越南仓库" />
+		<text name="Role.WareHouseCN" value="中国仓库" />
+		<text name="Role.SaleAdmin" value="销售管理" />
+		<text name="Function_BagDelete" value="删除包裹" />
+		<text name="Pages_DeliveryNote_ViewAllWarehouse" value="查看所有仓库 - 送货单" />
+		<text name="Function_PackageViewAll" value="查看所有件" />
+		<text name="Function_BagViewAll" value="查看所有包" />
+		<text name="PackgeNotFound" value="未找到包裹" />
+		<text name="PackageWarehouseNotMatch" value="包裹的仓库不匹配" />
+		<text name="PackageInAnotherBag" value="包裹已在其他袋中" />
+		<text name="PackageCustomerIsNotMatch" value="包裹所属客户不匹配" />
+		<text name="PackageWarehouseDestinationIsNotMatch" value="包裹的目的仓库不匹配" />
+		<text name="AddPackageSuccess" value="添加包裹成功" />
+		<text name="PackageNotInBag" value="包裹不在该袋中" />
+		<text name="RemovePackageSuccess" value="移除包裹成功" />
+		<text name="PackageWasInBag" value="包裹已被装袋" />
+		<text name="PleaseCheckTheCustomer" value="请重新检查客户信息" />
+
+	</texts>
+</localizationDictionary>
+
+
+

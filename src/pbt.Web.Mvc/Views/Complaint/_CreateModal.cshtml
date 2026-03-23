@@ -1,0 +1,90 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Complaint
+@using pbt.ApplicationUtils
+@model CreateUpdateComplaintViewModel
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewComplaint")))
+<form name="complaintCreateForm" role="form" class="form-horizontal">
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-complaint-details">@L("ComplaintDetails")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active" id="create-complaint-details">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("OrderCode")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="OrderId">
+                            @if (Model.Orders != null && Model.Orders.Count > 0)
+                            {
+                                foreach (var item in Model.Orders)
+                                {
+                                    <option value="@item.id">@item.text</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="-1">@L("OrderListNotAvailable")</option>
+                            }
+                        </select>
+                        <input type="hidden" class="form-control" name="OrderCode" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Reason")</label>
+                    <div class="col-md-9">
+
+                        <select class="form-control" name="Reason">
+                            @if (Model.ComplaintReasons != null && Model.ComplaintReasons.Count > 0)
+                            {
+                                foreach (var item in Model.ComplaintReasons)
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">@L("ComplaintReasonNotAvailable")</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Description")</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" name="Description" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("Resolution")</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="Resolution">
+                            <option value="@ComplaintResolutionType.ReturnAndExchange.GetDescription()">@ComplaintResolutionType.ReturnAndExchange.GetDescription()</option>
+                            <option value="@ComplaintResolutionType.Refund.GetDescription()">@ComplaintResolutionType.Refund.GetDescription()</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("RefundAmount")</label>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" name="RefundAmount" step="0.01">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">@L("UploadImage")</label>
+                    <div class="col-md-9">
+                        <input type="file" class="form-control" name="Images"  >
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>

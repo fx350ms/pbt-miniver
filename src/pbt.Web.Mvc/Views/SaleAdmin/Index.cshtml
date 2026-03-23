@@ -1,0 +1,173 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.SaleAdmin
+
+@model SaleAdminIndexModel
+
+@inject pbtAppSession AppSession
+
+@{
+    ViewBag.Title = L("SaleAdminDashboard");
+    ViewBag.CurrentPageName = PageNames.Orders;
+}
+
+
+@section scripts
+{
+
+    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_SaleAdmin) || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
+    {
+        <script>
+            let isAdminOrSaleAdmin = true;
+        </script>
+
+    }
+    else
+    {
+        <script>
+            let isAdminOrSaleAdmin = false;
+        </script>
+    }
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/SaleAdmin/Index.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/SaleAdmin/Package.js" asp-append-version="true"></script>
+        @*  <script src="~/view-resources/Views/SaleAdmin/Bags.js" asp-append-version="true"></script> *@
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/SaleAdmin/Index.min.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/SaleAdmin/Package.min.js" asp-append-version="true"></script>
+        @*  <script src="~/view-resources/Views/SaleAdmin/Bags.min.js" asp-append-version="true"></script> *@
+    </environment>
+}
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("SaleAdminPackage")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="@Url.Action("Create", "Orders")" class="btn bg-blue float-sm-right" style="margin-right:10px">
+                    <i class="fa fa-plus-square"></i>
+                    @L("CreateNewOrder")
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                       
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="abp-advanced-search">
+                                        <!-- Nút mở rộng/thu gọn -->
+                                        <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+                                            <i class="fas fa-filter"></i> Bộ lọc nâng cao
+                                        </button>
+                                        <div class="collapse" id="PackageFilterCollapse">
+                                            <form id="PackageSearchForm" class="form-horizontal">
+
+                                                <div class="form-row">
+
+                                                    <div class="col-md-2">
+                                                        <label>@L("Customer")</label>
+                                                        <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 100%;"></select>
+                                                    </div>
+                                                    <!-- Trạng thái -->
+                                                    <div class="col-md-2">
+                                                        <label for="Status">@L("ShippingPartner")</label>
+                                                        <select class="form-control" name="ShippingPartner" id="ShippingPartner" placeholder="@L("ShippingPartner")">
+                                                            <option value="-1">@L("All")</option>
+                                                            @if (Model.ShippingPartners != null)
+                                                            {
+                                                                foreach (var item in Model.ShippingPartners)
+                                                                {
+                                                                    <option value="@((int)item.Id)">@item.Name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label for="CreateDate">@L("ExportDate")</label>
+                                                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                                                        <input type="hidden" class="form-control float-right start-date export-date" name="StartExportDateStr" id="start-export-date">
+                                                        <input type="hidden" class="form-control float-right end-date export-date" name="EndExportDateStr" id="end-export-date">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="CreateDate">@L("ImportDate")</label>
+                                                        <input type="text" class="form-control date-range" name="ImportDate" id="ImportDate" target="import-date">
+                                                        <input type="hidden" class="form-control float-right start-date import-date" name="StartImportDateStr" id="start-import-date">
+                                                        <input type="hidden" class="form-control float-right end-date import-date" name="EndImportDateStr" id="end-import-date">
+                                                    </div>
+                                                 
+                                                    <!-- Line vận chuyển -->
+                                                    <div class="col-md-2">
+                                                        <label for="ShippingLine">@L("ShippingLine")</label>
+                                                        <select class="form-control" name="ShippingLine" id="ShippingLine">
+                                                            <option value="-1">@L("All")</option>
+                                                            <option value="@((int)LineShipping.Ecommerce)">@LineShipping.Ecommerce.GetDescription()</option>
+                                                            <option value="@((int)LineShipping.InformalTrade)">@LineShipping.InformalTrade.GetDescription()</option>
+                                                            <option value="@((int)LineShipping.OfficialChannel)">@LineShipping.OfficialChannel.GetDescription()</option>
+                                                            <option value="@((int)LineShipping.Portable)">@LineShipping.Portable.GetDescription()</option>
+                                                        </select>
+                                                    </div>
+                                                     
+
+                                                    <div class="col-md-2">
+                                                        <label for="TransactionDate">Từ khóa</label>
+                                                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-row mt-3">
+                                                    <div class="col-md-12 d-flex justify-content-end">
+                                                        <button type="button" class="btn btn-primary mr-2 btn-search">
+                                                            <i class="fas fa-search"></i> Tìm kiếm
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                         
+                    </div>
+                    <div class="card-body">
+                        @await Html.PartialAsync("~/Views/SaleAdmin/_Package.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

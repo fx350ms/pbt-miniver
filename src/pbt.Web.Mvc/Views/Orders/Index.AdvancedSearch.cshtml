@@ -1,0 +1,190 @@
+﻿@using pbt.Web.Models.Orders
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+@{
+    int x = 1;
+}
+@model OrderListIndexModel
+
+
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#OrderFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <button type="button" class="btn btn-success btn-export-order float-sm-right" style="margin-right:10px">
+        <i class="fas fa-download"></i>
+        @L("ExportExcelOrder")
+    </button>
+    <button type="button" class="btn btn-success btn-export-package float-sm-right" style="margin-right:10px">
+        <i class="fas fa-file-download"></i>
+        @L("ExportExcelPackage")
+    </button>
+
+    <a href="@Url.Action("Create", "Orders")" class="btn bg-blue float-sm-right" style="margin-right:10px">
+        <i class="fa fa-plus-square"></i>
+        @L("CreateNewOrder")
+    </a>
+
+    <a href="@Url.Action("Import", "Orders")" class="btn bg-blue float-sm-right" style="margin-right:10px">
+        <i class="fa fa-upload"></i>
+        @L("ImportOrder")
+    </a>
+
+
+
+    <div class="collapse" id="OrderFilterCollapse">
+        <form id="OrderSearchForm" class="form-horizontal" onsubmit="return false;">
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="Keyword">@L("Keyword")</label>
+                    <div class="input-group">
+                        <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" id="txt-keyword">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="Keyword">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label for="Status">@L("Status")</label>
+                    <div class="input-group">
+                        <select name="Status" class="form-control">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)OrderStatus.New)">@L("OrderStatus.New")</option>
+                            <option value="@((int)OrderStatus.Sent)">@L("OrderStatus.Sent")</option>
+                            <option value="@((int)OrderStatus.InChinaWarehouse)">@L("OrderStatus.InTransitToChinaWarehouse")</option>
+                            <option value="@((int)OrderStatus.InTransit)">@L("OrderStatus.InTransit")</option>
+                            <option value="@((int)OrderStatus.InVietnamWarehouse)">@L("OrderStatus.InTransitToVietnamWarehouse")</option>
+                            <option value="@((int)OrderStatus.OutForDelivery)">@L("OrderStatus.OutForDelivery")</option>
+                            <option value="@((int)OrderStatus.Delivered)">@L("OrderStatus.Delivered")</option>
+                            <option value="@((int)OrderStatus.Complaint)">@L("OrderStatus.Complaint")</option>
+                            <option value="@((int)OrderStatus.Refund)">@L("OrderStatus.Refund")</option>
+                            <option value="@((int)OrderStatus.Cancelled)">@L("OrderStatus.Cancelled")</option>
+                            <option value="@((int)OrderStatus.OrderCompleted)">@L("OrderStatus.OrderCompleted")</option>
+                            
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="Status" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="Keyword">@L("Line")</label>
+                    <div class="input-group input-group">
+                        <select class="form-control" id="ShippingLine" name="ShippingLine">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="@((int)LineShipping.InformalTrade)">@L("LineShipping.InformalTrade")</option>
+                            <option value="@((int)LineShipping.Ecommerce)">@L("LineShipping.Ecommerce")</option>
+                            <option value="@((int)LineShipping.OfficialChannel)">@L("LineShipping.OfficialChannel")</option>
+                            <option value="@((int)LineShipping.Portable)">@L("LineShipping.Portable")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="ShippingLine" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="ServiceId">@L("Service")</label>
+                    <div class="input-group">
+                        <select class="form-control" id="ServiceId" name="ServiceId">
+                            <option value="-1">-- @L("All") --</option>
+                            <option value="1">@L("WoodenPackaging")</option>
+                            <option value="2">@L("ShockproofPackaging")</option>
+                            <option value="3">@L("DomesticTransportation")</option>
+                        </select>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-flat btn-clear-value" target="ServiceId" target-value="-1">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="CreateDate" target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="ExportDate">@L("ExportDateCN")</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ExportDate" target-date="export-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date export-date" name="ExportStartDateStr" id="start-export-date">
+                    <input type="hidden" class="form-control float-right end-date export-date" name="ExportEndDateStr" id="end-export-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="ImportDate">@L("ImportDateVN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ImportDate" id="ImportDate" target="import-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-value" target="ImportDate" target-date="import-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date import-date" name="ImportStartDateStr" id="start-import-date">
+                    <input type="hidden" class="form-control float-right end-date import-date" name="ImportEndDateStr" id="end-import-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label>@L("Customer")</label>
+                    <div class="input-group">
+                        <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 80%;">
+                            <option value="-1">-- @L("All") --</option>
+                            @foreach (var item in Model.Customers)
+                            {
+                                <option value="@item.Id"> @item.Username </option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-select" target="CustomerSelect" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Căn phải nút tìm kiếm -->
+            <div class="form-row mt-3">
+                <div class="col-md-12 d-flex justify-content-end">
+
+                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                        <i class="fas fa-search"></i>
+                        @L("Search")
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

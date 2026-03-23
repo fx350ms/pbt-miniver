@@ -1,0 +1,48 @@
+﻿@using System.Collections.Generic;
+@using pbt.Warehouses.Dto;
+
+@model List<WarehouseDto>
+ 
+@* @if (Model != null && Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <input type="radio" id="rd-stock-@item.Id" name="ChinaWarehouseId" data-target="stock-@item.Id" value="@item.Id" target="CNWarehouseId">
+                <label class="control-label" for="rd-stock-@item.Id">@item.Name</label>
+            </div>
+            <div class="card-body" id="stock-@item.Id" data-type="cn-warehouse">
+                <div class="form-group">
+                    <label>Địa chỉ nhận</label>
+                    <p type="email">@item.FullAddress </p>
+                </div>
+                <div class="form-group">
+                    <label>Người nhận</label>
+                    <p type="email"> @item.Receiver  </p>
+                </div>
+                <div class="form-group">
+                    <label>Mã bưu điện</label>
+                    <p type="email"> @item.PostCode </p>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <p type="email"> @item.Phone </p>
+                </div>
+            </div>
+        </div>
+    }
+} *@
+
+@if (Model != null && Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <input type="radio" id="rd-stock-@item.Id" name="ChinaWarehouseId" data-target="stock-@item.Id" value="@item.Id" target="CNWarehouseId">
+                <label class="control-label" for="rd-stock-@item.Id">@item.Name : @item.FullAddress </label>
+            </div>
+        </div>
+    }
+}

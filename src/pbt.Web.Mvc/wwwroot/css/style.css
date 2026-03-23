@@ -1,0 +1,195 @@
+﻿/* prevent the drop down icon going onto a new line for the top bar language link */
+.top-bar-language-nav-link {
+    min-width: 65px;
+}
+
+/* bootstrap model showing two scroll bars */
+html {
+    overflow: visible;
+}
+
+/* main sidebar not under model */
+.modal {
+    z-index: 1110;
+}
+
+.form-group.required .col-form-label:after {
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 3px;
+}
+
+.nav-user-menu .user-image {
+    width: 20px;
+    margin-right: 4px;
+    margin-top: -4px;
+}
+
+.famfamfam-flags {
+    display: inline-block;
+}
+
+.gap-1{
+    gap: 10px;
+}
+.gap-2{
+    gap: 20px;
+}
+
+.btn-icon{
+    margin-left : 3px;
+}
+
+.custom-container {
+    max-width: 100%;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn-active {
+    background-color: #f5c97b;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+.form-check-label {
+    font-weight: 500;
+}
+
+.customer-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+    .customer-item:last-child {
+        border-bottom: none;
+    }
+
+.customer-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.customer-detail {
+    margin: 0;
+    font-size: 14px;
+}
+
+.info-card-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.info-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .info-card .card-body .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+.card-body .header .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #6c757d;
+    margin-right: 15px;
+}
+
+.card-body .header .balance {
+    margin-left: 50px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.balance div {
+    color: #28a745;
+}
+
+thead tr th {
+    background: #c0d8ff;
+}
+
+.customer-list {
+    max-height: calc(100vh - 470px);
+    overflow-y: scroll;
+}
+
+.customer-data {
+}
+
+.customer-item {
+    cursor: pointer;
+}
+
+    .customer-item:hover {
+        background: #fff6da;
+    }
+
+.nav-link.active {
+    color: #ffffff !important;
+    background-color: #007bffaa !important;
+}
+
+.close-tab {
+    background: none;
+    border: none;
+    color: #ff0000;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+    .close-tab:hover {
+        color: #ff5555;
+    }
+
+.select2-selection--single {
+    height: 38px !important;
+}
+
+.select2-selection__arrow {
+    top: 5px !important;
+}
+
+.select2-dropdown {
+    z-index: 9999;
+}
+
+
+.custom-card-body {
+    padding: 0px;    
+}
+
+
+
+
+.table-child thead tr th {
+    padding: 0 0 0 5px;
+    background: #3598ff99;
+}
+
+.child-row {
+    padding: 0px !important;
+}

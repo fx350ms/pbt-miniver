@@ -1,0 +1,72 @@
+﻿@using pbt.Web.Models.Orders
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+
+@inject pbtAppSession AppSession
+
+@model OrderSearchModel
+
+
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#OrderFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <a href="#" class="btn bg-blue float-sm-right" style="margin-right:10px">
+        <i class="fa fa-download"> </i>
+        @L("ExportExcel")
+
+    </a>
+    <div class="collapse" id="OrderFilterCollapse">
+        <form id="OrderSearchForm" class="form-horizontal">
+            <div class="form-row">
+
+
+                <div class="col-md-3">
+                    <label for="TransactionDate">Thời gian giao dịch</label>
+                    <input type="text" class="form-control" name="TransactionDate" id="input-date-range">
+
+                    <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+                    <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+                </div>
+            </div>
+
+            <div class="form-row mt-3">
+                <!-- Thời gian giao dịch -->
+                <div class="col-md-6">
+                    <label for="TransactionDate">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="CreateDate">@L("CreateDate")</label>
+                <input type="text" class="form-control date-range" name="ExportDate" id="CreateDate" target="create-date">
+                <input type="hidden" class="form-control float-right start-date create-date" name="StartCreateDateStr" id="start-create-date">
+                <input type="hidden" class="form-control float-right end-date create-date" name="EndCreateDateStr" id="end-create-date">
+            </div>
+            <div class="col-md-2">
+                <label for="CreateDate">@L("ExportDate")</label>
+                <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate" target="export-date">
+                <input type="hidden" class="form-control float-right start-date export-date" name="StartExportDateStr" id="start-export-date">
+                <input type="hidden" class="form-control float-right end-date export-date" name="EndExportDateStr" id="end-export-date">
+            </div>
+
+            <div class="col-md-3">
+                <label for="Status">Khách hàng</label>
+                <select class="select2 select2-hidden-accessible " name="CustomerId" style="width: 100%;">
+                </select>
+            </div>
+
+            <div class="col-md-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mr-2 btn-search">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+                <button type="button" class="btn btn-success btn-download">
+                    <i class="fa fa-download"></i> Download
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

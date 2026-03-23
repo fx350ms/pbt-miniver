@@ -1,0 +1,61 @@
+﻿<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#TransactionFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <div class="collapse" id="TransactionFilterCollapse">
+        <form id="MessageSearchForm" class="form-horizontal">
+            <div class="form-row">
+
+                <!-- Bộ lọc trạng thái (Status) -->
+                <div class="col-md-3">
+                    <label for="Status">Trạng thái</label>
+                    <select name="Status" class="form-control">
+                        <option value="-1">-- Chọn trạng thái --</option>
+                        <option value="1">Đã nhận</option>
+                        <option value="2">Đang xử lý</option>
+                        <option value="3">Hoàn thành</option>
+                        <option value="4">Thất bại</option>
+                    </select>
+                </div>
+
+                <!-- Bộ lọc loại tin nhắn (MessageType) -->
+                <div class="col-md-3">
+                    <label for="MessageType">Loại tin nhắn</label>
+                    <select name="MessageType" class="form-control">
+                        <option value="-1">-- Chọn loại --</option>
+                        <option value="0">Không xác định</option>
+                        <option value="1">Cộng tiền</option>
+                        <option value="2">Trừ tiền</option>
+                    </select>
+                </div>
+
+                <!-- Bộ lọc cú pháp đúng/sai (IsCorrectSyntax) -->
+                <div class="col-md-3">
+                    <label for="IsCorrectSyntax">Cú pháp</label>
+                    <select name="IsCorrectSyntax" class="form-control">
+                        <option value="-1">-- Chọn --</option>
+                        <option value="1">✔ Đúng</option>
+                        <option value="0">✖ Sai</option>
+                    </select>
+                </div>
+
+                <!-- Bộ lọc ngày tạo (CreatedDate) -->
+                <div class="col-md-3">
+                    <label for="CreatedDate">Ngày tạo</label>
+                    <!-- Đảm bảo input date range có đủ chiều rộng -->
+                    <input type="text" class="form-control" name="dateRange" id="input-date-range" style="min-width: 200px;">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+              
+                <button type="submit" class="btn btn-primary mr-2 btn-search">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+              
+            </div>
+        </form>
+    </div>
+</div>

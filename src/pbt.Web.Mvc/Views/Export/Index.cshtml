@@ -1,0 +1,68 @@
+﻿@using pbt.Web.Startup
+
+@{
+    ViewBag.Title = L("DeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Export/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Export/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("DeliveryNotes")</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-default">Cập nhật đối tác vận chuyển</button>
+                <button type="button" class="btn btn-default">Xuất Excel</button>
+                <button type="button" class="btn btn-default">Xuất chi tiết bao</button>
+                <button type="button" class="btn btn-default">Xuất bao</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        @* @await Html.PartialAsync("~/Views/Bags/Index.AdvancedSearch.cshtml") *@
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="DepartmentsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mã phiếu xuất</th>
+                                        <th>Trạng thái phiếu xuất</th>
+                                        <th>Thời gian tạo</th>
+                                        <th>Thời gian xuất</th>
+                                        <th>Ghi chú</th>
+                                        <th>Khách hàng(Mã KH)</th>
+                                        @* <th>Tổng cân nặng</th> *@
+                                        @* <th>Số lượng xuất</th> *@
+                                        @* <th>Kho xuất</th> *@
+                                        <th ></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

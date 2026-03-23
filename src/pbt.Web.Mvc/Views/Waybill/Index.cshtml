@@ -1,0 +1,186 @@
+﻿@using pbt.Web.Startup
+@using pbt.Web.Models.Common.Modals
+@using pbt.Waybills.Dto;
+@using pbt.Web.Models.Waybills
+@using pbt.Authorization;
+
+@{
+    ViewBag.Title = L("WaybillManagement");
+    ViewBag.CurrentPageName = PageNames.Waybills;
+}
+@section scripts
+{
+    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Function_Order_Rematch))
+    {
+        <script>
+            var canRematch = true;
+        </script>
+    }
+    else
+    {
+        <script>
+            var canRematch = false;
+        </script>
+    }
+    )
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Waybills/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Waybills/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+    </style>
+}
+@model WaybillIndexModel
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("WaybillManagement")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="@Url.Action("Create", "Waybill")" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i> 
+                    @L("CreateWaybill")
+                </a>
+@* 
+                <a class="btn bg-green float-sm-right disabled btn-rematch">
+                    <i class="fa fa-user"></i> 
+                    @L("Rematch")
+                </a> *@
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/Waybill/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="WaybillsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th></th>
+                                        <th>@("STT")</th>
+                                        <th>@L("WaybillCode")</th>
+                                        <th>@L("CustomerName")</th>
+                                        <th>@L("Status")</th>
+                                        <th>@L("Note")</th>
+                                        <th>@L("CreatedTime")</th>
+                                        @*  <th>@L("CreatedTime")</th> *@
+                                         <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@* 
+@await Html.PartialAsync("~/Views/Waybill/_CreateModal.cshtml", new CreateWaybillListModel(){ Customers = Model.Customers}) ;
+ *@
+<div class="modal fade" id="WaybillCreateModal" tabindex="-1" role="dialog" aria-labelledby="WaybillCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewWaybill")))
+            <form name="waybillCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("SelectCustomer")</label>
+                        <div class="col-md-9">
+                            <select class="select2 form-control" id="select-customer" name="CustomerId" style="width: 100%;">
+                                <option value="">@L("SelectCustomer")</option>
+                                @foreach (var customer in Model.Customers)
+                                {
+                                    <option value="@customer.Id">@customer.Username</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("WaybillCodesCommaSeparated")</label>
+                        <div class="col-md-9">
+                            <textarea type="text" class="form-control" name="WaybillCodes" required placeholder="Enter waybill codes separated by commas" rows="10"> </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">@L("Note")</label>
+                        <div class="col-md-9">
+                            <textarea type="text" class="form-control" name="Note" placeholder="Nhập ghi chú" rows="2"> </textarea>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="WaybillEditModal" tabindex="-1" role="dialog" aria-labelledby="WaybillEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="OrderNote" tabindex="-1" role="dialog" aria-labelledby="OrderNoteModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("OrderNote")))
+            <div class="form-horizontal">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="hidden-order-id" />
+                        <!-- Nhập ghi chú mới -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="noteContent" class="form-control" rows="6" placeholder="@L("EnterNoteHere")"></textarea>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>  
+
+                <div class="modal-footer justify-content-right">
+                    <button id="btnSaveNote" type="button" class="btn btn-primary btn-save-note">@L("SaveNote")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

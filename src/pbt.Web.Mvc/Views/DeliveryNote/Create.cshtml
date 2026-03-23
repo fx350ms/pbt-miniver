@@ -1,0 +1,333 @@
+﻿@using pbt.Web.Startup
+@using pbt
+@using pbt.ApplicationUtils
+
+@model pbt.Web.Models.DeliveryNote.CreateUpdateDeliveryNote
+
+@{
+    ViewBag.Title = L("CreateDeliveryNote");
+    ViewBag.CurrentPageName = PageNames.DeliveryNote;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/DeliveryNote/Create.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/DeliveryNote/Create.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles
+{
+    <style>
+        .custom-container {
+            max-width: 100%;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .btn-active {
+            background-color: #f5c97b;
+            color: #fff;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-check-label {
+            font-weight: 500;
+        }
+
+        .customer-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .customer-item:last-child {
+                border-bottom: none;
+            }
+
+        .customer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .customer-detail {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .info-card-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .info-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .info-card .card-body .header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+        .card-body .ready-list {
+            font-size: smaller;
+            padding: 0.5rem;
+        }
+
+        .card-body .header .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #6c757d;
+            margin-right: 15px;
+        }
+
+        .card-body .header .balance {
+            margin-left: 50px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .balance div {
+            color: #28a745;
+        }
+
+        thead tr th {
+            background: #c0d8ff;
+        }
+
+        .customer-list {
+            max-height: calc(100vh - 470px);
+            overflow-y: scroll;
+        }
+
+        .customer-data {
+        }
+
+        .customer-item {
+            cursor: pointer;
+        }
+
+            .customer-item:hover {
+                background: #fff6da;
+            }
+
+
+        .nav-link.active {
+            color: #ffffff !important;
+            background-color: #007bffaa !important;
+        }
+
+
+        .close-tab {
+            background: none;
+            border: none;
+            color: #ff0000;
+            font-size: 16px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+            .close-tab:hover {
+                color: #ff5555;
+            }
+
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-4">
+            <h1>@L("CreateDeliveryNote")</h1>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <input type="hidden" name="bagId" value="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="form-scan-code">
+                            <div class="custom-container">
+                                <div class="form-group">
+                                    <label class="section-title">Kho xuất</label>
+                                    <div class="d-flex">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="kho_vietnam"
+                                                   value="vietnam" checked>
+                                            <label class="form-check-label" for="kho_vietnam">Việt Nam</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="section-title">Đối tượng</label>
+                                    <button class="btn btn-active" disabled>Khách hàng</button>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input check-lock-customer" name="LockCustomer" type="checkbox" id="CheckLockCustomer">
+                                    <label class="form-check-label cursor-pointer" for="CheckLockCustomer">@L("LockCustomer")</label>
+                                    <input type="hidden" id="hidden-select-customer-id" name="CustomerId" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="section-title">Quét mã</label>
+                                    <input type="text" class="form-control mt-2" id="scanCode" name="scanCode" placeholder="Mã bao hoặc mã kiện">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <h5 class="customer-title">Danh sách YCG</h5>
+                            <div class="customer-list" id="customer-list">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <div class="customer-data card ">
+                    <div class="card-body">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="receiver">Người nhận</label>
+                                <select name="CustomerId" class="form-control select2" id="customer-select">
+                                    <option> @L("SelectCustomer")</option>
+                                    @if (Model.Customers != null && Model.Customers.Any())
+                                    {
+                                        foreach (var customer in Model.Customers)
+                                        {
+                                            <option value="@customer.CustomerId" CurrentAmount data-currentDebt="@(customer.CurrentDebt.ToString("N0") )"
+                                                    data-currentAmount="@(customer.CurrentAmount.ToString("N0") )" data-maxDebt="@(customer.MaxDebt.ToString("N0") )">@customer.UserName</option>
+                                        }
+                                    }
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="financialAmount">Phần âm tài chính</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-right " id="financialAmount" placeholder="0 đ" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 balance">
+                                <label for="financialAmount">Số dư tài khoản</label>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-right mask-number" id="currentAmount" placeholder="0 đ" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 balance">
+                                <label for="financialAmount">Công nợ tối đa</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-right mask-number" id="maxDebt" placeholder="0 đ" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-outline card-tabs">
+                            <div class="card-header p-0 pt-1 border-bottom-0">
+                                <ul class="nav nav-tabs" id="delivery-note-tabs" role="tablist">
+                                </ul>
+                            </div>
+                            <form id="form-delivery-note">
+                                <div class="tab-content" id="delivery-note-tabs-content">
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="customer-data text-right">
+                    <button class="btn btn-primary btn-save-and-export" type="button" style="width: 200px">Lưu và xuất kho</button>
+                    @*   <button class="btn btn-primary btn-save-and-export-all" style="width: 200px">Lưu và xuất kho tất cả</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">PTH5920112</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered" id="package-list">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>MÃ KIỆN</th>
+                                <th>MÃ ĐƠN HÀNG</th>
+                                <th>CÂN NẶNG</th>
+                                <th>KÍCH THƯỚC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="labelContent" style="display: none;">
+    </div>
+</section>

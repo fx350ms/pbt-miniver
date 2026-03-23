@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>pbt.Application</AssemblyName>
+    <PackageId>pbt.Application</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>pbt</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ApplicationUtils\obj\**" />
+    <Compile Remove="Bags\Dto\obj\**" />
+    <Compile Remove="CustomerTransactions\**" />
+    <Compile Remove="Export\**" />
+    <Compile Remove="Packages\Dto\obj\**" />
+    <Compile Remove="Packages\obj\**" />
+    <EmbeddedResource Remove="ApplicationUtils\obj\**" />
+    <EmbeddedResource Remove="Bags\Dto\obj\**" />
+    <EmbeddedResource Remove="CustomerTransactions\**" />
+    <EmbeddedResource Remove="Export\**" />
+    <EmbeddedResource Remove="Packages\Dto\obj\**" />
+    <EmbeddedResource Remove="Packages\obj\**" />
+    <None Remove="ApplicationUtils\obj\**" />
+    <None Remove="Bags\Dto\obj\**" />
+    <None Remove="CustomerTransactions\**" />
+    <None Remove="Export\**" />
+    <None Remove="Packages\Dto\obj\**" />
+    <None Remove="Packages\obj\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
+    <PackageReference Include="MassTransit" Version="8.5.7" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.7" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="NPOI" Version="2.7.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pbt.Application.Cache\pbt.Application.Cache.csproj" />
+    <ProjectReference Include="..\pbt.Core\pbt.Core.csproj" />
+  </ItemGroup>
+</Project>

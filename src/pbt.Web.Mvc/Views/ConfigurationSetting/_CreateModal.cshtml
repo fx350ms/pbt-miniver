@@ -1,0 +1,33 @@
+@using pbt.ConfigurationSettings.Dto
+@using pbt.Web.Models.Common.Modals
+
+@model ConfigurationSettingDto
+
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="ConfigurationSettingCreateModal" tabindex="-1" role="dialog" aria-labelledby="ConfigurationSettingCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewConfigurationSetting")))
+            <form name="configurationSettingCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("Key")</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="Key" required>
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-3 col-form-label">@L("Value")</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="Value" required>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

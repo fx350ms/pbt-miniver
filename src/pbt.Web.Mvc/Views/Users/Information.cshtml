@@ -1,0 +1,170 @@
+﻿@using pbt.CustomerAddresss.Dto
+@using pbt.Web.Startup
+@using pbt.Web.Models.Users
+@using pbt.ApplicationUtils
+@model UserInformationViewModel
+@{
+    ViewBag.Title = L("Users");
+    ViewBag.CurrentPageName = PageNames.Users;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Users/info.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Users/info.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model != null)
+            {
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="/libs/admin-lte/dist/img/avatar5.png" alt="User profile picture">
+                            </div>
+
+                            <h3 class="profile-username text-center">@Model.Customer?.FullName</h3>
+
+                            <p class="text-muted text-center"><strong>@L("CustomerCode"): </strong>@Model.Customer?.Id</p>
+                            <div class="text-center">
+
+                                @if (Model.Customer?.Status == (int)CustomerStatus.Active)
+                                {
+                                    <span class="right badge badge-success"> @L("Active")</span>
+                                }
+                                else
+                                {
+                                    <span class="right badge badge-danger"> @L("Inactive")</span>
+                                }
+                            </div>
+
+                            <hr>
+                            <p class="text-muted text-center"><strong>@L("Username"): </strong>@Model.User?.UserName</p>
+                            <p class="text-muted text-center"><strong>@L("EmailAddress"): </strong>@Model.User?.EmailAddress</p>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <strong> @L("YourInformation")</strong>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <strong><i class="fas fa-user mr-1"></i> @L("Information"): </strong>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled">
+                                                <li> <strong>@L("FullName"): </strong> @Model.Customer?.FullName</li>
+                                                <li><strong>@L("PhoneNumber"): </strong> @Model.Customer?.PhoneNumber</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <strong><i class="fas fa-map-marker-alt"></i> @L("YourAddress"): </strong>
+                                            </h3>
+                                            <a data-toggle="modal"   data-target="#CustomerAddressCreateModal" class="float-right btn bg-blue float-sm-right">@L("AddAddress")</a>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="AddressSearchForm"></form>
+                                            <table id="AddressTable" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@L("STT")</th>
+                                                        <th>@L("FullName")</th>
+                                                        <th>@L("PhoneNumber")</th>
+                                                        <th>@L("FullAddress")</th>
+                                                        <th></th>
+                                                        <th style="width: 80px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  @*   <tr>
+                                                        <td>1</td>
+                                                        <td>@Model.Customer?.FullName</td>
+                                                        <td>@Model.Customer?.PhoneNumber</td>
+                                                        <td>@Model.Customer?.Address</td>
+                                                        <td>  <span class="right badge badge-success"> @L("Default")</span> </td>
+                                                        <td style="width: 80px"><a href="javascript:void(0)">Sửa</a></td>
+                                                    </tr> *@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <strong><i class="fas fa-wallet"></i> @L("BankAccount"): </strong>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table id="AddressTable" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@L("STT")</th>
+                                                        <th>@L("FullName")</th>
+                                                        <th>@L("AccountNumber")</th>
+                                                        <th>@L("BankName")</th>
+                                                        <th></th>
+                                                        <th style="width: 80px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>@Model.Customer?.FullName</td>
+                                                        <td>99999999999</td>
+                                                        <td>Techcombank</td>
+                                                        <td> <span class="right badge badge-success"> @L("Default")</span> </td>
+                                                        <td style="width: 80px"><a href="javascript:void(0)">Sửa</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            }
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@await Html.PartialAsync("~/Views/Users/_CreateAddressModal.cshtml", new CustomerAddressDto(){ })
+
+
+<div class="modal fade" id="AddressEditModal" tabindex="-1" role="dialog" aria-labelledby="AddressEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

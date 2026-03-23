@@ -1,0 +1,65 @@
+﻿@using pbt.Web.Startup
+ 
+
+@{
+    ViewBag.Title = L("WalletTransaction");
+    ViewBag.CurrentPageName = PageNames.Customer;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/WalletTransaction/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/WalletTransaction/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("TransactionHistory")</h1>
+            </div>
+           <div class="col-sm-6">
+               <button class="btn bg-primary float-sm-right btn-export">@L("ExportExcel")</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @await Html.PartialAsync("~/Views/WalletTransaction/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="WalletTransactionTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>@L("STT")</th>
+                                        <th>@L("CreatedTime")</th>
+                                        <th>@L("TransactionCode")</th>
+                                        <th>@L("TransactionType")</th>
+                                        <th>@L("Description")</th>
+                                        <th>@L("Amount")</th>
+                                        <th>@L("BalanceAfterTransaction")</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 

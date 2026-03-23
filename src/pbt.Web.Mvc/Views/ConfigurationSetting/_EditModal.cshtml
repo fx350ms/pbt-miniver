@@ -1,0 +1,30 @@
+@using pbt.ConfigurationSettings.Dto
+@using pbt.Web.Models.Common.Modals
+
+@model ConfigurationSettingDto
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditConfigurationSetting")))
+<form name="configurationSettingEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">@L("Key")</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="Key" value="@Model.Key" required>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">@L("Value")</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="Value" value="@Model.Value" required>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/ConfigurationSetting/_EditModal.js" asp-append-version="true"></script>

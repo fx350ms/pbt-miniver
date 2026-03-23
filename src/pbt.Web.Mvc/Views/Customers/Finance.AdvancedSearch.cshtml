@@ -1,0 +1,55 @@
+﻿@model pbt.Web.Models.Customers.CustomerFinanceIndexModel
+<div class="abp-advanced-search">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#PackageFilterCollapse">
+        <i class="fas fa-filter"></i> @L("AdvancedFilter")
+    </button>
+    <div class="collapse" id="PackageFilterCollapse">
+        <form id="FinanceSearchForm" class="form-horizontal">
+            <div class="form-row">
+                <input type="hidden" value="@Model.CurrentCustomer.Id" name="CustomerId" />
+                <div class="col-md-3">
+                    <label>@L("Customer")</label>
+                    <select class="select2 form-control" id="CustomerSelect"  style="width: 100%;">
+                        <option value="">@L("All")</option>
+                        @foreach (var customer in Model.Customers)
+                        {
+                            if (Model.CurrentCustomer.Id.ToString() == customer.id)
+                            {
+                                <option value="@customer.id" selected>@customer.text</option>
+                            }
+                            else
+                            {
+                                <option value="@customer.id">@customer.text</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate" target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="CreateDate" target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date" name="CreateStartDateStr" id="start-create-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr" id="end-create-date">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="Keyword">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <div class="col-md-2 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

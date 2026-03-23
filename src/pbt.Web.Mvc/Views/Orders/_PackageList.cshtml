@@ -1,0 +1,91 @@
+﻿@using pbt.Packages.Dto
+@using pbt.ApplicationUtils
+@model List<PackageDto>
+
+@functions {
+    private string GetBadgeClass(int shippingStatus)
+    {
+        switch ((PackageDeliveryStatusEnum)shippingStatus)
+        {
+            case PackageDeliveryStatusEnum.Initiate:
+                return "badge-secondary"; // Gray for "Khởi tạo"
+            // case PackageDeliveryStatusEnum.InTransit:
+            //     return "badge-danger"; // Red for "Thất lạc"
+            case PackageDeliveryStatusEnum.InWarehouseVN:
+                return "badge-info"; // Light blue for "Kiện về kho"
+            case PackageDeliveryStatusEnum.WaitingForShipping:
+                return "badge-warning"; // Yellow for "Chờ vận chuyển"
+            case PackageDeliveryStatusEnum.Shipping:
+                return "badge-primary"; // Blue for "Vận chuyển"
+            case PackageDeliveryStatusEnum.WaitingForDelivery:
+                return "badge-warning"; // Yellow for "Chờ giao"
+            case PackageDeliveryStatusEnum.DeliveryRequest:
+                return "badge-info"; // Light blue for "Yêu cầu giao"
+            case PackageDeliveryStatusEnum.DeliveryInProgress:
+                return "badge-primary"; // Blue for "Đang giao"
+           
+            // case PackageDeliveryStatusEnum.Closed:
+            //     return "badge-dark"; // Dark gray for "Ngừng hoạt động"
+        
+                return "badge-success"; // Green for "Đã thanh lý"
+            default:
+                return "badge-secondary"; // Default gray for unknown statuses
+        }
+    }
+}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>@L("BagCode")</th>
+            <th>@L("PackageCode")</th>
+            <th>@L("Status")</th>
+            <th>@L("Width")</th>
+            <th>@L("Height")</th>
+            <th>@L("Length")</th>
+            <th>@L("Weight")</th>
+            <th>@L("VolumeM3")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.Bag != null)
+                        {
+                            <span>@item.Bag.BagCode</span>
+                        }
+                    </td>
+                    <td>@item.PackageNumber</td>
+                    <td>
+                        <span class="badge @GetBadgeClass(item.ShippingStatus)">
+                            @(((PackageDeliveryStatusEnum)item.ShippingStatus).GetDescription())
+                        </span>
+                    </td>
+                    <td align="right">
+                        @item.Width
+                    </td>
+                    <td align="right">
+                        @item.Height
+                    </td>
+                    <td align="right">
+                        @item.Weight
+                    </td>
+
+                    <th align="right">@item.Length</th>
+                    <td align="right">
+                        @((decimal)(item.Width * item.Height * item.Length) / 1000000)
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">@L("NoPackagesFound")</td>
+            </tr>
+        }
+    </tbody>
+</table>

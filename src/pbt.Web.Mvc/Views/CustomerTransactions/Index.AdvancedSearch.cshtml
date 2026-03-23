@@ -1,0 +1,32 @@
+﻿
+<div class="abp-advanced-search">
+    <form id="OrderSearchForm" class="form-horizontal">
+        <div class="input-group">
+            <div class="d-flex gap-2 mb-2 w-100">
+
+                <!-- Phần tìm kiếm mã vận đơn vẫn ở bên trái -->
+                <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("InputOrderNumber")" />
+
+                <!-- Phần chứa input date range và button tìm kiếm di chuyển sang bên phải -->
+                <div class="d-flex gap-2 ms-auto">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+
+                    <!-- Đảm bảo input date range có đủ chiều rộng -->
+                    <input type="text" class="form-control" name="dateRange" id="input-date-range" style="min-width: 200px;">
+
+                    <button type="button" class="btn bg-blue btn-search">
+                        <span class="fas fa-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" class="form-control float-right" name="StartDateStr" id="start-date">
+        <input type="hidden" class="form-control float-right" name="EndDateStr" id="end-date">
+    </form>
+</div>

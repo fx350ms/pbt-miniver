@@ -1,0 +1,28 @@
+﻿@using pbt.Web.Models.Orders
+
+@model OrderDetailModel
+<div class="modal fade" id="editGoodsValueModal" tabindex="-1" role="dialog" aria-labelledby="editGoodsValueModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editGoodsValueModalLabel">Edit Goods Value</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editGoodsValueForm">
+                <input type="hidden" name="id" id="id" value="@Model.PackageDto.Id"/>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="goodsValue">Giá trị hàng hoá</label>
+                        <input type="number" class="form-control" id="goodsValue" name="goodsValue" value="@Model.Dto.GoodsValue" required/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@L("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@L("Save")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

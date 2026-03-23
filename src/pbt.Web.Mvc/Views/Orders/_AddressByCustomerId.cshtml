@@ -1,0 +1,17 @@
+﻿@using System.Collections.Generic;
+@using pbt.CustomerAddresss.Dto;
+
+@model List<CustomerAddressDto>
+
+@if (Model != null && Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="card collapsed-card">
+            <div class="card-header">
+                <input type="radio" id="rd-address-@item.Id" name="address" data-target="address-@item.Id" value="@item.Id" target="AddressId">
+                <label class="control-label" for="rd-address-@item.Id">@item.FullAddress</label>
+            </div>
+        </div>
+    }
+}

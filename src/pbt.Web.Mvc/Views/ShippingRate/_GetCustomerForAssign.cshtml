@@ -1,0 +1,40 @@
+﻿@using pbt.ShippingRates
+@using pbt.Web.Models.ShippingRate
+@model AssignToCustomersModel; 
+@* List<ShippingRateCustomerCheckDto> *@
+
+    <div class="modal-header">
+        <h5 class="modal-title">@L("AssignCustomersToShippingRate")</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="assignCustomerForm" class="form-horizontal">
+            <input type="hidden" id="ShippingRateGroupId" name="ShippingRateGroupId" value="@Model.GroupId" />
+            <select class="select2 form-control select-customer-ids" multiple name="select-customer-ids">
+            @if (Model.Customers != null && Model.Customers.Count > 0)
+            {
+                foreach (var customer in Model.Customers)
+                {
+                    if (customer.Selected)
+                    {
+                            <option value="@customer.CustomerId" selected>@customer.CustomerName</option>
+                    }
+                    else
+                    {
+                            <option value="@customer.CustomerId">@customer.CustomerName</option>
+                    }
+                }
+            }
+            </select>
+
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@L("Cancel")</button>
+        <button type="button" class="btn btn-primary save-customer-button">@L("Save")</button>
+    </div>
+

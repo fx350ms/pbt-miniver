@@ -1,0 +1,134 @@
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.ShippingCosts
+@using pbt.ApplicationUtils
+@using System.Globalization
+
+@model ConfigureShippingCostModel
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ConfigureShippingCost")))
+
+<form name="ShippingCostEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" id="ShippingCostGroupId" value="@Model.GroupId" />
+    <div class="modal-body">
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="card-header">
+                    <!-- Chọn loại vận chuyển và kho -->
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <select class="form-control" id="select-line">
+                                <option value="-1" selected>@L("ShippingLine")</option>
+                              @*   @foreach (var shippingType in Model.ShippingTypes)
+                                {
+                                    <option value="@shippingType.Id">@shippingType.Name</option>
+                                } *@
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" id="select-from-warehouse">
+                                <option value="-1" selected>@L("SelectFromWarehouse")</option>
+                                @foreach (var warehouse in Model.WarehousesCN)
+                                {
+                                    <option value="@warehouse.Id">@warehouse.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" id="select-to-warehouse">
+                                <option value="-1" selected>@L("SelectToWarehouse")</option>
+                                @foreach (var warehouse in Model.WarehousesVN)
+                                {
+                                    <option value="@warehouse.Id">@warehouse.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary add-group">@L("Add")</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body rate-list" style="max-height:700px; overflow-y:scroll;">
+                   @*  @if (Model.ShippingCosts != null && Model.ShippingCosts.Any())
+                    {
+                        @foreach (var cost in Model.ShippingCosts)
+                        {
+                            <div class="rate-item" data-id="@cost.Id" data-line="@cost.ShippingTypeId" data-from="@cost.WarehouseFromId" data-to="@cost.WarehouseToId">
+
+                                <input type="hidden" name="RateId" value="@cost.Id" />
+                                <input type="hidden" name="LineNumber" value="@cost.ShippingTypeId" />
+                                <input type="hidden" name="FromWarehouseId" value="@cost.WarehouseFromId" />
+                                <input type="hidden" name="ToWarehouseId" value="@cost.WarehouseToId" />
+
+                                <div class="form-row mb-3">
+                                    <div class="col">
+                                        @L("ShippingType"): <label>@(((CustomerLine)cost.ShippingTypeId).GetDescription())</label>
+                                    </div>
+                                    <div class="col">
+                                        @L("FromWarehouse"): <label>@Model.WarehousesCN.FirstOrDefault(w => w.Id == cost.WarehouseFromId)?.Name</label>
+                                    </div>
+                                    <div class="col">
+                                        @L("ToWarehouse"): <label>@Model.WarehousesVN.FirstOrDefault(w => w.Id == cost.WarehouseToId)?.Name</label>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-danger float-sm-right remove-tier-data" data-id="@cost.Id">
+                                            <i class="fas fa-trash"></i> @L("Delete")
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Bảng cấu hình giá -->
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>@L("Category")</th>
+                                            <th>@L("From")</th>
+                                            <th>@L("To")</th>
+                                            <th width="125">@L("Unit")</th>
+                                            <th>@L("PricePerUnit")</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var tier in cost.Tiers.OrderBy(t => t.ProductTypeId))
+                                        {
+                                            <tr data-id="@tier.Id">
+                                                <td>
+                                                    <input type="hidden" name="ProductGroupId" value="@tier.ProductTypeId" />
+                                                    <strong>@Model.ProductGroupTypes.FirstOrDefault(p => p.Id == tier.ProductTypeId)?.Name</strong>
+                                                </td>
+                                                <td><input type="number" class="form-control mask-num" name="FromValue" value="@((long)tier.FromValue)" min="0" max="99999999" maxlength="10" /></td>
+                                                <td><input type="number" class="form-control mask-num" name="ToValue" value="@((long)tier.ToValue)" min="0" max="99999999" maxlength="10" /></td>
+                                                <td>
+                                                    <select class="form-control" name="Unit">
+                                                        @if (tier.Unit == "KG")
+                                                        {
+                                                            <option value="KG" selected>KG</option>
+                                                            <option value="M3">M3</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="KG">KG</option>
+                                                            <option value="M3" selected>M3</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" class="form-control mask-num-price" name="PricePerUnit" value="@(((long)tier.PricePerUnit).ToString("N0", new CultureInfo("en-US")))" /></td>
+                                                <td><button class="btn btn-success btn-sm add-tier-row" title="@L("AddRow")">+</button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    } *@
+                </div>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+    </div>
+</form>
+
+<script src="~/view-resources/Views/ShippingCosts/ConfigTier.js" asp-append-version="true"></script>

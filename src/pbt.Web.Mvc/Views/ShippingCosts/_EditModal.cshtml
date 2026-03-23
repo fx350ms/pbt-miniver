@@ -1,0 +1,63 @@
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.ShippingCosts;
+
+@model ShippingCostIndexViewModel
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditShippingCostGroup")))
+<form role="form" class="form-horizontal">
+    <div class="modal-body">
+        <input type="hidden" name="id" value="@Model.ShippingCostGroup.Id"/>
+        <div class="form-row">
+            <div class="col-md-6">
+                <label>@L("Name")</label>
+                <input type="text" name="Name" value="@Model.ShippingCostGroup.Name" class="form-control" required/>
+            </div>
+            <div class="col-md-6">
+                <label>@L("ShippingPartner")</label>
+                <select name="ShippingPartnerId" class="form-control">
+                    @if (Model.ShippingPartners != null && Model.ShippingPartners.Count > 0)
+                    {
+                        foreach (var partner in Model.ShippingPartners)
+                        {
+                            if (partner.Id == Model.ShippingCostGroup.ShippingPartnerId)
+                            {
+                                <option value="@partner.Id" selected>@partner.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@partner.Id">@partner.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>@L("FromDate")</label>
+                <div class="input-group">
+                    <input type="text" class="form-control date-single" value="@Model.ShippingCostGroup.FromDateStr" name="FromDate" target="from-date">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-danger btn-clear-date" target-date="FromDate" style="border: none;">
+                            <i class="fa fa-times-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control float-right from-date" name="FromDateStr" value="">
+            </div>
+
+            <div class="col-md-6">
+                <label>@L("ToDate")</label>
+                <div class="input-group">
+                    <input type="text" class="form-control date-single" value="@Model.ShippingCostGroup.ToDate" name="ToDate" target="to-date">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-danger btn-clear-date" target-date="ToDate" style="border: none;">
+                            <i class="fa fa-times-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control float-right to-date" name="ToDateStr" value="">
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>

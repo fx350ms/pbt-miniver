@@ -1,0 +1,129 @@
+﻿@using pbt.Web.Models.DeliveryNote
+@using pbt.ApplicationUtils
+
+@model DeliveryNoteIndexView
+
+<div class="abp-advanced-search" xmlns="http://www.w3.org/1999/html">
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#BagFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <div class="collapse" id="BagFilterCollapse">
+        <form id="PackageSearchForm" class="form-horizontal">
+            <input type="hidden" name="FilterType" value="all" />
+            <div class="form-row mb-3">
+                <div class="col-md-2">
+                    <label for="Keyword">@L("Keyword")</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <div class="col-md-2">
+                    <label>@L("Status")</label>
+                    <select class="select2 form-control" name="Status" style="width: 100%;">
+                        @if (Model != null && Model.Status == -1)
+                        {
+                            <option value="-1" selected>@L("All")</option>
+                        }
+                        else
+                        {
+                            <option value="-1">@L("All")</option>
+                        }
+                        @if (Model != null && Model.Status == 0)
+                        {
+                            <option value="@((int)DeliveryNoteStatus.New)" selected>@DeliveryNoteStatus.New.GetDescription()
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@((int)DeliveryNoteStatus.New)">@DeliveryNoteStatus.New.GetDescription()</option>
+                        }
+
+                        <option value="@((int)DeliveryNoteStatus.Delivered)">
+                            @DeliveryNoteStatus.Delivered.GetDescription()</option>
+                        <option value="@((int)DeliveryNoteStatus.Cancel)">
+                            @DeliveryNoteStatus.Cancel.GetDescription()
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>@L("Customer")</label>
+                    <select class="select2 form-control" id="CustomerSelect" name="CustomerId" style="width: 100%;">
+                        <option value="">@L("All")</option>
+                        @if (Model != null && Model.Customers != null && Model.Customers.Count > 0)
+                        {
+                            foreach (var customer in Model.Customers)
+                            {
+                                <option value="@customer.id">@customer.text</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>@L("ShippingPartner")</label>
+                    <select class="select2 form-control" name="ShippingPartnerId" style="width: 100%;">
+                        <option value="">@L("All")</option>
+                        @if (Model != null && Model.ShippingPartners != null && Model.ShippingPartners.Count > 0)
+                        {
+                            foreach (var item in Model.ShippingPartners)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="CreateDate">@L("CreateDate")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="CreateDate" id="CreateDate"
+                            target="create-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="CreateDate"
+                                target-date="create-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date create-date"
+                        name="CreateStartDateStr" id="start-create-date">
+                    <input type="hidden" class="form-control float-right end-date create-date" name="CreateEndDateStr"
+                        id="end-create-date">
+                </div>
+                <div class="col-md-3">
+                    <label for="ExportDate">@L("ExportDateVN")</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control date-range" name="ExportDate" id="ExportDate"
+                            target="export-date">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger btn-clear-date" target="ExportDate"
+                                target-date="export-date" style="border: none;">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control float-right start-date export-date"
+                        name="ExportStartDateVNStr" id="start-export-date">
+                    <input type="hidden" class="form-control float-right end-date export-date" name="ExportEndDateVNStr"
+                        id="end-export-date">
+                </div>
+                @*  <div class="col-md-2">
+                    <label for="FromWeight">@L("FromWeight")</label>
+                    <input type="number" class="form-control" name="FromWeight" value="0" id="FromWeight" placeholder="@L("FromWeight")">
+                </div>
+
+                <!-- Trọng lượng đến -->
+                <div class="col-md-2">
+                    <label for="ToWeight">@L("ToWeight")</label>
+                    <input type="number" class="form-control" name="ToWeight" value="0" id="ToWeight" placeholder="@L("ToWeight")">
+                </div> *@
+
+                <div class="col-md-1 text-right">
+                    <label style="display: block" for="">&nbsp;</label>
+                    <button type="button" style="width: auto" class="btn btn-primary btn-search form-control">
+                        <i class="fas fa-search"></i> @L("Search")
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿
+<div class="abp-advanced-search">
+    <!-- Nút mở rộng/thu gọn -->
+    <button class="btn btn-outline-primary mb-2" type="button" data-toggle="collapse" data-target="#TransactionFilterCollapse">
+        <i class="fas fa-filter"></i> Bộ lọc nâng cao
+    </button>
+
+    <div class="collapse" id="TransactionFilterCollapse">
+        <form id="WalletTransactionSearchForm" class="form-horizontal">
+            
+            <input type="hidden" name="StartDateStr" id="StartDateStr" />
+            <input type="hidden" name="EndDateStr" id="EndDateStr" />
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="TransactionDate">Từ khóa</label>
+                    <input type="text" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
+                </div>
+                <!-- Loại giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionType">Loại giao dịch</label>
+                    <select name="TransactionType" class="form-control">
+                        <option value="-1">-- Chọn loại giao dịch --</option>
+                        <option value="1">Nạp tiền</option>
+                        <option value="2">Thanh toán</option>
+                        <option value="3">Rút tiền</option>
+                    </select>
+                </div>
+ 
+
+                <!-- Hướng giao dịch -->
+                @* <div class="col-md-3"> *@
+                @*     <label for="TransactionDirection">Hướng giao dịch</label> *@
+                @*     <select name="TransactionDirection" class="form-control"> *@
+                @*         <option value="-1">-- Chọn hướng giao dịch --</option> *@
+                @*         <option value="1">Cộng tiền</option> *@
+                @*         <option value="2">Trừ tiền</option> *@
+                @*     </select> *@
+                @* </div> *@
+            </div>
+
+            <div class="form-row mt-3">
+                
+                <!-- Khoảng giá trị giao dịch -->
+                <div class="col-md-6">
+                    <label for="AmountRange">Khoảng giá trị</label>
+                    <div class="input-group">
+                        <input type="number" name="MinAmount" class="form-control" placeholder="Từ">
+                        <div class="input-group-append input-group-prepend">
+                            <span class="input-group-text">-</span>
+                        </div>
+                        <input type="number" name="MaxAmount" class="form-control" placeholder="Đến">
+                    </div>
+                </div>
+
+
+                <!-- Thời gian giao dịch -->
+                <div class="col-md-3">
+                    <label for="TransactionDate">Thời gian giao dịch</label>
+                    <input type="text" class="form-control" name="TransactionDate" id="input-date-range">
+                </div>
+            </div>
+
+            <!-- Căn phải nút tìm kiếm -->
+            <div class="form-row mt-3">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mr-2 btn-search">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

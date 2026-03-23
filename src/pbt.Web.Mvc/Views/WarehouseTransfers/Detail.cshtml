@@ -1,0 +1,131 @@
+@using pbt.Web.Startup
+@using pbt
+@using pbt.ApplicationUtils
+
+@model pbt.Web.Models.WarehouseTransfers.WarehouseTransferDetailViewModel
+
+@{
+    ViewBag.Title = L("WarehouseTransferDetail");
+    ViewBag.CurrentPageName = PageNames.WarehouseTransfer;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/WarehouseTransfers/Detail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/WarehouseTransfers/Detail.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-6">
+            <h1>@L("WarehouseTransferDetail")</h1>
+        </div>
+        <div class="col-6 text-right">
+            <a href="@Url.Action("Index", "WarehouseTransfers")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> @L("BackToList")
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-primary">@L("GeneralInformation")</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>@L("TransferCode")</label>
+                                    <input type="text" class="form-control" value="@Model.Dto.TransferCode" readonly />
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label>@L("FromWarehouse")</label>
+                                    <input type="text" class="form-control" value="@Model.Dto.FromWarehouseName" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label>@L("FromWarehouseAddress")</label>
+                                    <textarea class="form-control" rows="2" readonly>@Model.Dto.FromWarehouseAddress</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>@L("Customer")</label>
+                                    <input type="text" class="form-control" value="@Model.CustomerName" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label>@L("ToWarehouse")</label>
+                                    <input type="text" class="form-control" value="@Model.Dto.ToWarehouseName" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label>@L("ToWarehouseAddress")</label>
+                                    <textarea class="form-control" rows="2" readonly>@Model.Dto.ToWarehouseAddress</textarea>
+                                </div>
+                               
+                            </div>
+                             
+                        </div>
+
+                        <h5 class="text-primary mt-4">@L("TransferDetails")</h5>
+                        <div class="table-responsive">
+                            <table id="transfer-detail-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>@L("STT")</th>
+                                        <th>@L("PackageCode")</th>
+                                        <th>@L("BagCode")</th>
+                                        <th>@L("CodeType")</th>
+                                        <th>@L("Weight") (kg)</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Items != null && Model.Items.Any())
+                                    {
+                                        var i = 1;
+                                        foreach (var detail in Model.Items)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@detail.PackageCode</td>
+                                                <td>@detail.BagNumber</td>
+                                                <td>@(detail.ItemType == 1 ? L("Package") : L("Bag"))</td>
+                                                <td>@detail.Weight.ToString("N2")</td>
+
+                                            </tr>
+                                            @(i ++)
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4" class="text-center">@L("NoDataAvailable")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="text-primary mt-4">@L("AdditionalInformation")</h5>
+                        <div class="form-group">
+                            <label>@L("Note")</label>
+                            <textarea class="form-control" rows="3" readonly>@Model.Dto.Note</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>@L("ShippingFee")</label>
+                            <input type="text" class="form-control" value="@Model.Dto.ShippingFee.ToString("N2")" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

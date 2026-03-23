@@ -1,0 +1,96 @@
+@using pbt.Transactions.Dto
+@using pbt.Web.Models.Common.Modals
+
+@model TransactionDto
+@{
+    Layout = null;
+}
+<div class="modal fade" id="TransactionCreateModal" tabindex="-1" role="dialog" aria-labelledby="TransactionCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewTransaction")))
+            <form name="transactionCreateForm" role="form" class="form-horizontal">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" role="tab" href="#create-transaction-details">@L("TransactionDetails")</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active" id="create-transaction-details">
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("TransactionId")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="TransactionId" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("OrderId")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="OrderId" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("TransactionContent")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="TransactionContent" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("ExpensePurpose")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="ExpensePurpose" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Amount")</label>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" name="Amount" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Currency")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="Currency" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("Status")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="Status" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("TransactionType")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="TransactionType" required>
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("ExecutionSource")</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="ExecutionSource" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">@L("Notes")</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="Notes"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-9 offset-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="IsActive" id="IsActive">
+                                        <label class="form-check-label" for="IsActive">@L("IsActive")</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

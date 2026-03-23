@@ -1,0 +1,40 @@
+﻿
+@using Abp.Application.Services.Dto;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using pbt.Users.Dto;
+@using pbt.Web.Models.Common.Modals;
+
+@{
+    Layout = null;
+}
+
+@model pbt.Customers.Dto.CustomerListCustomerChildsDto
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("AddChild")))
+<form name="AddChildToCustomerForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id"  value="@Model.CustomerId" />
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">@L("Customer")</label>
+            <div class="col-md-9">
+                <select class="form-control select2" name="CustomerId" id="CustomerId">
+                    @if (Model != null && Model.CustomerDtos.Count > 0)
+                    {
+                        foreach (var item in Model.CustomerDtos)
+                        {
+                            <option value="@item.Id">@item.Username</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+<style>
+    .select2-container--open{
+        z-index: 1200 !important;
+    }
+</style>
+
+<script src="~/view-resources/Views/Customers/_AddChildModal.js" asp-append-version="true"></script>

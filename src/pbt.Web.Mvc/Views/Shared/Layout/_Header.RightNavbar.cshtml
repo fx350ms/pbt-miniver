@@ -1,0 +1,34 @@
+﻿@using pbt.Web.Views.Shared.Components.RightNavbarLanguageSwitch
+@using pbt.Web.Views.Shared.Components.RightNavbarUserArea
+@using pbt.Web.Startup
+@using pbt.Authorization
+@using pbt.ApplicationUtils
+
+@inject pbtAppSession AppSession
+
+<ul class="navbar-nav ml-auto">
+
+    <ul class="navbar-nav ">
+        <li class="nav-item">
+            <a class="nav-link"> @L("CurrencyRate"): <strong id="rmbExchangeRate">...</strong> VNĐ</a>
+        </li>
+       @*  @if (AppSession != null && AppSession.IsCustomer)
+        {
+            <li class="nav-item d-none d-sm-inline-block">
+                <a class="nav-link">  <strong class="text-danger">Công nợ: <label id="CurrentUser.CurrentDebt"> @AppSession.CurrentDebt.ToCurrencyFormat() </label> </strong>  </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a class="nav-link"> <strong class="text-primary">Số dư ví:<label id="CurrentUser.CurrentAmount"> @AppSession.CurrentAmount.ToCurrencyFormat()  </label>  </strong>  </a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="@Url.Action("Charge", "MyWallet")" class="btn btn-primary">  Nạp ví</a>
+            </li>
+        } *@
+    </ul>
+
+</ul>
+
+<ul class="navbar-nav ">
+    @await Component.InvokeAsync(typeof(RightNavbarLanguageSwitchViewComponent))
+    @await Component.InvokeAsync(typeof(RightNavbarUserAreaViewComponent))
+</ul>

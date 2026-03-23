@@ -1,0 +1,64 @@
+﻿@using pbt.Web.Models.Orders
+
+@model OrderDetailModel
+<!-- Bootstrap 4 Modal -->
+<div class="modal fade" id="changeFeeModal" tabindex="-1" role="dialog" aria-labelledby="changeFeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeFeeModalLabel">THAY ĐỔI</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="editDeliveryFeeForm">
+      <input type="hidden" name="id" id="id" value="@Model.PackageDto.Id"/>
+      <div class="modal-body">
+        <!-- Miễn phí -->
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="freeCheckbox">
+          <label class="form-check-label" for="freeCheckbox">Miễn phí</label>
+        </div>
+
+        <!-- Đơn giá, Cân nặng, Tổng phí -->
+        <div class="form-row align-items-center mb-3">
+          <div class="col">
+            <label><span class="text-danger">*</span> Đơn giá</label>
+            <input type="text" class="form-control" name="unitPrice" placeholder="Nhập đơn giá">
+          </div>
+          <div class="col">
+            <label>Cân nặng</label>
+            <input type="text" class="form-control" name="weight" value="@Model.PackageDto.Weight.ToString().Replace(",",".")">
+          </div>
+          <div class="col">
+            <label>Tổng phí</label>
+            <input type="text" class="form-control" name="totalFee" value="@Model.PackageDto.TotalFee.ToString().Replace(",",".")" id="totalFeeInput">
+          </div>
+        </div>
+        <!-- Scope và Mô tả -->
+        <div class="form-row mb-3">
+          <div class="col">
+            <label>Scope</label>
+            <div>Tính theo đơn</div>
+          </div>
+          <div class="col">
+            <label>Mô tả</label>
+            <div>--</div>
+          </div>
+        </div>
+
+        <!-- Lý do thay đổi phí -->
+        <div class="form-group">
+          <label><span class="text-danger">*</span> Lý do thay đổi phí</label>
+          <textarea class="form-control" name="WeightUpdateReason" rows="3"></textarea>
+        </div>
+      </div>
+      </form>
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary save-button">Đồng ý</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Bỏ qua</button>
+      </div>
+    </div>
+  </div>
+</div>

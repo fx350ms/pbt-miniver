@@ -1,0 +1,520 @@
+﻿@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Startup
+@using pbt.Customers.Dto
+@using pbt.ApplicationUtils
+@using pbt.Orders.Dto
+@using pbt.Web.Models.Orders
+@using pbt
+@using pbt.Authorization
+@model OrderDetailModel
+
+@{
+    ViewBag.Title = L("OrderDetail");
+    ViewBag.CurrentPageName = PageNames.Orders;
+    int orderStatus = (int)Model.Dto.OrderStatus;
+
+}
+
+@section styles {
+    <link href="~/libs/bootstrap-steps/bootstrap-steps.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-8/assets/css/timeline-8.css">
+    <style>
+        .bsb-timeline-8 {
+            --bsb-tl-circle-border-color: #28a745;
+            --bsb-tl-circle-color: #28a745;
+        }
+
+        tr.active td {
+            background-color: #4ee0ff;
+        }
+
+        .dropdown-menu.show {
+            left: -100px !important;
+        }
+    </style>
+}
+@{
+
+    var packageStatus = new Dictionary<int, (string text, string color)>
+        {
+            { 0, ("Thiếu thông tin", "danger") },
+            { 1, ("Khởi tạo", "secondary") },
+            { 2, ("Đang vận chuyển", "info") },
+            { 3, ("Chờ vận chuyển", "warning") },
+            { 4, ("Đang VCQT", "primary") },
+            { 5, ("Đã về kho VN", "info") },
+            { 6, ("Chờ giao hàng", "warning") },
+            { 7, ("Yêu cầu giao hàng", "info") },
+            { 8, ("Đang giao hàng", "info") },
+            { 9, ("Đã giao", "success") },
+            { 10, ("Hoàn thành", "success") },
+            { 11, ("Chờ trả hàng", "warning") },
+            { 12, ("Đang trả hàng", "primary") },
+            { 13, ("Đã trả hàng", "success") },
+            { 14, ("Khách không nhận", "danger") },
+            { 15, ("Chờ thông quan", "warning") },
+            { 16, ("Đã thông quan", "success") }
+        };
+
+}
+
+@if (Model != null && Model.Dto != null)
+{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Tiêu đề đơn hàng -->
+                    <h1 class="text-center">Chi tiết vận đơn: <strong class="text-danger"> #@Model.Dto.WaybillNumber </strong></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <!-- Timeline đơn hàng -->
+
+                            <div class="row">
+                                <!-- Timeline theo chiều ngang -->
+                                <div class="col-8 offset-1">
+
+                                    <div class="steps">
+                                        <progress id="progress" value="0" max="100"></progress>
+                                        <div class="step-item">
+                                            <div class="step-title">
+                                                @* Đã kí gửi *@
+                                                @L("Entrusted")
+                                            </div>
+                                            <button class="step-button text-center done" type="button">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                        <div class="step-item">
+                                            <div class="step-title">
+                                                @* Đã về kho TQ *@
+                                                @L("InTransitToChinaWarehouse")
+                                            </div>
+                                            <button class="step-button text-center collapsed" type="button">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                        @if ((OrderStatus)orderStatus == OrderStatus.Cancelled)
+                                        {
+                                            <div class="step-item">
+                                                <div class="step-title">
+                                                    @L("Cancel")
+                                                </div>
+                                                <button class="step-button text-center done" type="button">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="step-item">
+                                                <div class="step-title">
+                                                    @* Đang vận chuyển quốc tế *@
+                                                    @L("InInternationTransit")
+                                                </div>
+                                                <button class="step-button text-center done" type="button">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="step-item">
+                                                <div class="step-title">
+                                                    @* Đã về kho VN *@
+                                                    @L("DeliveringToVietnam")
+                                                </div>
+                                                <button class="step-button text-center collapsed" type="button">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                            <div class="step-item">
+                                                <div class="step-title">
+                                                    @* Đang giao hàng *@
+                                                    @L("OutForDelivery")
+                                                </div>
+                                                <button class="step-button text-center collapsed" type="button">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="step-item">
+                                                <div class="step-title">
+                                                    @* Đã giao hàng *@
+                                                    @L("Delivered")
+                                                </div>
+                                                <button class="step-button text-center collapsed" type="button">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                            @if ((OrderStatus)orderStatus == OrderStatus.Complaint || (OrderStatus)orderStatus == OrderStatus.Refund)
+                                            {
+                                                <div class="step-item">
+                                                    <div class="step-title">
+                                                        @L("Complaint")
+                                                    </div>
+                                                    <button class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="step-item">
+                                                    <div class="step-title">
+                                                        @L("Refund")
+                                                    </div>
+                                                    <button class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="step-item">
+                                                    <div class="step-title">
+                                                        @L("OrderCompleted")
+                                                    </div>
+                                                    <button class="step-button text-center collapsed" type="button">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </div>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="padding-bottom: 0px;">
+                            <div class="row">
+                                <table class="table table-striped table-bordered ">
+                                    <thead>
+                                        <tr class="info">
+                                            <th>STT</th>
+                                            <th>@L("PackageCode")</th>
+                                            <th>@L("WaybillCode")</th>
+                                            <th>@L("BagCode")</th>
+                                            <th>@L("Status")</th>
+                                            <th>Cân nặng</th>
+                                            <th>Thể tích</th>
+                                            <th>Giá cước</th>
+                                            <th>Phí đóng gỗ</th>
+                                            <th>Phí chống sốc</th>
+                                            <th>Phí ship nội địa</th>
+                                            <th>Bảo hiểm</th>
+                                            <th>Tổng chi phí</th>
+                                            <th>@L("TimeLine")</th>
+                                            <th width="20"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Packages != null && Model.Packages.Count > 0)
+                                        {
+                                            var _index = 0;
+                                            foreach (var item in Model.Packages)
+                                            {
+                                                _index++;
+                                                <tr>
+                                                    <td class="text-center">
+                                                        @_index 
+                                                    </td>
+                                                    <td>
+                                                        @item.PackageNumber
+                                                    </td>
+                                                    <td>
+                                                        @item.TrackingNumber
+                                                    </td>
+                                                    <td>
+                                                        @item.BagNumber
+                                                    </td>
+
+                                                    <td>
+                                                        @if (packageStatus.ContainsKey(item.ShippingStatus))
+                                                        {
+                                                            <span class="badge badge-@packageStatus[item.ShippingStatus].color">@packageStatus[item.ShippingStatus].text</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @item.Weight
+                                                    </td>
+                                                    <td align="right">
+                                                        @((item.Width ?? 0) * (item.Height ?? 0) * (item.Length ?? 0) / 1000000)
+                                                    </td>
+                                                    <td align="right">
+                                                        @item.TotalFee.ToCustomNumberFormat()
+                                                    </td>
+                                                    <td align="right">
+                                                        @item.WoodenPackagingFee.ToCustomNumberFormat()
+                                                    </td>
+
+                                                    <td align="right">
+                                                        @item.ShockproofFee.ToCustomNumberFormat()
+                                                    </td>
+                                                    <td align="right">
+                                                        @item.DomesticShippingFee.ToCustomNumberFormat()
+                                                    </td>
+                                                    <td align="right">
+                                                        @item.InsuranceFee.ToCustomNumberFormat()
+                                                    </td>
+                                                    <td align="right">
+                                                        @item.TotalPrice.ToCustomNumberFormat()
+                                                    </td>
+
+                                                    <td align="left">
+                                                        @{
+                                                            // Ngày tạo
+                                                            var creationTime = item.CreationTime != null ? item.CreationTime.ToString("dd/MM/yyyy HH:mm") : "-";
+                                                            // Ngày xuất kho TQ
+                                                            var exportDate = item.ExportDate != null ? item.ExportDate?.ToString("dd/MM/yyyy HH:mm") : "-";
+                                                            // Ngày nhập kho VN
+                                                            var importDate = item.ImportDate != null ? item.ImportDate?.ToString("dd/MM/yyyy HH:mm") : "-";
+                                                        }
+
+                                                        <div>
+                                                            <strong>@L("CreationTime"):</strong> @creationTime
+                                                        </div>
+                                                        <div>
+                                                            <strong>@L("ExportDateCN"):</strong> @exportDate
+                                                        </div>
+                                                        <div>
+                                                            <strong>@L("ImportDateVN"):</strong> @importDate
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a href="@Url.Action("Finance", "Packages", new { id = item.Id })" type="button" class="dropdown-item  bg-primary">  <i class="fas fa-pencil-alt"></i> Tài chính kiện </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="card-body" style="padding-top: 0px;">
+                            <h4><strong> THÔNG TIN ĐƠN HÀNG</strong></h4>
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Người nhận</span>
+                                    <span class="d-block"><strong>@Model.Dto.CustomerName</strong></span>
+                                </div>
+                                <div class="col-4">
+                                    <span>Kho gửi</span>
+                                    <span class="d-block"><strong>Bằng Tường</strong></span>
+                                </div>
+                                <div class="col-4">
+                                    <span>Kho nhận</span>
+                                    <span class="d-block"><strong>Hà Nội</strong></span>
+                                </div>
+                                <div class="col-4">
+                                    <span>Địa chỉ nhận</span>
+                                    <span class="d-block"><strong>@Model.CustomerAddress?.FullAddress</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" role="tab" href="#order-finance">Tài chính đơn</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" role="tab" href="#order-complaint">Khiếu nại</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " data-toggle="tab" role="tab" href="#order-history">@L("History")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " data-toggle="tab" role="tab" href="#order-logs">@L("Logs")</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane  active" id="order-finance">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="card-body">
+                                                    <h5>PHÍ DỊCH VỤ</h5>
+                                                    <table style="width:100%;" class="">
+                                                       
+                                                        <tr>
+                                                            <td>Phí bảo hiểm</td>
+                                                            <td class="text-right">(@(Model.Dto.InsuranceValue.HasValue ? Model.Dto.InsuranceValue : 0)%) - @Model.Dto.Insurance.ToCurrencyFormat()</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phí đóng gỗ</td>
+                                                            <td class="text-right">@Model.Dto.WoodenPackagingFee.ToCurrencyFormat()</td>
+                                                            <td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phí quấn bọt khí</td>
+                                                            <td class="text-right">@Model.Dto.ShockproofFee.ToCurrencyFormat() </td>
+                                                            <td>
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ship nội địa</td>
+                                                            <td class="text-right">@Model.Dto.DomesticShippingFeeRMB (RMB) @Model.Dto.DomesticShippingFee.ToCurrencyFormat() </td>
+                                                            <td>
+                                                               
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phí bao bì</td>
+                                                            <td class="text-right">(@Model.Dto.WeightCover kg) @Model.Dto.WeightCoverFee.ToCurrencyFormat() </td>
+                                                            <td>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5>PHÍ VẬN CHUYỂN</h5>
+                                                    <table style="width:100%; ">
+                                                        <tr>
+                                                            <td>Vận chuyển TMDT</td>
+                                                            <td class="text-right">@Model.Dto.TotalFee.ToCurrencyFormat() </td>
+                                                            <td>
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card-body">
+                                                    <h5>Tài chính đơn</h5>
+                                                    <table style="width:100%; ">
+                                                        <tr>
+                                                            <td>Tổng chi phí</td>
+                                                            <td class="text-right"><strong> @Model.Dto.TotalPrice.ToCurrencyFormat() </strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Đã thanh toán</td>
+                                                            <td class="text-right">@Model.Dto.Paid.ToCurrencyFormat() </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cần thanh toán</td>
+                                                            <td class="text-right">@Model.Dto.AmountDue.ToCurrencyFormat() </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane  " id="order-complaint">
+                                        <div class="table-responsive">
+                                            @await Html.PartialAsync("~/Views/Orders/_ComplaintsTable.cshtml", Model.Complaints)
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane  " id="order-history">
+                                        <!-- Timeline 8 - Bootstrap Brain Component -->
+                                        <section class="py-3 py-md-5">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-12 col-md-9 ">
+                                                        <div class="card widget-card bsb-timeline-8 border-light shadow-sm">
+                                                            <div class="card-body p-4">
+                                                                <ul class="timeline">
+                                                                    @if (Model.Histories != null && Model.Histories.Count > 0)
+                                                                    {
+                                                                        foreach (var item in Model.Histories)
+                                                                        {
+                                                                            <li class="timeline-item">
+                                                                                <div class="timeline-body">
+                                                                                    <div class="timeline-meta">
+                                                                                        <span>@item.CreationTime.ToString("dd/MM/yyyy HH:mm")</span>
+                                                                                    </div>
+                                                                                    <div class="timeline-content timeline-indicator">
+                                                                                        <h6 class="mb-1">@(((OrderStatus)item.Status).GetDescription())</h6>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="order-logs">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <label>Log hành động</label>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="orders-logs" class="list-group overflow-auto" style="max-height: 100vh;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*   @if (@Model.PackageDto != null)
+    {
+        @await Html.PartialAsync("_EditDeliveryFee.cshtml", @Model)
+        @await Html.PartialAsync("_EditWoodenPackagingFee.cshtml", @Model)
+        @await Html.PartialAsync("_EditInsurance.cshtml", @Model)
+        @await Html.PartialAsync("_EditFee.cshtml", @Model)
+        @await Html.PartialAsync("_EditGoodsValue.cshtml", @Model)
+    } *@
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Orders/Detail.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Orders/Detail.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script>
+        (function ($) {
+            function setStep(index) {
+                const $stepButtons = $('.step-button');
+                const $progress = $('#progress');
+
+                // Cập nhật giá trị của progress
+                $progress.attr('value', index * 100 / ($stepButtons.length - 1));
+
+                // Cập nhật trạng thái class 'done' cho các nút
+                $stepButtons.each(function (secIndex) {
+                    if (index >= secIndex) {
+                        $(this).addClass('done');
+                    } else if (index < secIndex) {
+                        $(this).removeClass('done');
+                    }
+                });
+            }
+
+            setStep(@(orderStatus - 1));
+        })(jQuery);
+
+    </script>
+}

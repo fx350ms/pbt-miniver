@@ -1,0 +1,239 @@
+﻿@using pbt.Web.Startup
+@using pbt.Customers.Dto;
+@using pbt.Web.Models.Common.Modals
+@using pbt.Web.Models.Customers;
+
+@model CustomerIndexViewModel
+
+@{
+    ViewBag.Title = L("Customers");
+    ViewBag.CurrentPageName = PageNames.Customer;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Customers/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Customers/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+@section styles {
+    <style>
+        .select2-selection--single {
+            height: 38px !important;
+        }
+
+        .select2-selection__arrow {
+            top: 5px !important;
+        }
+
+        .select2-container {
+            z-index: 99999;
+            min-width: 350px;
+        }
+
+        #CustomersTable_wrapper {
+            min-height: 400px;
+        }
+
+        .table-responsive {
+            min-height: 500px !important;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Customer")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="javascript:;" data-toggle="modal" data-target="#CustomerCreateModal" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("CreateNew")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="d-flex">
+                                <button class="btn btn-outline-primary mb-2 mr-2" type="button" data-toggle="collapse" data-target="#CustomerFilterCollapse">
+                                    <i class="fas fa-filter"></i> Bộ lọc nâng cao
+                                </button>
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#CustomerAssignToSaleModal" class="btn bg-blue float-sm-right assign-to-sale mb-2">
+                                    <i class="fa fa-user"></i>
+                                    @L("AssignToSale")
+                                </a>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+
+                            </div>
+                            @* <div class="col-md-6"> *@
+                            @*     @await Html.PartialAsync("~/Views/Customers/Index.AdvancedSearch.cshtml") *@
+                            @* </div> *@
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @await Html.PartialAsync("~/Views/Customers/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="CustomersTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" data-check="all" /></th>
+                                        <th></th>
+                                        <th>@L("STT")</th>
+                                        <th>@L("Account")</th>
+
+                                        <th>@L("PhoneNumber")</th>
+                                        <th>@L("Email")</th>
+                                        <th>@L("CurrentAmount")</th>
+                                        <th>@L("CurrentDebt")</th>
+                                        <th>@L("MaxDebt")</th>
+                                        <th>@L("SaleUser")</th>
+                                        <th>Đại lý</th>
+                                        <th>@L("Warehouse")</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Customers/_CreateModal.cshtml", new CreateUpdateCustomerDto() { }) ;
+<script src="~/view-resources/Views/Customers/_CreateModal.js" asp-append-version="true"></script>
+
+<div class="modal fade" id="CustomerEditModal" tabindex="-1" role="dialog" aria-labelledby="CustomerEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+ 
+
+<div class="modal fade" id="CustomerAssignToSaleModal" tabindex="-1" role="dialog" aria-labelledby="CustomerAssignToSaleModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerLinkToUserModal" tabindex="-1" role="dialog" aria-labelledby="CustomerLinkToUserModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerResetPassword" tabindex="-1" role="dialog" aria-labelledby="CustomerResetPassword" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerUpdateMaxDebt" tabindex="-1" role="dialog" aria-labelledby="CustomerUpdateMaxDebt" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerSelectShippingRateGroup" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="select-shipping-rate-group-form" name="select-shipping-rate-group-from" role="form" class="form-horizontal">
+
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("SelectShippingRateGroupFor"): <span class="customer-name"></span></a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active">
+                            <div class="form-group row required">
+                                <input type="hidden" name="CustomerId" class="customerId" />
+                                <label class="col-md-3 col-form-label">@L("SelectShippingRateGroup") </label>
+                                <div class="col-md-6">
+                                    <select name="ShippingGroupId" class="form-control select2 select-shipping-rate-group-id">
+                                        @if (Model != null && Model.ShippingRateGroups != null && Model.ShippingRateGroups.Count > 0)
+                                        {
+                                            foreach (var item in Model.ShippingRateGroups)
+                                            {
+                                                if (item.IsDefaultForCustomer)
+                                                {
+                                                    <option value="@item.Id" selected> (@L("Default")) @item.Name </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id"> @item.Name </option>
+                                                }
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="CustomerUpdateAmountModal" tabindex="-1" role="dialog" aria-labelledby="UpdateAmount" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("UpdateAmount")))
+            <form name="CustomerUpdateAmountModalForm" role="form" class="form-horizontal">
+                <input type="hidden" name="CustomerId" value="" />
+                <div class="modal-body">
+
+                    <div class="tab-content mt-4">
+                        <div role="tabpanel" class="tab-pane container active">
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("SpecialPassword")</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="password" name="SpecialPIN" placeholder="@L("SpecialPassword")" />
+                                </div>
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label">@L("NewAmount")</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="number" id="txt-customer-new-amount" name="NewAmount" placeholder="@L("NewAmount")" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

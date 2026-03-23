@@ -1,0 +1,48 @@
+﻿@using pbt.Web.Models.Dicsionarys
+@using pbt.Web.Models.Common.Modals
+@using pbt.Dictionary.Dto
+
+@model  DictionaryDto
+
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditDictionary")))
+<form name="CategoryEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#create-user-details">@L("GeneralInfomation")</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div role="tabpanel" class="tab-pane container active">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("NameVi")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="NameVi" minlength="1" value="@Model.NameVi">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("NameCn")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="NameCn" minlength="1" value="@Model.NameCn">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label">@L("Description")</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="Description" value="@Model.Description">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Dictionary/_EditModal.js" asp-append-version="true"></script>
