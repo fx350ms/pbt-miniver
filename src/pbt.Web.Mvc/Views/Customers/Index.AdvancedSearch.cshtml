@@ -11,46 +11,8 @@
                     <input type="text" id="Keyword" name="Keyword" class="form-control txt-search" placeholder="@L("Search")" />
                 </div>
 
-                <div class="col-md-3">
-                    <label for="SaleId">@L("SaleUser")</label>
-                    <select class="form-control" id="SaleId" name="SaleId">
-                        <option value="">-- Chọn nhân viên kinh doanh --</option>
-                        @foreach (var user in Model.UserSales)
-                        {
-                            <option value="@user.Id">@user.UserName</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    @* <label for="cbOnlyNoSale"> 
-                        <input type="checkbox" id="cbOnlyNoSale"  />  Chưa được gán cho Sale
-                    </label> *@
-                    <label for="SaleId">Phân loại Sale</label>
-                    <select class="form-control" name="SaleType">
-                        <option value="-1">-- Tất cả --</option>
-                        <option value="1">Chưa được gán cho Sale</option>
-
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="WarehouseId">Kho nhận</label>
-                    <select class="form-control" id="WarehouseId" name="WarehouseId">
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    @*  <div class="d-flex align-items-center">
-                        <label class="mb-0">
-                            <input type="checkbox" value="true" id="showParentCustomer" name="parentCustomer"/> Khách hàng cha
-                        </label>
-                    </div> *@
-
-                    <label for="SaleId">Phân loại khách</label>
-                    <select class="form-control" name="CustomerType">
-                        <option value="-1">-- Tất cả --</option>
-                        <option value="@((int) CustomerType.Agent)">Đại lý</option>
-                        <option value="@((int)CustomerType.Individual)">Lẻ </option>
-                    </select>
-                </div>
+           
+                
                 <div class="col-md-12 text-right">
                     <button type="button" class="btn bg-blue btn-search">
                         <span class="fas fa-search" aria-hidden="true">Tìm kiếm</span>

@@ -436,23 +436,7 @@
             }
         );
     }
-
-    function loadWarehouse() {
-        return abp.services.app.warehouse.getFull().done(function (data) {
-            var warehouseDestination = $("#warehouseDestinationId");
-            warehouseDestination.empty();
-            warehouseDestination.append('<option value="">' + l('SelectWarehouse') + '</option>');
-            for (var i = 0; i < data.length; i++) {
-                var warehouse = data[i];
-                if (warehouse.countryId === 1)
-                    warehouseDestination.append('<option value="' + warehouse.id + '">' + warehouse.name + '</option>');
-            }
-        }).fail(function (error) {
-            PlaySound('warning');
-            abp.notify.error("Failed to load Tracking numer: " + error.message);
-        });
-    }
-
+ 
     function submitEditBagForm() {
 
         const form = document.getElementById('fmEditBag');

@@ -28,13 +28,50 @@ namespace pbt.OrderNumbers
         public async Task<IdentityCodeDto> GenerateNewSequentialNumberAsync(string prefix)
         {
 
-            long currentDate = Convert.ToInt64(DateTime.Now.ToString("yMMdd"));
+            //long currentDate = Convert.ToInt64(DateTime.Now.ToString("yyMMdd"));
+            //using (var connection = new SqlConnection(_connectionString))
+            //using (var command = new SqlCommand("SP_GenerateNewSequentialNumber", connection))
+            //{
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.AddWithValue("@Prefix", prefix);
+            //    command.Parameters.AddWithValue("@Date", currentDate);
+            //    connection.Open();
+            //    var dataReader = await command.ExecuteReaderAsync();
+            //    if (dataReader.Read())
+            //    {
+            //        var newSequentialNumber = Convert.ToInt64(dataReader["SequentialNumber"]);
+            //        var newRecord = new IdentityCodeDto
+            //        {
+            //            Date = currentDate,
+            //            Prefix = prefix,
+            //            SequentialNumber = newSequentialNumber
+            //        };
+
+            //        return newRecord;
+            //    }
+
+            //}
+            //return new IdentityCodeDto()
+            //{
+            //    Date = currentDate,
+            //    Prefix = prefix,
+            //    SequentialNumber = 1
+            //};
+
+            return await GenerateNewSequentialNumberAsync(prefix, DateTime.Now);
+        }
+
+
+        public async Task<IdentityCodeDto> GenerateNewSequentialNumberAsync(string prefix, DateTime date)
+        {
+
+            long dateInt = Convert.ToInt64(date.ToString("yyMMdd"));
             using (var connection = new SqlConnection(_connectionString))
             using (var command = new SqlCommand("SP_GenerateNewSequentialNumber", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Prefix", prefix);
-                command.Parameters.AddWithValue("@Date", currentDate);
+                command.Parameters.AddWithValue("@Date", dateInt);
                 connection.Open();
                 var dataReader = await command.ExecuteReaderAsync();
                 if (dataReader.Read())
@@ -42,7 +79,7 @@ namespace pbt.OrderNumbers
                     var newSequentialNumber = Convert.ToInt64(dataReader["SequentialNumber"]);
                     var newRecord = new IdentityCodeDto
                     {
-                        Date = currentDate,
+                        Date = dateInt,
                         Prefix = prefix,
                         SequentialNumber = newSequentialNumber
                     };
@@ -53,14 +90,13 @@ namespace pbt.OrderNumbers
             }
             return new IdentityCodeDto()
             {
-                Date = currentDate,
+                Date = dateInt,
                 Prefix = prefix,
                 SequentialNumber = 1
             };
         }
 
 
-       
 
     }
 }

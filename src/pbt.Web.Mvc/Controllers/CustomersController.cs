@@ -22,9 +22,7 @@ using pbt.ShippingRates;
 namespace pbt.Web.Controllers
 {
     //  [AbpMvcAuthorize]
-
-    //  [permi] 
-
+    [Authorize]
     public class CustomersController : pbtControllerBase
     {
         private readonly ICustomerAppService _customerService;
@@ -51,41 +49,14 @@ namespace pbt.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var shippingGroups = await _shippingRateGroupService.GetAllListAsync();
-            var userSales = await _customerService.GetUserSale();
+          
             var model = new CustomerIndexViewModel()
             {
-                ShippingRateGroups = shippingGroups,
-                UserSales = userSales
+               
             };
             return View(model);
         }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> IndexChild(long? id)
-        {
-            var customerId = id ?? _pbtAppSession.CustomerId;
-            if (customerId == null)
-            {
-                return Redirect("/Customers");
-            }
-            var customer = await _customerService.GetAsync(new EntityDto<long>(customerId.Value));
-            if (customer == null )
-            {
-                return NotFound();
-            }
-
-            ViewBag.customerId = customerId;
-            ViewBag.customerName = customer.Username;
-
-            var userSales = await _customerService.GetUserSale();
-            var model = new CustomerIndexViewModel()
-            {
-                UserSales = userSales
-            };
-            return View("IndexChilds", model);
-
-        }
+ 
 
         public async Task<ActionResult> EditModal(long id)
         {
@@ -95,72 +66,7 @@ namespace pbt.Web.Controllers
             return PartialView("_EditModal", customer);
         }
 
-        public async Task<ActionResult> Finance(long id)
-        {
-            var customer = await _customerService.GetAsync(new EntityDto<long>(id));
-            var customers = await _customerService.GetAllForSelectBySaleAsync("");
-            var model = new CustomerFinanceIndexModel()
-            {
-                CurrentCustomer = customer,
-                Customers = customers
-            };
-            return View("Finance", model);
-        }
-
-        public async Task<ActionResult> CreateTransaction(long customerId)
-        {
-            var customer = await _customerService.GetAsync(new EntityDto<long>(customerId));
-
-            var model = new CreateCustomerTransactionModel()
-            {
-                CustomerId = customerId,
-                Dto = customer,
-
-            };
-            return View("CreateTransaction", model);
-        }
-
-
-        public async Task<ActionResult> SelectShippingRate(long id)
-        {
-            var customer = await _customerService.GetAsync(new EntityDto<long>(id));
-            var model = new SelectShippingRateModel()
-            {
-
-                CustomerId = id,
-                ShippingGroups = await _shippingRateGroupService.GetAllListAsync()
-            };
-            return PartialView("_SelectShippingRate", customer);
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> Import()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Import(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                return RedirectToAction("Index");
-            }
-
-            try
-            {
-                await _customerService.ImportCustomersAsync(file);
-            }
-            catch (Exception ex)
-            {
-            }
-
-            return RedirectToAction("Index");
-        }
-
-
+        
         [HttpGet]
         public async Task<IActionResult> Export()
         {
@@ -169,45 +75,8 @@ namespace pbt.Web.Controllers
             return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> UserSales()
-        {
-            var list = await _userService.GetUserSales();
-            return PartialView("UserSales", list);
-
-        }
-
-        [HttpGet("Customers/AddChildCustomer/{parentId}")]
-        public async Task<IActionResult> AddChildCustomer(long parentId)
-        {
-
-            // get list customer where parent id not null
-            var list = await _customerService.GetAllChildren();
-            var model = new CustomerListCustomerChildsDto()
-            {
-                CustomerId = parentId,
-                CustomerDtos = list
-            };
-
-            return PartialView("ChildCustomer", model);
-
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> LinkToUser(long id)
-        {
-
-            var data = await _userService.GetUserSales();
-            var model = new LinkToUserModel()
-            {
-                Id = id,
-                Users = data
-            };
-
-            return PartialView("_LinkUserModal", model);
-        }
-
+  
+ 
 
         [HttpGet]
         public async Task<IActionResult> ResetPassword(long id)

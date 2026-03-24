@@ -223,7 +223,7 @@ namespace pbt.Packages
                 }
                 Logger.Info($"[CreatePackages] Input: {JsonConvert.SerializeObject(input)}");
                 string[] packagePrefix = packagePrefixList.Split(",");
-
+                var date = DateTime.Now;
                 var currentUser = _pbtAppSession.UserId;
                 var currentUserWarehouseId = _pbtAppSession.WarehouseId;
                 var waybillNumber = input.Packages[0].TrackingNumber;
@@ -268,7 +268,7 @@ namespace pbt.Packages
                         new SqlParameter("@CNWarehouseId", currentUserWarehouseId ?? 0),
                         new SqlParameter("@VNWarehouseId", (int)currentCustomer.WarehouseId),
                         new SqlParameter("@ShippingLine", (int)input.ShippingLineId),
-                        new SqlParameter("@AddressId", (int)currentCustomer.AddressId),
+                        new SqlParameter("@AddressId",  currentCustomer.AddressId ??0),
                         new SqlParameter("@CreatorUserId", currentUser.Value),
                         rootOrderIdSqlParam
                         }
@@ -284,7 +284,7 @@ namespace pbt.Packages
                         CNWarehouseId = currentUserWarehouseId ?? 0,
                         VNWarehouseId = (int)currentCustomer.WarehouseId,
                         ShippingLine = input.ShippingLineId,
-                        AddressId = (int)currentCustomer.AddressId,
+                        AddressId = currentCustomer.AddressId ?? 0,
                         CreationTime = DateTime.Now,
                         CreatorUserId = currentUser.Value
                     };
@@ -327,13 +327,15 @@ namespace pbt.Packages
                 var newPackageLst = new List<int>();
                 var numberOfPackage = input.NumberPackage != null ? (input.NumberPackage + 1) : 1;
                 var warehouse = await GetWarehouseByCustomerId(input.CustomerId.Value);
-
+                var rmbRateStr = await _configurationSettingAppService.GetValueAsync("ExchangeRateRMB");
+                decimal.TryParse(rmbRateStr, out var rmbRate);
                 for (int i = 1; i <= numberOfPackage; i++)
                 {
                     var package = input.Packages[0];
-                    var identityCode = await _identityCodeAppService.GenerateNewSequentialNumberAsync(packagePrefix[0]);
+                    
+                    var identityCode = await _identityCodeAppService.GenerateNewSequentialNumberAsync(packagePrefix[0], date);
                     var fakeCustomer = await GetRandomCustomerFake();
-
+                    var domesticShippingFeeVND = package.DomesticShippingFee * rmbRate;
                     var newPackage = new Package
                     {
                         WaybillNumber = waybillNumber,
@@ -345,7 +347,7 @@ namespace pbt.Packages
                         IsShockproof = package.IsShockproof,
                         IsWoodenCrate = package.IsWoodenCrate,
                         Length = package.Length,
-                        PackageNumber = identityCode.Code,
+                        PackageNumber = $"{identityCode.Prefix}{DateTime.Now.ToString("ddMMyy")}{identityCode.SequentialNumber.ToString("D5")}",
                         PriceCN = package.Price,
 
                         ProductLink = package.ProductLink,
@@ -362,7 +364,7 @@ namespace pbt.Packages
                         WarehouseStatus = (int)WarehouseStatus.InStock,
                         ShippingStatus = (int)PackageDeliveryStatusEnum.Initiate, // Khởi tạo
                         DomesticShippingFeeRMB = package.DomesticShippingFee, // phí vận chuyển nội địa  RMB
-
+                        DomesticShippingFee = domesticShippingFeeVND, // phí vận chuyển nội địa VND
                         CustomerId = package.CustomerId,
                         CustomerFakeId = fakeCustomer?.Id,
                         MatchTime = DateTime.Now,
@@ -374,32 +376,6 @@ namespace pbt.Packages
                     if (rootPackage != null && rootPackage.ShippingStatus < (int)PackageDeliveryStatusEnum.Delivered)
                         newPackage.ParentId = rootPackage.Id;
 
-                    ShippingCostResult shippingCost = await _shippingCostService.CalculateShippingCostAsync(newPackage);
-                    Logger.Info($"[CreatePackagesAsync] PackageCode: {identityCode.Code}, CustomerId: {currentCustomer.Id}, ShippingLineId: {package.ShippingLineId}, ProductGroupTypeId: {package.ProductGroupTypeId}, [shippingCost]: {JsonConvert.SerializeObject(shippingCost)}");
-                    newPackage.Price = (package.Price ?? 0) * shippingCost.Rs;
-                    newPackage.InsuranceFee = shippingCost.InsuranceValue;
-                    newPackage.TotalPrice = shippingCost.PackagePrice;
-                    newPackage.DomesticShippingFee = shippingCost.DomesticShippingFee; // phí vận chuyển nội địa được tính
-                    newPackage.ShockproofFee = shippingCost.ShockproofFee;
-                    newPackage.TotalFee = shippingCost.ShippingFee;
-                    newPackage.UnitPrice = shippingCost.PricePerUnit;
-                    newPackage.UnitType = shippingCost.UnitType;
-
-                    // Tính phí đóng gỗ
-
-                    if (package.IsWoodenCrate && package.WoodenCrateType == 2)
-                    {
-                        var createWoodenPacking = new CreateWoodenPackingDto()
-                        {
-                            Package = newPackage,
-                            packageNumber = package.WoodenPacking
-                        };
-                        newPackage = await _woodenPackingService.CreateWoodenPacking(createWoodenPacking, currentCustomer.Username, newPackage.TrackingNumber);
-                    }
-                    else
-                    {
-                        newPackage.WoodenPackagingFee = shippingCost.WoodenFee;
-                    }
 
                     // var newPackageId = Repository.InsertAndGetId(newPackage);
 
@@ -426,50 +402,7 @@ namespace pbt.Packages
                     AddPackageToCache(newPackageByCreator);
                     // Thêm vào cache
                     //
-                    if (newPackage.DomesticShippingFee > 0)
-                    {
-                        // Lấy ra tài khoản fundAccount
-                        var currentFund = (await _fundAccountAppService.GetFundAccountsByCurrentUserAsync()).FirstOrDefault();
-                        if (currentFund == null)
-                        {
-                            Logger.Error("[CreatePackagesAsync] Không tìm thấy tài khoản quỹ để ghi nhận phí vận chuyển nội địa.");
-                            throw new UserFriendlyException("Không tìm thấy tài khoản quỹ để ghi nhận phí vận chuyển nội địa.");
-                        }
-                        //var gd = await _identityCodeAppService.GenerateNewSequentialNumberAsync("GD");
-
-                        //var transaction = new Transaction
-                        //{
-                        //    TransactionId = gd.Code,
-                        //    OrderId = newPackage.TrackingNumber,
-                        //    Amount = shippingCost.DomesticShippingFeeCN,
-                        //    TransactionContent = $"Phí vận chuyển nội địa cho kiện hàng {waybillNumber}",
-                        //    TransactionDirection = (int)TransactionDirectionEnum.Expense,
-                        //    TransactionType = (int)TransactionTypeEnum.Payment,
-                        //    FundAccountId = currentFund.Id,
-                        //    TotalAmount = currentFund.TotalAmount - shippingCost.DomesticShippingFeeCN,
-                        //    Currency = currentFund.Currency,
-                        //    ExecutionSource = (int)TransactionSourceEnum.Auto,
-                        //    Status = (int)TransactionStatusEnum.Approved,
-                        //    ExpensePurpose = "Thanh toán phí vận chuyển nội địa",
-                        //    RecipientPayer = package.CustomerId
-                        //};
-                        //await _transactionRepository.InsertAsync(transaction);
-                        //currentFund.TotalAmount = currentFund.TotalAmount - shippingCost.DomesticShippingFeeCN;
-
-                        //await _fundAccountAppService.UpdateAsync(currentFund);
-
-                        await CreateTransactionDomesticShippingFee(
-                               currentFund.Id,
-                               newPackage.TrackingNumber,
-                               shippingCost.DomesticShippingFeeCN,
-                               (int)TransactionDirectionEnum.Expense,
-                               (int)TransactionTypeEnum.Payment,
-                               (int)TransactionSourceEnum.Auto,
-                               (int)TransactionStatusEnum.Approved,
-                               _pbtAppSession.UserId ?? 0,
-                               package.CustomerId
-                           );
-                    }
+                    
 
                     // add log
                     _entityChangeLoggerAppService.LogChangeAsync<PackageDto>(
@@ -642,18 +575,6 @@ namespace pbt.Packages
                 package.WarehouseStatus = input.WarehouseStatus;
                 package.ShippingStatus = input.ShippingStatus;
 
-                ShippingCostResult shippingCost = await _shippingCostService.CalculateShippingCostAsync(package);
-                // Tính tổng chi phí
-                package.TotalPrice = shippingCost.PackagePrice;
-
-                package.Price = (package.PriceCN ?? 0) * shippingCost.Rs;
-                package.InsuranceFee = shippingCost.InsuranceValue;
-                // package.WoodenPackagingFee = shippingCost.woodenFee;
-                package.DomesticShippingFee = shippingCost.DomesticShippingFee;
-                package.ShockproofFee = shippingCost.ShockproofFee;
-                package.TotalFee = shippingCost.ShippingFee;
-                package.UnitPrice = shippingCost.PricePerUnit;
-                package.UnitType = shippingCost.UnitType;
 
                 package.BagId = input.BagId;
 

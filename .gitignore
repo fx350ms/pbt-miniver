@@ -403,3 +403,10 @@ FodyWeavers.xsd
 /src/pbt.Web.Mvc/wwwroot/view-resources/Views/SaleAdmin/ImportExport.min.js
 /src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Pending.min.js
 /src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Edit.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/_CloneMultiModal.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Create.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Detail.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Edit.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/EditByAdmin.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Finance.min.js
+/src/pbt.Web.Mvc/wwwroot/view-resources/Views/Packages/Index.min.js

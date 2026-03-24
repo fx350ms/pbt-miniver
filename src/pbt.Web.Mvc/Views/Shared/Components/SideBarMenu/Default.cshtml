@@ -58,58 +58,7 @@
             </li>
         }
        
-         
-
-        @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Orders))
-        {
-
-            if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Customer)
-            || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Sale))
-            {
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tasks"></i>
-                        <p>
-                            @L("Pages_Order")
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="@Url.Action("Create", "Orders")" class="nav-link">
-                                <i class="nav-icon far fa-circle"></i>
-                                <p>
-                                    @L("Pages_Create")
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Orders")" class="nav-link">
-                                <i class="nav-icon far fa-circle"></i>
-                                <p>
-                                    @L("Pages_AllOrder")
-                                </p>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a href="@Url.Action("Index", "SaleAdmin")" class="nav-link">
-                        <i class="nav-icon fas fa-tasks"></i>
-                        <p>
-                            @L("Pages_Order")
-                        </p>
-                    </a>
-                </li>
-            }
-
-        }
+          
         @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_Waybill))
         {
             <li class="nav-item">

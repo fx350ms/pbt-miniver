@@ -150,7 +150,7 @@ namespace pbt.Warehouses
                     }
                     throw new UserFriendlyException("Các kiện sau không hợp lệ, vui lòng kiểm tra lại: " + packageNumbers.Trim(','));
                 }
-
+                var dateTimeNow = DateTime.Now;
                 var identity = await _identityCodeAppService.GenerateNewSequentialNumberAsync(PrefixConst.BagCode);
                 var bag = ObjectMapper.Map<BagDto>(input);
                 bag.WarehouseStatus = (int?)WarehouseStatus.InStock;

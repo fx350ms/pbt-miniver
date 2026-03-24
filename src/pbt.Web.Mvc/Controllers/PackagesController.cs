@@ -107,6 +107,18 @@ namespace pbt.Web.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> PrintStamp(string ids, string stampType = "LO")
+        {
+            var packages = await _packageAppService.GetListDetailAsync(ids,true);
+            var model = new PrintStampModel()
+            {
+                Packages = packages,
+                StampType = stampType
+            };
+            return View(model);
+        }
+
         public async Task<IActionResult> Download(PagedPackageResultRequestDto input)
         {
             input.SkipCount = 0; // Đặt SkipCount về 0 để lấy tất cả các bản ghi
@@ -416,7 +428,6 @@ namespace pbt.Web.Controllers
             return View("Edit", model);
         }
 
-
         public async Task<IActionResult> EditByAdmin(int id)
         {
             // Load package detail
@@ -439,9 +450,6 @@ namespace pbt.Web.Controllers
             };
             return View("EditByAdmin", model);
         }
-
-
-
 
         /// <summary>
         /// Chức năng tài chính đơn hàng

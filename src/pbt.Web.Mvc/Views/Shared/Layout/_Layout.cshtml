@@ -21,11 +21,18 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>@pageTitle</title>
-
+   
     @await Html.PartialAsync("_Styles.cshtml")
     @RenderSection("styles", required: false)
+
+    <style>
+        .table td, .table th {
+            padding: .25rem;
+        }
+
+    </style>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" style="font-size:0.85rem;">
     <div class="wrapper">
         @await Html.PartialAsync("_Header.cshtml")
         @await Html.PartialAsync("_SideBar.cshtml")

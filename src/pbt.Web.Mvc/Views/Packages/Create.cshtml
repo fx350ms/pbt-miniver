@@ -72,6 +72,12 @@
     .select2-selection__arrow {
         top: 5px !important;
     }
+
+    
+    .table-v-align-middle td {
+        vertical-align:middle;
+    }
+
 </style>
 
 <section class="content-header">
@@ -88,7 +94,7 @@
         <div class="row">
             <div class="col-md-8" id="createPackage">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 0.25rem;">
                         <div class="d-flex gap-1 mb-3">
                             <input type="hidden" name="RMBRate" value="@Model.RMBRate" />
                             <div>
@@ -250,20 +256,20 @@
             </div>
             <div class="col-md-4" id="lstPackagePending">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 0.25rem;">
                         <h4 class="mb-3">@L("PackageList")</h4>
                         <div class="d-inline"><span id="total-package">0</span> Kiện</div>
                         <div class="pl-2 d-inline"><span id="total-weight">0</span> kg</div>
-                        <table class="table table-bordered" id="table-new-package">
+                        <table class="table table-bordered table-v-align-middle" id="table-new-package">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col"><input type="checkbox" id="check-all"></th>
+                                    <th scope="col" width="10"><input type="checkbox" id="check-all"></th>
                                     <th scope="col">@L("PackageCode")</th>
                                     <th scope="col">@L("Customer")</th>
                                     <th scope="col">KG</th>
                                     <th scope="col" style="width: 1%">Line</th>
                                     <th scope="col">@L("Warehouse")</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" width="15"></th>
                                 </tr>
                             </thead>
                             <tbody>
