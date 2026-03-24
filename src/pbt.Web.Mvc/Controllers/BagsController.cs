@@ -173,6 +173,23 @@ namespace pbt.Web.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> PrintStamp(int id, bool isExport = true)
+        {
+            if (id <= 0) return BadRequest("Invalid bag id");
+
+            var dto = await _bagAppService.GetForStampAsync(id, isExport);
+            if (dto == null) return NotFound();
+
+            var model = new PrintBagStampModel
+            {
+                Bag = dto,
+                IsExport = isExport
+            };
+
+            return View("~/Views/Bags/PrintStamp.cshtml", model);
+        }
+
         public async Task<IActionResult> Bagging(int id)
         {
             var dto = await _bagAppService.GetAsync(new EntityDto<int>(id));

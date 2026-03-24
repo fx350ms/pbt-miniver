@@ -136,157 +136,52 @@
     disableControl(false);
 
     function printStamp(packageIds, stampType, reload = false) {
-        var packages = packageIds.join(",");
+        const packages = packageIds.join(",");
         abp.ui.setBusy();
-      
 
-        abp.services.app.package.getListDetail(packages, true).done(function (result) {
-            debugger;
-            $("#labelContent").empty();
-            $("#label-container-9710").empty();
-            result.forEach(function (tem) {
-                var temp;
-                if (stampType === "lo") {
-                    temp = $(
-                        '<div class="label-container">' +
-                        '<div class="header">' +
-                        '<span><span class="whvn"></span>&nbsp;&nbsp;<span class="linevn"></span></span>' +
-                        '<span style="font-size: 28px" class="packageCode"></span>' +
-                        '</div>' +
-                        '<div class="barcode"></div>' +
-                        '<div class="footer" style="position: relative">' +
-                        '<div>' +
-                        '<p class="customerCode"></p>' +
-                        '<p class="trackingNumber"></p>' +
-                        '<p class="orderNumber"></p>' +
-                        '<p style="font-weight: bold;">pbtt</p>' +
-                        '</div>' +
-                        '<div>' +
-                        '<p class="weight"></p>' +
-                        '</div>' +
-                        '<span id="warehouseCode" style="position: absolute; right: 4px; bottom: 4px; font-size: 28px">${data.warehouseCode}</span>' +
-                        '</div>' +
-                        '</div>'
-                    );
+        const url = `/Packages/PrintStamp?ids=${encodeURIComponent(packages)}&stampType=${encodeURIComponent(stampType)}`;
 
-                    temp.find('.whvn').text("HN");
-                    temp.find('.linevn').text(tem.shippingLineId == 1 ? "LO" : 'TMDT');
-                    temp.find('.customerCode').text(tem.customer ? tem.customer.username : '');
-                    temp.find('.packageCode').text(tem.packageNumber);
-                    temp.find('.trackingNumber').text(tem.trackingNumber);
-                    temp.find('.orderNumber').text(tem.waybillNumber);
-                    temp.find('.weight').text(tem.weight + "kg");
-                    temp.find('#warehouseCode').text(tem.vnWarehouse ? tem.vnWarehouse.code : "");
-
-                    var svg = $('<svg class="barcodeSvg" style="width: 100%; height: 80px;"></svg>');
-                    JsBarcode(svg[0], tem.packageNumber, {
-                        format: "CODE128",
-                        displayValue: false,
-                        height: 80,
-                        width: 2.3,
-                    });
-                    temp.find('.barcode').append(svg);
-
-                    $("#labelContent").append(temp);
-                } else if (stampType === "tmdt") {
-                    temp = $(
-                        '<div class="label-container">' +
-                        '<div class="section flex">' +
-                        '<div style="width: 40%">' +
-                        '<span class="bold">Từ:</span> <span class="sender9710"></span>' +
-                        '</div>' +
-                        '<div style="width: 60%">' +
-                        '<span class="bold">Đến:</span> <span class="to9710"></span><br>' +
-                        'SĐT: <span class="sdt9710"></span><br>' +
-                        'Địa chỉ: <span class="add9710"></span>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '<div class="section">' +
-                        '<div class="barcode">' +
-                        '<div style="width: 25%; display: inline-block">' +
-                        '<span style="display: block;"><img style="height: 36px" src="/img/logo_stamp_kikitu.png" /></span>' +
-                        '</div>' +
-                        '<div style="width: 72%; height: 70px; display: inline-block">' +
-                        '<div style="height: 70px" id="barcodeImage9710" alt="Barcode"></div>' +
-                        '</div>' +
-                        '<div class="bold packageCode9710" id="packageCode9710"></div>' +
-                        '<div class="bold waybillCode9710" id="waybillCode9710"></div>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '<div class="section flex">' +
-                        '<div><span class="bold">Order No.</span> <span class="orderCode9710"></span></div>' +
-                        '<div><span class="bold" id="warehouseVn"></span></div>' +
-                        '<div>' +
-                        '<div><span class="bold">HN</span></div>' +
-                        '<div>CN9710</div>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '<div class="section flex">' +
-                        '<div>' +
-                        '<div class="bold">Nội dung hàng:</div>' +
-                        '(Tổng số lượng <span class="quantity9710"></span> sản phẩm)<br>' +
-                        '<span class="packageName9710"></span>' +
-                        '</div>' +
-                        '<div>' +
-                        '<div class="bold">User: <span class="toCustomerName9710"></span></div><br>' +
-                        'Ngày đặt hàng: <span class="orderCreate9710"></span>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '<div class="section flex">' +
-                        '<div class="amount">Tiền thu người nhận</div>' +
-                        '<div class="amount priceAmount9710"></div>' +
-                        '</div>' +
-
-                        '<div class="section flex">' +
-                        '<div>Khối lượng: <span class="weight9710"></span>(kg)</div>' +
-                        '<div style="height: 70px" class="bold">Chữ ký người nhận</div>' +
-                        '</div>' +
-
-                        '<div class="footer">' +
-                        'Chỉ dẫn giao hàng: Không đồng kiểm, chuyển hoàn sau 3 lần phát. Lưu 5 ngày.' +
-                        '</div>' +
-                        '</div>'
-                    );
-                    temp.find(".sender9710").text(tem.fakeCompany || '');
-                    temp.find(".to9710").text(tem.customerFake ? tem.customerFake.fullName : '');
-                    temp.find(".sdt9710").text(tem.customerFake ? tem.customerFake.phoneNumber : '');
-                    temp.find(".add9710").text(tem.customerFake ? tem.customerFake.address : '');
-                    temp.find(".packageCode9710").text(tem.packageNumber);
-                    temp.find(".waybillCode9710").text('(' + tem.trackingNumber + ')');
-
-                    temp.find(".orderCode9710").text(tem.order ? tem.order.orderNumber : '');
-                    temp.find(".quantity9710").text(tem.quantity);
-                    temp.find(".packageName9710").text(tem.productNameVi);
-                    temp.find(".toCustomerName9710").text(tem.customer ? tem.customer.username : '');
-                    temp.find(".orderCreate9710").text(tem.order ? tem.order.orderDateString : '');
-                    temp.find(".priceAmount9710").text(tem.price >= 3000000 ? "***" : (tem.priceStr || ''));
-                    temp.find(".weight9710").text(tem.weightString || '');
-                    temp.find("#warehouseVn").html(tem.vnWarehouse.name + '-' + tem.vnWarehouse.code);
-                    var $barcodeContainer = temp.find('#barcodeImage9710');
-                    $barcodeContainer.empty();
-                    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                    svg.setAttribute("id", "svgBarcode9710");
-                    svg.style.width = "100%";
-                    svg.style.height = "70px";
-                    $barcodeContainer.append(svg);
-                    JsBarcode(svg, tem.packageNumber, {
-                        format: "CODE128", width: 2.3, height: 80, displayValue: false
-                    });
-
-                    $("#label-container-9710").append(temp);
-                }
-                if (stampType === "lo") printLabel(reload);
-                if (stampType === "tmdt") printLabel9710(reload);
-
+        $.get(url)
+            .done(function (html) {
+                printFromHtml(html, reload);
                 $('.TrackingNumber').focus();
+            })
+            .fail(function (xhr) {
+                abp.message.error(xhr.responseText || l('SaveFailed'), l('Error'));
+            })
+            .always(function () {
+                abp.ui.clearBusy();
             });
-        });
+    }
 
-        abp.ui.clearBusy();
+    let printIframeServer;
+
+    function printFromHtml(html, reload) {
+        if (!printIframeServer) {
+            printIframeServer = document.createElement('iframe');
+            printIframeServer.style.position = "absolute";
+            printIframeServer.style.width = "0px";
+            printIframeServer.style.height = "0px";
+            printIframeServer.style.border = "none";
+            printIframeServer.style.visibility = "hidden";
+            document.body.appendChild(printIframeServer);
+        }
+
+        const doc = printIframeServer.contentWindow.document;
+        doc.open();
+        doc.write(html);
+        doc.close();
+
+        printIframeServer.onload = null; // ensure no stale handler
+        printIframeServer.contentWindow.onload = function () {
+            printIframeServer.contentWindow.focus();
+            printIframeServer.contentWindow.print();
+
+            if (reload) {
+                setTimeout(() => window.location.reload(), 100);
+            }
+            disableControl(false);
+        };
     }
 
     let printIframe9710;
@@ -790,13 +685,13 @@
 
     updateRowId();
     getPackageCreateByCustomer();
-    setInterval(function () {
-        // kiểm tra xem có bất kỳ checkox name = selectPackage checked
-        if ($("input[name='selectPackage']:checked").length < 1) {
-            getPackageCreateByCustomer();
-        }
+    //setInterval(function () {
+    //    // kiểm tra xem có bất kỳ checkox name = selectPackage checked
+    //    if ($("input[name='selectPackage']:checked").length < 1) {
+    //        getPackageCreateByCustomer();
+    //    }
 
-    }, 3000);
+    //}, 3000);
     initValue();
 
 })(jQuery);

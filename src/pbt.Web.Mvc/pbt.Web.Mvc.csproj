@@ -74,6 +74,8 @@
     <PackageReference Include="Abp.HangFire" Version="9.4.1" />
     <PackageReference Include="Abp.RedisCache" Version="9.4.1" />
     <PackageReference Include="Abp.Castle.Log4Net" Version="9.4.1" />
+    <PackageReference Include="ZXing.Net" Version="0.16.11" />
+    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.14" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />

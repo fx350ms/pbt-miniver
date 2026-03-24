@@ -17,10 +17,14 @@ namespace pbt.Packages.Dto
         public CustomerDto Customer { get; set; }
         public int? FakePackages { get; set; }
         public string? FakeCompany { get; set; }
+        public string? FakeCompanyAddress { get; set; }
         public WarehouseDto? CnWarehouse { get; set; }
         public WarehouseDto? VnWarehouse { get; set; }
         public WarehouseDto? CurrentWarehouse { get; set; }
         public ProductGroupTypeDto ProductGroupType { get; set; }
+
+
+        public decimal? PriceVN { get; set; }
 
     }
 }

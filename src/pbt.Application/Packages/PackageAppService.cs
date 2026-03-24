@@ -349,7 +349,7 @@ namespace pbt.Packages
                         Length = package.Length,
                         PackageNumber = $"{identityCode.Prefix}{DateTime.Now.ToString("ddMMyy")}{identityCode.SequentialNumber.ToString("D5")}",
                         PriceCN = package.Price,
-
+                        Price = (package.Price  ?? 0)* rmbRate,
                         ProductLink = package.ProductLink,
                         ProductNameCn = package.ProductNameCn,
                         ProductNameVi = package.ProductNameVi,
@@ -1021,9 +1021,10 @@ namespace pbt.Packages
                     package.VnWarehouse = await GetWarehouseByIdAsync((package.WarehouseDestinationId ?? 0));
                     package.CnWarehouse = await GetWarehouseByIdAsync((package.WarehouseCreateId ?? 0));
 
-                    string key = "fake_company";
-                    var rsString = await _configurationSettingAppService.GetValueAsync(key);
-                    package.FakeCompany = rsString;
+                    string fakeCompanyKey = "fake_company";
+                    string fakeCompanyAddressKey = "fake_address";
+                    package.FakeCompany = await _configurationSettingAppService.GetValueAsync(fakeCompanyKey);
+                    package.FakeCompanyAddress = await _configurationSettingAppService.GetValueAsync(fakeCompanyAddressKey);
                     package.FakePackages = 1;
 
                     if (printStamp)

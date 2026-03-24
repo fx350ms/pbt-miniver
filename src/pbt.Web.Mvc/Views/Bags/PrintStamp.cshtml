@@ -1,0 +1,188 @@
+@{
+    Layout = null;
+}
+
+@using System
+@using System.Drawing
+@using System.IO
+@using System.Drawing.Imaging
+@using ZXing
+@using ZXing.Common
+@using pbt.Web.Models.Bags
+
+@model PrintBagStampModel
+
+@functions {
+    private string BarcodeBase64(string text, int width = 600, int height = 140)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return "";
+
+        var writer = new BarcodeWriter<Bitmap>
+        {
+            Format = BarcodeFormat.CODE_128,
+            Options = new EncodingOptions
+            {
+                Height = height,
+                Width = width,
+                Margin = 2,
+                PureBarcode = true
+            },
+            Renderer = new ZXing.Windows.Compatibility.BitmapRenderer()
+        };
+
+        using (var bitmap = writer.Write(text.Trim()))
+        using (var ms = new MemoryStream())
+        {
+            bitmap.Save(ms, ImageFormat.Png);
+            return "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+        }
+    }
+
+    private string FormatDecimal(object value)
+    {
+        if (value == null) return "0";
+        decimal number;
+        if (decimal.TryParse(value.ToString(), out number))
+        {
+            return number % 1 == 0
+                ? number.ToString("0")
+                : number.ToString("0.##");
+        }
+        return value.ToString();
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Bag Stamp</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000;
+            background: #fff;
+        }
+
+        .label-container {
+            width: 100mm;
+            height: 72mm;
+            box-sizing: border-box;
+            padding: 4mm;
+            page-break-before: always;
+        }
+
+        .stamp-box {
+            width: 100%;
+            height: 100%;
+            border: 1px dashed #666;
+            box-sizing: border-box;
+            padding: 6mm 6mm 5mm 6mm;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .barcode-wrap {
+            text-align: center;
+            margin-top: 2mm;
+        }
+
+            .barcode-wrap img {
+                width: 100%;
+                height: 16mm;
+                object-fit: fill;
+                display: block;
+            }
+
+        .bag-code {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 2mm;
+            margin-bottom: 4mm;
+            letter-spacing: 0.3px;
+        }
+
+        .divider {
+            border-top: 1px dashed #777;
+            margin: 0 0 4mm 0;
+        }
+
+        .date-row {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6mm;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-top: auto;
+        }
+
+            .summary-table td {
+                border: 1px dashed #777;
+                padding: 8px 10px;
+                font-size: 14px;
+                font-weight: 600;
+                vertical-align: middle;
+            }
+
+        .summary-left {
+            text-align: left;
+        }
+
+        .summary-right {
+            text-align: center;
+        }
+
+        @@media print {
+            body {
+                margin: 0;
+            }
+
+            .label-container {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    @{
+        var b = Model?.Bag;
+        if (b == null)
+        {
+            <div>Không có dữ liệu tem.</div>
+            return;
+        }
+
+        var bagCode = b.BagCode ?? "";
+        var createdDate = b.CreationTime.ToString("dd/MM/yyyy");
+        var totalPackages = b.TotalPackages;
+        var totalWeight = FormatDecimal(b.Weight);
+    }
+
+    <div class="label-container">
+        <div class="stamp-box">
+            <div class="barcode-wrap">
+                <img src="@BarcodeBase64(bagCode, 760, 120)" alt="barcode" />
+            </div>
+
+            <div class="bag-code">@bagCode</div>
+
+            <div class="divider"></div>
+
+            <div class="date-row">@createdDate</div>
+
+            <table class="summary-table">
+                <tr>
+                    <td class="summary-left">Tổng số kiện: @totalPackages</td>
+                    <td class="summary-right">Tổng kg: @totalWeight</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

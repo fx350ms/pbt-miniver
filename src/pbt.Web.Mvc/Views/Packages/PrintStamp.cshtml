@@ -1,0 +1,390 @@
+﻿@{
+    Layout = null;
+}
+@using System
+@using System.Drawing
+@using System.IO
+@using System.Drawing.Imaging
+@using ZXing
+@using ZXing.Common
+@using pbt.Web.Models.Packages
+
+@model PrintStampModel
+
+@functions {
+    private string BarcodeBase64(string text, int width = 250, int height = 160)
+    {
+        // 1. Khởi tạo Barcode Writer
+        var writer = new BarcodeWriter<Bitmap>
+        {
+            Format = BarcodeFormat.CODE_128, // Bạn có thể đổi sang QR_CODE nếu muốn
+            Options = new EncodingOptions
+            {
+                Height = height,
+                Width = width,
+                Margin = 5,
+                PureBarcode = false // Set true nếu bạn không muốn hiển thị chữ số dưới mã vạch
+            },
+            // Sử dụng bộ dựng hình ảnh từ thư viện Compatibility
+            Renderer = new ZXing.Windows.Compatibility.BitmapRenderer()
+        };
+
+        // 2. Tạo hình ảnh Bitmap từ text
+        using (Bitmap bitmap = writer.Write(text))
+        {
+            // 3. Chuyển Bitmap thành byte array qua MemoryStream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                return "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+            }
+        }
+    }
+
+    private bool IsTmdt() => string.Equals(Model?.StampType, "tmdt", StringComparison.OrdinalIgnoreCase);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Stamp</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000;
+        }
+
+        /* LO label giữ nguyên nếu cần */
+        .lo-label {
+            width: 74mm;
+            height: 52mm;
+            box-sizing: border-box;
+            padding: 5px;
+            page-break-before: always;
+        }
+
+        .lo-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .lo-packageCode {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .lo-barcode {
+            text-align: center;
+            margin: 4px 0;
+        }
+
+        .lo-footer {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-top: 4px;
+            position: relative;
+        }
+
+        .lo-customerCode {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .lo-line {
+            margin: 0;
+        }
+
+        .lo-warehouse {
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            font-size: 28px;
+        }
+
+        /* TEM TMĐT - sửa lại theo ảnh thực tế */
+       
+
+        .tmdt-code-bottom {
+            font-size: 18px;
+        }
+
+        .tmdt-barcode-top img {
+            height: 48px;
+        }
+
+        .tmdt-barcode-bottom img {
+            height: 36px;
+        }
+
+        .tmdt-table th, .tmdt-table td {
+            padding: 3px 4px;
+            font-size: 12px;
+        }
+
+
+        .tmdt-label {
+            width: 100mm;
+            min-height: 145mm;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            padding: 4mm 4mm 3mm 4mm;
+            page-break-before: always;
+            font-size: 13px;
+            line-height: 1.25;
+        }
+
+        .tmdt-center {
+            text-align: center;
+        }
+
+        .tmdt-bold {
+            font-weight: 700;
+        }
+
+        .tmdt-small {
+            font-size: 11px;
+        }
+
+        .tmdt-xs {
+            font-size: 10px;
+        }
+
+        .tmdt-mb-4 {
+            margin-bottom: 4px;
+        }
+
+        .tmdt-mb-6 {
+            margin-bottom: 6px;
+        }
+
+        .tmdt-mb-8 {
+            margin-bottom: 8px;
+        }
+
+        .tmdt-barcode-top img {
+            width: 100%;
+            height: 52px;
+            object-fit: fill;
+        }
+
+        .tmdt-barcode-bottom img {
+            width: 78%;
+            height: 42px;
+            object-fit: fill;
+        }
+
+        .tmdt-code-main {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 2px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .tmdt-divider {
+            border-top: 1px dashed #666;
+            margin: 4px 0;
+        }
+
+        .tmdt-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .tmdt-table th,
+            .tmdt-table td {
+                border: 1px solid #777;
+                padding: 4px 5px;
+                vertical-align: top;
+                word-wrap: break-word;
+            }
+
+            .tmdt-table th {
+                text-align: center;
+                font-weight: 700;
+            }
+
+        .tmdt-section-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 8px 0 6px 0;
+        }
+
+        .tmdt-product-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .tmdt-product-table td {
+                padding: 2px 0;
+                vertical-align: top;
+            }
+
+        .tmdt-warning {
+            text-align: center;
+            font-style: italic;
+            font-size: 11px;
+            margin: 10px 0 8px 0;
+        }
+
+        .tmdt-code-bottom {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 4px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body>
+    @if (Model?.Packages != null)
+    {
+        foreach (var tem in Model.Packages)
+        {
+            if (!IsTmdt())
+            {
+                <div class="lo-label">
+                    <div class="lo-header">
+                        <span>
+                            <span>HN</span>&nbsp;&nbsp;
+                            <span class="lo-line">@((tem.ShippingLineId == 1) ? "LO" : "TMDT")</span>
+                        </span>
+                        <span class="lo-packageCode">@tem.PackageNumber</span>
+                    </div>
+
+                    <div class="lo-barcode">
+                        <img src="@BarcodeBase64(tem.PackageNumber)" style="width:100%; height:80px;" />
+                    </div>
+
+                    <div class="lo-footer">
+                        <div>
+                            <p class="lo-customerCode">@tem.Customer?.Username</p>
+                            <p style="margin:0;">@tem.TrackingNumber</p>
+                            <p style="margin:0;">@tem.WaybillNumber</p>
+                            <p style="margin:0; font-weight:700;">pbtt</p>
+                        </div>
+                        <div>
+                            <p style="margin:0; font-weight:700;">@tem.Weight kg</p>
+                        </div>
+                        <span class="lo-warehouse">@tem.VnWarehouse?.Code</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                var senderName = tem.FakeCompany ?? "";
+                var senderPhone =   "";
+                var senderAddress = tem.FakeCompanyAddress ?? "";
+
+                var receiverName = tem.CustomerFake?.FullName ?? "";
+                var receiverPhone = tem.CustomerFake?.PhoneNumber ?? "";
+                var receiverAddress = tem.CustomerFake?.Address ?? "";
+
+                var mainCode = tem.PackageNumber ?? "";
+                var subCode = !string.IsNullOrWhiteSpace(tem.TrackingNumber) ? tem.TrackingNumber : mainCode;
+                var printTime = DateTime.Now.ToString("HH:mm dd/MM/yyyy");
+                var areaCode = tem.VnWarehouse?.Code ?? "";
+                var productName = !string.IsNullOrWhiteSpace(tem.ProductNameVi) ? tem.ProductNameVi : "";
+                var productNameCn = !string.IsNullOrWhiteSpace(tem.ProductNameCn) ? tem.ProductNameCn : "";
+                var quantity = tem.Quantity <= 0 ? 1 : tem.Quantity;
+                var declareValue = (tem.Price ?? 0).ToString("N0");
+                var customerCode = tem.Customer?.Username ?? "";
+                var warehouseName = tem.VnWarehouse?.Name ?? "";
+                var addressLine = string.IsNullOrWhiteSpace(receiverAddress) ? "" : receiverAddress;
+
+                <div class="tmdt-label">
+                    <!-- Barcode trên -->
+                    <div class="tmdt-barcode-top tmdt-center">
+                        <img src="@BarcodeBase64(mainCode, 720, 140)" />
+                    </div>
+
+                    <!-- Mã chính -->
+                    <div class="tmdt-code-main">@mainCode</div>
+
+                    <!-- Mã kiện -->
+                    <div class="tmdt-mb-6">
+                        <span class="tmdt-bold">Mã kiện:</span> @mainCode
+                    </div>
+
+                    <!-- Giờ / ngày / khu -->
+                    <table class="tmdt-table tmdt-mb-8">
+                        <tr>
+                            <td style="width:40%; text-align:center;" class="tmdt-bold">@printTime</td>
+                            <td style="width:30%; text-align:center;" class="tmdt-bold">@areaCode</td>
+                            <td style="width:30%; text-align:center;" class="tmdt-bold">@warehouseName</td>
+                        </tr>
+                    </table>
+
+                    <!-- Từ / Đến -->
+                    <table class="tmdt-table tmdt-mb-8">
+                        <tr>
+                            <th>Từ</th>
+                            <th>Đến</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>Tên: @senderName</div>
+                                @if (!string.IsNullOrWhiteSpace(senderPhone))
+                                {
+                                    <div>SĐT: @senderPhone</div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(senderAddress))
+                                {
+                                    <div>Địa chỉ: @senderAddress</div>
+                                }
+                            </td>
+                            <td>
+                                <div>Tên: @receiverName</div>
+                                @if (!string.IsNullOrWhiteSpace(receiverPhone))
+                                {
+                                    <div>SĐT: @receiverPhone</div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(addressLine))
+                                {
+                                    <div>Địa chỉ: @addressLine</div>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Sản phẩm -->
+                    <div class="tmdt-section-title">Sản phẩm</div>
+
+                    <table class="tmdt-product-table tmdt-mb-6">
+                        <tr>
+                            <td style="width:32%;">Tên sản phẩm:</td>
+                            <td>@productName | @productNameCn</td>
+                        </tr>
+                        <tr>
+                            <td>Số lượng:</td>
+                            <td>@quantity</td>
+                        </tr>
+                        <tr>
+                            <td>Giá trị kê khai hải quan:</td>
+                            <td class="tmdt-bold">@declareValue VND</td>
+                        </tr>
+                    </table>
+
+                    <!-- Ghi chú -->
+                    <div class="tmdt-warning">Không mở gói hàng không đồng kiểm</div>
+
+                    <!-- Barcode dưới -->
+                    <div class="tmdt-barcode-bottom tmdt-center">
+                        <img src="@BarcodeBase64(subCode, 560, 120)" />
+                    </div>
+
+                    <div class="tmdt-code-bottom">@subCode</div>
+                </div>
+            }
+        }
+    }
+</body>
+</html>
