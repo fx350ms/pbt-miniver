@@ -27,10 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. DataAccess", "02. DataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pbt.Application.Cache", "src\pbt.Application.Cache\pbt.Application.Cache.csproj", "{DDC12B2A-9C4B-4C2E-8C96-2AA67DF7BC97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pbt.CopyFile", "src\pbt.CopyFile\pbt.CopyFile.csproj", "{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pbt.Jobs", "src\pbt.Jobs\pbt.Jobs.csproj", "{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,14 +65,6 @@ Global
 		{DDC12B2A-9C4B-4C2E-8C96-2AA67DF7BC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDC12B2A-9C4B-4C2E-8C96-2AA67DF7BC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDC12B2A-9C4B-4C2E-8C96-2AA67DF7BC97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,8 +78,6 @@ Global
 		{A2213374-BB48-48FD-BBD4-81E6A961D866} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F} = {8BB3383A-EDFA-48F8-BFDF-0A3A6AF61EF6}
 		{DDC12B2A-9C4B-4C2E-8C96-2AA67DF7BC97} = {9E0C5C00-68EB-40A9-8A45-108DBD5BB93B}
-		{8E24DFED-F7BA-4DFF-BCC1-7AD3891D2096} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
-		{5B8BED1C-5A57-49DA-8F1A-CA0A9CB43DB2} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A55C749-0BFF-4EFD-8499-12A2CB3B5B07}

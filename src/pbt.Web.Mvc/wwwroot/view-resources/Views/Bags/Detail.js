@@ -262,39 +262,47 @@
         });
     }
 
-    $('#printStamp').click(function () {
-        var bagId = $("[name='bagId']").val();
-        _bagService.getForStamp(bagId, true).done(function (data) {
-            
-            $("#bagNo").text(data.shippingType == 2 ? data.warehouseDestination.code + " - " + data.bagCode : data.bagCode);
-            $("#createdDate").text(data.creationTimeFormat);
-            $("#exportDate").text(data.creationTimeFormat);
-            $("#fromName").text(data.warehouseCreate.name);
-            $("#toLocation").text(data.warehouseDestination.name);
-            //$("#toName").text(data.warehouseDestination.name + '-'+ data.warehouseDestination.code + '  ' + data.receiver);
-            $("#toName").text(data.receiver.toUpperCase());
-            $("#packages").text(data.totalPackages);
-            $("#fromNameMobile").text(data.warehouseCreate.phone);
-            $("#fromNameAdd").text(data.warehouseCreate.address);
-            $("#weight").text((data.weight || 0) + " (kg)");
-            $("#volume").text((data.volumeStr || 0) + " (m2)");
-            var tempPackages = "";
-            tempPackages = '<tr>' +
-                '<td class="bold"><span id="productName">' + data.packagesDtos[0].productNameVi + '</span></td>' +
-                '<td class="bold"><span id="quantity">' + data.packagesDtos[0].quantity + '</span></td>' +
-                '</tr>';
-            $("#packageTemplate").empty().append(tempPackages);
-            
-            var $barcodeSvg = $("#barcodeImage");
-            $barcodeSvg.empty();
-            JsBarcode($barcodeSvg[0], data.bagCode, {
-                format: "CODE128",
-                width: 3,
-                height: 80,
-                displayValue: false
+    let printIframeServer;
+
+    function printFromHtml(html) {
+        if (!printIframeServer) {
+            printIframeServer = document.createElement('iframe');
+            printIframeServer.style.position = "absolute";
+            printIframeServer.style.width = "0px";
+            printIframeServer.style.height = "0px";
+            printIframeServer.style.border = "none";
+            printIframeServer.style.visibility = "hidden";
+            document.body.appendChild(printIframeServer);
+        }
+
+        const doc = printIframeServer.contentWindow.document;
+        doc.open();
+        doc.write(html);
+        doc.close();
+
+        printIframeServer.contentWindow.onload = function () {
+            printIframeServer.contentWindow.focus();
+            printIframeServer.contentWindow.print();
+        };
+    }
+
+    $('#printStamp').off('click').on('click', function () {
+        const bagId = $("[name='bagId']").val();
+        if (!bagId) return;
+
+        abp.ui.setBusy($("body"));
+        const url = `/Bags/PrintStamp?id=${encodeURIComponent(bagId)}&isExport=true`;
+
+        $.get(url)
+            .done(function (html) {
+                printFromHtml(html);
+            })
+            .fail(function (xhr) {
+                abp.message.error(xhr.responseText || 'Print failed');
+            })
+            .always(function () {
+                abp.ui.clearBusy($("body"));
             });
-            printLabel();
-        });
     });
 
     function printLabel() {

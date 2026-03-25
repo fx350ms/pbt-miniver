@@ -334,6 +334,7 @@ namespace pbt.Packages
                     var package = input.Packages[0];
                     
                     var identityCode = await _identityCodeAppService.GenerateNewSequentialNumberAsync(packagePrefix[0], date);
+                    
                     var fakeCustomer = await GetRandomCustomerFake();
                     var domesticShippingFeeVND = package.DomesticShippingFee * rmbRate;
                     var newPackage = new Package
@@ -347,7 +348,7 @@ namespace pbt.Packages
                         IsShockproof = package.IsShockproof,
                         IsWoodenCrate = package.IsWoodenCrate,
                         Length = package.Length,
-                        PackageNumber = $"{identityCode.Prefix}{DateTime.Now.ToString("ddMMyy")}{identityCode.SequentialNumber.ToString("D5")}",
+                        PackageNumber = $"{identityCode.Prefix}{currentCustomer.BagPrefix}{date.ToString("ddMM")}{identityCode.SequentialNumber.ToString("D3")}",
                         PriceCN = package.Price,
                         Price = (package.Price  ?? 0)* rmbRate,
                         ProductLink = package.ProductLink,

@@ -685,13 +685,13 @@
 
     updateRowId();
     getPackageCreateByCustomer();
-    //setInterval(function () {
-    //    // kiểm tra xem có bất kỳ checkox name = selectPackage checked
-    //    if ($("input[name='selectPackage']:checked").length < 1) {
-    //        getPackageCreateByCustomer();
-    //    }
+    setInterval(function () {
+        // kiểm tra xem có bất kỳ checkox name = selectPackage checked
+        if ($("input[name='selectPackage']:checked").length < 1) {
+            getPackageCreateByCustomer();
+        }
 
-    //}, 3000);
+    }, 3000);
     initValue();
 
 })(jQuery);

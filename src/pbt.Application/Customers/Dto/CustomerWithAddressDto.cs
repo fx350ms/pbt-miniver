@@ -16,5 +16,7 @@ namespace pbt.Customers.Dto
         public int? WarehouseId { get; set; }
         public long? SaleId { get; set; }
 
+        public string BagPrefix { get; set; }
+
     }
 }

@@ -150,12 +150,30 @@ namespace pbt.Warehouses
                     }
                     throw new UserFriendlyException("Các kiện sau không hợp lệ, vui lòng kiểm tra lại: " + packageNumbers.Trim(','));
                 }
+
                 var dateTimeNow = DateTime.Now;
-                var identity = await _identityCodeAppService.GenerateNewSequentialNumberAsync(PrefixConst.BagCode);
+
+                string prefix = PrefixConst.BagCode;
+
+                if (input.BagType == (int)BagTypeEnum.SeparateBag)
+                {
+                    // get customer bagCode prefix
+                   await _customerRepository.FirstOrDefaultAsync(x => x.Id == input.CustomerId.Value).ContinueWith(customerTask =>
+                    {
+                        var customer = customerTask.Result;
+                        if (customer != null && !string.IsNullOrEmpty(customer.BagPrefix))
+                        {
+                            prefix = customer.BagPrefix;
+                        }
+                    });
+                }
+            
+                var identity = await _identityCodeAppService.GenerateNewSequentialNumberAsync(prefix);
+
                 var bag = ObjectMapper.Map<BagDto>(input);
                 bag.WarehouseStatus = (int?)WarehouseStatus.InStock;
                 bag.CurrentWarehouseId = currentWarehouseId;
-                bag.BagCode = identity.Code;
+                bag.BagCode = $"{PrefixConst.BagCode}{prefix}{dateTimeNow.ToString("ddMM")}{identity.SequentialNumber.ToString("D3")}";
                 bag.ShippingStatus = (int)BagShippingStatus.Initiated;
                 bag = await base.CreateAsync(bag);
 
@@ -566,7 +584,7 @@ namespace pbt.Warehouses
 
             return dto;
         }
-         
+
 
         /// <summary>
         /// lấy danh customer
