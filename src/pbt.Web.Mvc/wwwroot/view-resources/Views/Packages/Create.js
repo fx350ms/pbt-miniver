@@ -59,7 +59,7 @@
             }
             else {
                 $("#rememberCustomer").prop("checked", false);
-                $("#select-delivery-line").val(0);
+               
                 $('#selectAllCustomer').val(0);
             }
         });

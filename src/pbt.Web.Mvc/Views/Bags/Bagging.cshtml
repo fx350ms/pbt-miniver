@@ -64,7 +64,7 @@
                                 <div class="container form-container">
                                     <h5 class="mb-1">Bao hàng</h5>
                                     <p class="text-primary">@Model.Dto.BagCode</p>
-                          
+
                                     <div class="form-group">
                                         <label for="scanType">Loại mã quét</label>
                                         <select class="form-control" id="scanType" name="scanType">
@@ -75,12 +75,12 @@
                                         <label for="scanCode">Quét mã kiện</label>
                                         <input type="text" class="form-control" id="scanCode" placeholder="Mã kiện">
                                     </div>
-                               
+
                                     <div class="form-group">
                                         <label for="packageWeight">Cân nặng bao (Kg)</label>
                                         <div class="row">
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" value="@Model.Dto.Weight" 
+                                                <input type="text" class="form-control" value="@Model.Dto.Weight"
                                                        id="packageWeight" placeholder="Nhập cân nặng bao">
                                             </div>
                                             <div class="col-sm-3">
@@ -108,22 +108,28 @@
                                     else
                                     {
                                         <button id="ending-packing" disabled="disabled"
-                                                class="btn btn-primary">@L("EndOfBagging")</button>
+                                                class="btn btn-primary">
+                                            @L("EndOfBagging")
+                                        </button>
                                     }
-                                    <hr/>
+                                    <hr />
 
                                     <form id="fmEditBag">
                                         <h5 class="section-title mt-2">Thông tin bao hàng</h5>
                                         <div class="">
                                             <button type="button" class="btn btn-sm btn-primary" id="editBag">Sửa</button>
                                             <button type="button" class="btn btn-sm btn-danger d-none"
-                                                    id="CancelBag">@L("Cancel")</button>
+                                                    id="CancelBag">
+                                                @L("Cancel")
+                                            </button>
                                             <button type="button" class="btn btn-sm btn-success d-none"
-                                                    id="saveBag">@L("Save")</button>
+                                                    id="saveBag">
+                                                @L("Save")
+                                            </button>
                                         </div>
                                         <div class="form-group">
                                             <label for="packageType">Loại bao</label>
-                                                <select class="form-control" id="BagType" asp-for="Dto.BagType" readonly>
+                                            <select class="form-control" id="BagType" asp-for="Dto.BagType" readonly>
                                                 <option value="1">Bao riêng</option>
                                                 <option value="2">Bao ghép</option>
                                             </select>
@@ -147,20 +153,20 @@
                                             <label for="dimensions">Kích thước (cm)</label>
                                             <div class="form-row" id="dimensions">
                                                 <div class="col">
-                                                        <input type="number" class="form-control" asp-for="@Model.Dto.Length" placeholder="Dài" readonly>
+                                                    <input type="number" class="form-control" asp-for="@Model.Dto.Length" placeholder="Dài" readonly>
                                                 </div>
                                                 <div class="col">
-                                                        <input type="number" class="form-control" asp-for="@Model.Dto.Width" placeholder="Rộng" readonly>
+                                                    <input type="number" class="form-control" asp-for="@Model.Dto.Width" placeholder="Rộng" readonly>
                                                 </div>
                                                 <div class="col">
-                                                        <input type="number" class="form-control" asp-for="@Model.Dto.Height" placeholder="Cao" readonly>
+                                                    <input type="number" class="form-control" asp-for="@Model.Dto.Height" placeholder="Cao" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Tổng cân nặng kiện</label>
                                             <p class="weight-display" id="totalPackageWeight">
-                                                @(Model.Dto.WeightPackages.HasValue ? Model.Dto.WeightPackages.Value.ToString("N2", new System.Globalization.CultureInfo("vi-VN")) : "0") (kg)
+                                                @(Model.Dto.WeightPackages.HasValue? Model.Dto.WeightPackages.Value.ToString("N2", new System.Globalization.CultureInfo("vi-VN")) : "0") (kg)
                                             </p>
                                         </div>
                                         <div class="form-group">
@@ -171,17 +177,17 @@
                                                     <label class="form-check-label" for="isSolution">@L("Solution")</label>
                                                 </div>
                                                 <div class="form-check ">
-                                                    <input class="form-check-input" type="checkbox" asp-for="Dto.IsWoodSealing"  id="isWoodSealing" disabled="disabled" value="true">
-                                                        <label class="form-check-label" for="isWoodSealing">@L("WoodSealing")</label>
+                                                    <input class="form-check-input" type="checkbox" asp-for="Dto.IsWoodSealing" id="isWoodSealing" disabled="disabled" value="true">
+                                                    <label class="form-check-label" for="isWoodSealing">@L("WoodSealing")</label>
                                                 </div>
                                                 <div class="form-check ">
-                                                    <input class="form-check-input" type="checkbox" asp-for="Dto.IsFakeGoods"  id="isFakeGoods" disabled="disabled" value="true">
+                                                    <input class="form-check-input" type="checkbox" asp-for="Dto.IsFakeGoods" id="isFakeGoods" disabled="disabled" value="true">
                                                     <label class="form-check-label" for="isFakeGoods">@L("FakeGoods")</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" asp-for="Dto.IsOtherFeature" id="isOtherFeature" disabled="disabled" value="true">
                                                     <label class="form-check-label" for="isOtherFeature">@L("Other")</label>
-                                                    <input type="text" asp-for="Dto.otherReason" class="form-control d-none ml-2" readonly/>
+                                                    <input type="text" asp-for="Dto.otherReason" class="form-control d-none ml-2" readonly />
                                                 </div>
                                             </div>
                                         </div>
@@ -195,10 +201,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="destinationWarehouse">Kho đích</label>
-                                                <select class="form-control" id="warehouseDestinationId" asp-for="Dto.WarehouseDestinationId" readonly>
+                                            <select class="form-control" id="warehouseDestinationId" asp-for="Dto.WarehouseDestinationId" readonly>
                                                 @foreach (var warehouse in Model.destinationWarehouses)
                                                 {
-                                                    if(Model.Dto.WarehouseDestinationId == warehouse.Id)
+                                                    if (Model.Dto.WarehouseDestinationId == warehouse.Id)
                                                     {
                                                         <option value="@warehouse.Id" selected>@warehouse.Name</option>
                                                     }
@@ -211,23 +217,24 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="transportType">Line vận chuyển</label>
-                                                <select class="form-control" id="transportType" asp-for="Dto.ShippingType" asp-items="@EnumHelper.GetEnumSelectList<LineShipping>()" readonly>
+                                            <select class="form-control" id="transportType" readonly>
+                                                <option value="@((int)LineShipping.Ecommerce)" selected>@L("Ecommerce")</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="ShippingPartnerId">@L("ShippingPartner")</label>
-                                                <select class="form-control" id="ShippingPartnerId" readonly asp-for="Dto.ShippingPartnerId">
+                                            <select class="form-control" id="ShippingPartnerId" readonly asp-for="Dto.ShippingPartnerId">
                                                 @if (Model.ShippingPartnerDtos != null)
                                                 {
                                                     @foreach (var shippingPartnerDto in Model.ShippingPartnerDtos)
                                                     {
                                                         @if (Model.Dto.ShippingPartnerId == shippingPartnerDto.Id)
                                                         {
-                                                                <option value="@shippingPartnerDto.Id" selected>@shippingPartnerDto.Name</option>
+                                                            <option value="@shippingPartnerDto.Id" selected>@shippingPartnerDto.Name</option>
                                                         }
                                                         else
                                                         {
-                                                                <option value="@shippingPartnerDto.Id">@shippingPartnerDto.Name</option>
+                                                            <option value="@shippingPartnerDto.Id">@shippingPartnerDto.Name</option>
                                                         }
                                                     }
                                                 }
@@ -246,7 +253,6 @@
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="list-group" id="list-closed-bag">
-
                                 </div>
                             </div>
                         </div>
@@ -268,21 +274,21 @@
                             <div class="table-responsive">
                                 <table id="PackagesBagTable" class="table table-striped table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>@L("PackageNumber")</th>
-                                        <th>@L("TrackingNumber")</th>
-                                        <th>@L("Customer")</th>
-                                        <th>@L("Weight")</th>
-                                        <th>@L("Volume")</th>
-                                        <th>@L("Description")</th>
-                                        <th>@L("CreationTime")</th>
-                                        <th>@L("MatchTime")</th>
-                                        <th>@L("DeliveryTime")</th>
-                                        <th>@L("WarehouseStatus")</th>
-                                        <th>@L("ShippingStatus")</th>
-                                        <th style="width: 30px"></th>
-                                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>@L("PackageNumber")</th>
+                                            <th>@L("TrackingNumber")</th>
+                                            <th>@L("Customer")</th>
+                                            <th>@L("Weight")</th>
+                                            <th>@L("Volume")</th>
+                                            <th>@L("Description")</th>
+                                            <th>@L("CreationTime")</th>
+                                            <th>@L("MatchTime")</th>
+                                            <th>@L("DeliveryTime")</th>
+                                            <th>@L("WarehouseStatus")</th>
+                                            <th>@L("ShippingStatus")</th>
+                                            <th style="width: 30px"></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>

@@ -10,8 +10,8 @@
 @{
     AbpAntiForgeryManager.SetCookie(Context);
 
-    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
-    pageTitle += "pbt";
+    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title   : "";
+    pageTitle += "";
 }
 <!DOCTYPE html>
 <html lang="@LanguageManager.CurrentLanguage.Name">

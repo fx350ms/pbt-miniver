@@ -10,7 +10,8 @@ namespace pbt.ApplicationUtils
 
     public class PrefixConst
     {
-        public const string BagCode = "BB";
+        public const string BagCode = "QV";
+        public const string BagCodeIdentity = "BAG";
         public const string PackageCode = "QV";
         public const string OrderCode = "DH";
         public const string DeliveryNote = "PNX";

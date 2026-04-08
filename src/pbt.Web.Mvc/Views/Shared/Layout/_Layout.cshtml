@@ -10,8 +10,8 @@
 @{
     AbpAntiForgeryManager.SetCookie(Context);
 
-    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
-    pageTitle += "pbt";
+    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title   : "";
+    pageTitle += "";
 }
 <!DOCTYPE html>
 <html lang="@LanguageManager.CurrentLanguage.Name">
@@ -32,7 +32,7 @@
 
     </style>
 </head>
-<body class="hold-transition sidebar-mini" style="font-size:0.85rem;">
+<body class="sidebar-mini layout-fixed control-sidebar-slide-open accent-primary hold-transition sidebar-mini" style="font-size:0.85rem;">
     <div class="wrapper">
         @await Html.PartialAsync("_Header.cshtml")
         @await Html.PartialAsync("_SideBar.cshtml")

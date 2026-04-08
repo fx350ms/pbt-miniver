@@ -237,116 +237,51 @@
             }
         }, 50);
     }
+    let printIframeServer;
 
-
-    $('#btnPrintLabel9710').click(function () {
-        var packageId = $("[name='packageId']").val();
-
-        abp.ui.setBusy("body");
-
-        abp.services.app.package.getDetail(packageId, true).done(function (tem) {
-            // Đổ dữ liệu
-            $("#sender9710").text(tem.fakeCompany || '');
-            $("#to9710").text(tem.customerFake && tem.customerFake.fullName ? tem.customerFake.fullName : '');
-            $("#sdt9710").text(tem.customerFake && tem.customerFake.phoneNumber ? tem.customerFake.phoneNumber : '');
-            $("#add9710").text(tem.customerFake && tem.customerFake.address ? tem.customerFake.address : '');
-            $("#packageCode9710").text(tem.packageNumber);
-            $("#waybillCode9710").text('(' + tem.trackingNumber + ')');
-            $("#waybillNumber9710").text(tem.waybillNumber);
-            $("#orderCode9710").text(tem.order && tem.order.orderNumber ? tem.order.orderNumber : '');
-            $("#quantity9710").text(tem.quantity);
-            $("#packageName9710").text(tem.productNameVi);
-            $("#toCustomerName9710").text(tem.customer && tem.customer.username ? tem.customer.username : '');
-            $("#orderCreate9710").text(tem.order && tem.order.orderDateString ? tem.order.orderDateString : '');
-            $("#priceAmount9710").text(tem.price >= 3000000 ? "***" : tem.priceStr);
-            $("#weight9710").text(tem.weightString);
-            $("#warehouseVn").text(!tem.vnWarehouse ? '' : tem.vnWarehouse.name + '-' + tem.vnWarehouse.code);
-            $("#amount").text(tem.totalPrice.toLocaleString("vi-VN") + " VNĐ");
-
-            var $barcodeContainer = $('#barcodeImage9710');
-            $barcodeContainer.empty(); // reset
-            var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("id", "svgBarcode9710");
-            svg.style.width = "100%";
-            svg.style.height = "80px";
-            $barcodeContainer.append(svg);
-
-            JsBarcode(svg, tem.packageNumber, {
-                format: "CODE128", width: 2.3, height: 80, displayValue: false
-            });
-
-            // In label
-            printLabel9710();
-            abp.ui.clearBusy("body");
-        });
-    });
-
-
-
-    let printIframe9710;
-
-    function printLabel9710() {
-        if (!printIframe9710) {
-            printIframe9710 = document.createElement('iframe');
-            printIframe9710.style.position = "absolute";
-            printIframe9710.style.width = "0px";
-            printIframe9710.style.height = "0px";
-            printIframe9710.style.border = "none";
-            printIframe9710.style.visibility = "hidden";
-            document.body.appendChild(printIframe9710);
+    function printFromHtml(html) {
+        if (!printIframeServer) {
+            printIframeServer = document.createElement('iframe');
+            printIframeServer.style.position = "absolute";
+            printIframeServer.style.width = "0px";
+            printIframeServer.style.height = "0px";
+            printIframeServer.style.border = "none";
+            printIframeServer.style.visibility = "hidden";
+            document.body.appendChild(printIframeServer);
         }
 
-        const content = document.getElementById('label-container-9710').innerHTML;
-        const doc = printIframe9710.contentWindow.document;
-
-        const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Print Label</title>
-        <style>
-            @media print {
-                @page { size: auto; margin: 0; }
-                body { font-family: Arial, sans-serif; font-size: 12px; margin: 0; padding: 0; }
-                .label-container { width: 105mm; height: 148mm; border: 1px solid black; padding: 5px; box-sizing: border-box; }
-                .section { border: 1px solid black; padding: 5px; margin-bottom: 3px; }
-                .flex { display: flex; justify-content: space-between; }
-                .bold { font-weight: bold; }
-                .barcode { text-align: center; width: 100%; margin: 5px 0; }
-                .barcode img { width: 80%; height: 80px; }
-                .amount { font-size: 16px; font-weight: bold; text-align: center; margin-top: 5px; }
-                #packageCode9710 { font-size: 28px; }
-                #barcodeImage9710 { width: 100%; height: auto; }
-                #svgBarcode9710 { width: 100%; height: auto; }
-                #toCustomerName9710 { font-size: 22px; font-weight: 600; }
-                #priceAmount9710 { font-size: 13px; }
-                #waybillCode9710 { font-size: 18px; }
-                #waybillNumber9710 { font-size: 14px; }
-                .footer { font-size: 10px; text-align: center; margin-top: 5px; }
-            }
-        </style>
-    </head>
-    <body>${content}</body>
-    </html>
-    `;
-
+        const doc = printIframeServer.contentWindow.document;
         doc.open();
         doc.write(html);
         doc.close();
 
-        setTimeout(() => {
-            const state = printIframe9710.contentWindow.document.readyState;
-            if (state === 'complete') {
-                printIframe9710.contentWindow.focus();
-                printIframe9710.contentWindow.print();
-            } else {
-                setTimeout(() => {
-                    printIframe9710.contentWindow.focus();
-                    printIframe9710.contentWindow.print();
-                }, 50);
-            }
-        }, 50);
+        printIframeServer.contentWindow.onload = function () {
+            printIframeServer.contentWindow.focus();
+            printIframeServer.contentWindow.print();
+        };
     }
+
+    // Replace old 9710 print: client-render -> server-render
+    $('#btnPrintLabel9710').off('click').on('click', function () {
+        const packageId = $("[name='packageId']").val();
+        if (!packageId) return;
+
+        abp.ui.setBusy($("body"));
+
+        // same as Create.js: server returns full HTML for printing
+        const url = `/Packages/PrintStamp?ids=${encodeURIComponent(packageId)}&stampType=${encodeURIComponent('tmdt')}`;
+
+        $.get(url)
+            .done(function (html) {
+                printFromHtml(html);
+            })
+            .fail(function (xhr) {
+                abp.message.error(xhr.responseText || 'Print failed');
+            })
+            .always(function () {
+                abp.ui.clearBusy($("body"));
+            });
+    });
 
 
 

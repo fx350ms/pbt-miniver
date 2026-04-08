@@ -154,7 +154,7 @@ namespace pbt.Warehouses
                 var dateTimeNow = DateTime.Now;
 
                 string prefix = PrefixConst.BagCode;
-
+                var identity = await _identityCodeAppService.GenerateNewSequentialNumberAsync(PrefixConst.BagCodeIdentity);
                 if (input.BagType == (int)BagTypeEnum.SeparateBag)
                 {
                     // get customer bagCode prefix
@@ -167,8 +167,6 @@ namespace pbt.Warehouses
                         }
                     });
                 }
-            
-                var identity = await _identityCodeAppService.GenerateNewSequentialNumberAsync(prefix);
 
                 var bag = ObjectMapper.Map<BagDto>(input);
                 bag.WarehouseStatus = (int?)WarehouseStatus.InStock;

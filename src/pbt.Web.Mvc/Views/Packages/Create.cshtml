@@ -99,11 +99,7 @@
                             <input type="hidden" name="RMBRate" value="@Model.RMBRate" />
                             <div>
                                 <select class="form-control mr-2" style="max-width: 250px;" id="select-delivery-line">
-                                    <option value="0">@L("SelectLine")</option>
-                                    <option value="@((int)LineShipping.InformalTrade)">@L("InformalTrade")</option>
-                                    <option value="@((int)LineShipping.Ecommerce)">@L("Ecommerce")</option>
-                                    <option value="@((int)LineShipping.OfficialChannel)">@L("OfficialChannel")</option>
-                                    <option value="@((int)LineShipping.Portable)">@L("Portable")</option>
+                                    <option value="@((int)LineShipping.Ecommerce)" selected>@L("Ecommerce")</option>
                                 </select>
                             </div>
                             <div style="min-width: 300px">
@@ -237,9 +233,7 @@
                                     onclick="AddMultiClonePackage(this)">
                                 <i class="fas fa-copy"></i> @L("AddMultiplePackages")
                             </button>
-                            <button tabindex="6" class="btn btn-success ml-2" id="btnPrintStamp">
-                                <i class="fas fa-print"></i>  @L("PrintStamp")
-                            </button>
+                           
                             <button tabindex="6" class="btn btn-success ml-2" id="btnPrintStampTmdt">
                                 <i class="fas fa-print"></i>  @L("PrintStampTmdt")
                             </button>

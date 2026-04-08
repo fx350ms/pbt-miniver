@@ -133,15 +133,6 @@
                             <p>@L("Pages_Packages_List")</p>
                         </a>
                     </li>
-                    @if (await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Sale) || await PermissionChecker.IsGrantedAsync(PermissionNames.Role_Admin))
-                    {
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "SaleAdmin")" class="nav-link @(Context.Request.Path.Value?.EndsWith("/SaleAdmin/Index") == true ? "active" : "")">
-                                <i class="nav-icon far fa-circle"></i>
-                                <p>Theo dõi kiện hàng</p>
-                            </a>
-                        </li>
-                    }
                 </ul>
             </li>
         }

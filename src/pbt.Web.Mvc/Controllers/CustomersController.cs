@@ -57,12 +57,11 @@ namespace pbt.Web.Controllers
             return View(model);
         }
  
-
         public async Task<ActionResult> EditModal(long id)
         {
             var customer = await _customerService.GetAsync(new EntityDto<long>(id));
-            var warehouses = await _warehouseService.GetFull();
-            ViewBag.WarehouseSelectList = warehouses.Select(x => new SelectListItem() { Text = x.FullAddress, Value = x.Id.ToString() });
+            var warehouses = await _warehouseService.GetByCountry(2);
+            ViewBag.WarehouseSelectList = warehouses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             return PartialView("_EditModal", customer);
         }
 

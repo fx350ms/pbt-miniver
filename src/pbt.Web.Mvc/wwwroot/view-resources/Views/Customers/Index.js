@@ -268,7 +268,7 @@
     }
 
     async function loadWarehouse() {
-        return await abp.services.app.warehouse.getFull().done(function (data) {
+        return await abp.services.app.warehouse.getByCountry(2).done(function (data) {
             const warehouse = $("[name='WarehouseId']");
             warehouse.empty();
             warehouse.append('<option value="">' + l('SelectWarehouse') + '</option>');

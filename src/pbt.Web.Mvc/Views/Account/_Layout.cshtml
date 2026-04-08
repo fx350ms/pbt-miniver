@@ -10,8 +10,8 @@
     Layout = null;
     AbpAntiForgeryManager.SetCookie(Context);
 
-    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
-    pageTitle += "pbt";
+    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title  : "";
+    pageTitle += "";
     
     var hideTenantChange = ViewBag.HideTenantChange != null && ViewBag.HideTenantChange == true;
     var showTenantChange = MultiTenancyConfig.IsEnabled && !hideTenantChange;
@@ -28,12 +28,12 @@
     @await Html.PartialAsync("_Styles.cshtml")
     @RenderSection("styles", required: false)
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box" style="width:500px">
+<body class="hold-transition login-page" style="height: 0vh;">
+    <div class="login-box" style="width:450px">
         <div class="login-logo">
-            <a href="/"><img src="~/img/logo.png" /></a>
+            <a href="/"><img src="~/img/logo.png" width="150" /></a>
         </div>
-        <h3 class="mt-4 mb-4 text-center">Vận chuyển Việt Trung</h3>
+        <h3 class="mt-4 mb-4 text-center">Khai thác hàng TMĐT</h3>
         <div class="card">
             @if (showTenantChange)
             {

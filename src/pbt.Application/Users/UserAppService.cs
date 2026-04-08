@@ -109,6 +109,7 @@ namespace pbt.Users
             return MapToEntityDto(user);
         }
 
+        [HttpPost]
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
             CheckUpdatePermission();

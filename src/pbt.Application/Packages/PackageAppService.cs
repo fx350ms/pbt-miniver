@@ -340,7 +340,7 @@ namespace pbt.Packages
                     var newPackage = new Package
                     {
                         WaybillNumber = waybillNumber,
-                        TrackingNumber = (rootPackage == null && i == 1) ? waybillNumber : ShortProductCode.GenerateSafeAoId(),
+                        TrackingNumber = (rootPackage == null && i == 1) ? waybillNumber : (waybillNumber + "-" + i.ToString("00")),
                         Description = package.Description,
                         Height = package.Height,
                         IsDomesticShipping = package.IsDomesticShipping,
